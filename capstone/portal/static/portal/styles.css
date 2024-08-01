@@ -1,0 +1,77 @@
+input[type="file"]{
+    display: none;
+}
+.file-input{
+    display: inline-block;
+    cursor: pointer;
+    border: 1px #ccc solid;
+}
+.cecil{
+    margin: auto;
+    width: 38%;
+    position: absolute;
+    top: 120px;
+    border: 1px #ccc solid;
+    border-radius: 60px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 120px;
+    padding-bottom: 100px;
+}
+.container{
+    width: 40%;
+}
+.student-registration{
+    position: relative;
+    top: 50px;
+    border: 1px #ccc solid;
+    border-radius: 30px;
+    margin: auto;
+    padding: 130px;
+    width: 50%;
+    text-align: center;
+}
+.confirmation{
+    display: none;
+    padding-bottom: 40px;
+    padding-top: 40px;
+    border-radius: 20px;
+    border: 1px #ccc solid;
+}
+
+.header{
+    grid-area: header;
+    padding: 20px;
+    position: sticky;
+    top: 0;
+}
+.main{
+    grid-area: main;
+    height: 87vmin;
+}
+.menu{
+    display: flex;
+    flex-flow: column wrap;
+    grid-area: menu;
+    position: sticky;
+    top: 65px;
+}
+.grid-container{
+    display: grid;
+    grid-template-areas: 'header header header header header header header'
+                         'menu main main main main main main';
+}
+.grid-container > div{
+    border: 1px #ccc solid;
+}
+
+.menu-options{
+    border: none;
+    width: 100%;
+    padding: 20px;
+    background-color: #fff;
+}
+.menu-options:hover{
+    background-color: #f6f7f8;
+    border: none;
+}

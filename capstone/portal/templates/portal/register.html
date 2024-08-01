@@ -1,0 +1,29 @@
+{% extends "portal/layout.html" %}
+{% block body %}
+<div class="container">
+    <form action="{% url 'register' %}" method="post" class="cecil">
+        {% csrf_token %}
+        <input type="radio" id="student" name="rank" value="Student">
+        <label for="student">Student</label>
+        <input type="radio" id="employee" name="rank" value="Employee">
+        <label for="employee">Employee</label>
+        <div class="form form-group">
+            {% if no_user %}
+                <div>{{ no_user }}</div>
+            {% endif %}
+            <input type="text" placeholder="EmployeeID"name="username" class="form-control">
+        </div>
+        <div class="form form-group">
+            <input type="password" name="password" placeholder="Enter Password" class="form-control">
+        </div>
+        <div class="form form-group">
+            <input type="password" name="confirmation" placeholder="Confirm Password" class="form-control">
+            {% if message %}
+                <div>{{ message }}</div>
+            {% endif %}
+        </div>
+        <input class="btn btn-primary" type="submit" value="Create Account">
+    </form>
+   <span style="position: absolute; top: 480px; left: 480px;">Already have an account? <a class="nav-link" href="{% url 'login' %}">Login Here.</a></span>
+</div>
+{% endblock %}
