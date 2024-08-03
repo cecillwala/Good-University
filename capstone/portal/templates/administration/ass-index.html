@@ -13,54 +13,45 @@
                 {% endif %}
             </ul>
         </div>
-        <div class="menu">
-            <button class="menu-options">
+        <nav class="menu">
+            <button onclick="ShowPage('#profile')" class="btn btn-light menu-options">
                 <div>
                     Profile
                 </div>
             </button>
-            <br>
-            <button class="menu-options">
+            <button onclick="ShowPage('#student-registration')" class="btn btn-light menu-options">
                 <div>
                     First Year Registration
                 </div>
             </button>
-            <br>
-            <button class="menu-options">
+            <button onclick="ShowPage('#lecturer-registration')" class="btn btn-light menu-options">
                 <div>
                     Lecturer Registration
                 </div>
             </button>
-            <br>
-            <button class="menu-options">
+            <button onclick="ShowPage('#timetable-upload')" class="btn btn-light menu-options">
                 <div>
                     Timetable Upload
                 </div>
             </button>
-        </div>
-        <div class="main">
-            <div id="profile"></div>
+        </nav>
+        <div id="main" class="main">
+            <div id="profile">profile</div>
             <div class="student-registration" id="student-registration">
                 <h3>2024/2025 First Year Admission</h3>
-                <div id="status"></div>
                 <br>
-                <div id="contents">
-                    <div><strong>NOTE: </strong> File must be an excel file `file.xlsx`</div>
-                    <br>
-                    <form id="upload-form" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <label for="csv" class="file-input">
-                            Upload file
-                            <input type="file" name="file" id="csv">
-                        </label>
-                    </form>
-                    <div class="confirmation" id="confirm">
-                        Are you sure you want to enroll all students from file?
-                        <button class="btn btn-primary" id="confirmed">Yes</button>
-                        <button class="btn btn-secondary" id="not-confirmed" name="Cancel">Cancel</button>
-                    </div>
-                    <button id="upload" class="btn btn-primary">Upload File</button>
-                </div>
+                <div id="status"></div>
+                <div><strong>NOTE: </strong> File must be an excel file `file.xlsx`</div>
+                <br>
+                <form id="upload-form" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <label for="csv" class="file-input btn btn-primary">
+                        Choose file
+                        <input type="file" name="file" id="csv">
+                    </label>
+                    <span id="filename"></span>
+                    <input class="btn btn-success" type="submit" id="upload" value="Upload file">
+                </form>
             </div>
             <div id="lecturer-registration"></div>
             <div id="profile"></div>

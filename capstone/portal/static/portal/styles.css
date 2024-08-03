@@ -2,9 +2,7 @@ input[type="file"]{
     display: none;
 }
 .file-input{
-    display: inline-block;
-    cursor: pointer;
-    border: 1px #ccc solid;
+    display: block;
 }
 .cecil{
     margin: auto;
@@ -22,14 +20,16 @@ input[type="file"]{
     width: 40%;
 }
 .student-registration{
-    position: relative;
-    top: 50px;
     border: 1px #ccc solid;
     border-radius: 30px;
-    margin: auto;
-    padding: 130px;
     width: 50%;
+    margin: auto;
     text-align: center;
+    position: relative;
+    top: 30px;
+}
+.content{
+    margin: 15vb;
 }
 .confirmation{
     display: none;
@@ -40,38 +40,36 @@ input[type="file"]{
 }
 
 .header{
-    grid-area: header;
-    padding: 20px;
+    grid-area: 1 /  1 / span 1 / span 3;
+    padding: 15px;
     position: sticky;
+    background-color: beige;
     top: 0;
+    z-index: 1;
 }
 .main{
-    grid-area: main;
-    height: 87vmin;
+    grid-area: 2 / 2 /span 2 / span 2;
+    width: 85vw;
+    min-height: 100vh;
 }
 .menu{
     display: flex;
-    flex-flow: column wrap;
-    grid-area: menu;
     position: sticky;
-    top: 65px;
+    top: 71px;
+    height: calc(100vh - 71px);
+    flex-flow: column wrap;
+    width: fit-content;
+    border: 1px #ccc solid;
+    grid-area: 2 / 1 / span 2 / span 1;
 }
+
 .grid-container{
     display: grid;
-    grid-template-areas: 'header header header header header header header'
-                         'menu main main main main main main';
-}
-.grid-container > div{
-    border: 1px #ccc solid;
+    grid-template-columns: 'auto auto';
 }
 
 .menu-options{
-    border: none;
     width: 100%;
-    padding: 20px;
-    background-color: #fff;
-}
-.menu-options:hover{
-    background-color: #f6f7f8;
-    border: none;
+    padding: 30px;
+    border-radius: 0;
 }
