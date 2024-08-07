@@ -2,7 +2,7 @@ input[type="file"]{
     display: none;
 }
 .file-input{
-    display: block;
+    display: inline-block;
 }
 .cecil{
     margin: auto;
@@ -24,6 +24,7 @@ input[type="file"]{
     border-radius: 30px;
     width: 50%;
     margin: auto;
+    height: 70vh;
     text-align: center;
     position: relative;
     top: 30px;
@@ -43,6 +44,7 @@ input[type="file"]{
     grid-area: 1 /  1 / span 1 / span 3;
     padding: 15px;
     position: sticky;
+    flex-flow: row wrap;
     background-color: beige;
     top: 0;
     z-index: 1;
@@ -55,14 +57,20 @@ input[type="file"]{
 .menu{
     display: flex;
     position: sticky;
-    top: 71px;
-    height: calc(100vh - 71px);
+    top: 75px;
+    height: calc(100vh - 75px);
     flex-flow: column wrap;
     width: fit-content;
-    border: 1px #ccc solid;
+    background-color: #9ee0b0;
     grid-area: 2 / 1 / span 2 / span 1;
 }
 
+.forms{
+    display: flex;
+    flex-flow: column wrap;
+    width: 50%;
+    justify-content: center;
+}
 .grid-container{
     display: grid;
     grid-template-columns: 'auto auto';
@@ -72,4 +80,9 @@ input[type="file"]{
     width: 100%;
     padding: 30px;
     border-radius: 0;
+}
+
+.align{
+    text-align: right;
+    border: 1px solid #ccc;
 }

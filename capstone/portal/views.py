@@ -2,11 +2,11 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from .models import *
 from django.core.exceptions import ObjectDoesNotExist
 import pandas as pd
-import csv
+import json
 from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
@@ -35,6 +35,7 @@ def login_view(request):
                 return HttpResponseRedirect(reverse("index"))
             else:
                 return HttpResponseRedirect(reverse("emp_index"))
+    logout(request)
     return render(request, "portal/login.html")
 
 
@@ -60,11 +61,31 @@ def register_view(request):
     logout(request)
     return render(request, "portal/register.html")
 
-
+@permission_required('portal.add_user')
 @login_required(login_url="login")
 @csrf_exempt
 def upload_students(request):
     if request.method == 'POST':
         file = pd.read_excel(request.body)
-        file.to_csv("portal/static/portal/test.csv", index=None, header=True) 
+        file.to_csv("portal/static/portal/students.csv", index=None, header=True) 
     return JsonResponse({"status": 200})
+
+@permission_required('portal.add_user')
+@login_required(login_url="login")
+@csrf_exempt
+def register_lecturers(request):
+    if request.method == 'POST':
+        file = pd.read_excel(request.body)
+        file.to_csv("portal/static/portal/lecturers.csv", index=None, header=True) 
+    return JsonResponse(200, safe=False)
+
+
+@permission_required('portal.add_user')
+@login_required(login_url="login")
+@csrf_exempt
+def register_student(request):
+    if request.method != 'POST':
+        return JsonResponse({"error":"POST method required"})
+    else:
+        data = json.loads(request.body)
+        return JsonResponse(200, safe=False)

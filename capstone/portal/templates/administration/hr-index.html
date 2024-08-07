@@ -1,0 +1,46 @@
+{% extends "administration/layout.html"%}
+{% block body %}
+    <nav class="menu">
+        <button onclick="ShowPage('#main', '#profile')" class="btn btn-light menu-options">
+            <div>
+                Profile
+            </div>
+        </button>
+        <button onclick="ShowPage('#main', '#lecturer-registration')" class="btn btn-light menu-options">
+            <div>
+                Lecturer Registration
+            </div>
+        </button>
+    </nav> 
+    <div class="main" id="main">
+        <div id="profile">
+            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+            </svg>
+            {{ user.first_name }}
+            {{ user.last_name }}
+            {% if user.is_active %}
+            Yes
+            {% else %}
+            No
+            {% endif %}
+            {{ user.email }}
+            {{ user.gender }}
+            {{ user.position }}
+            {{ user.department }}
+            {{ user.office }}
+        </div>
+        <div id="lecturer-registration">
+            <div id="status"></div>
+            <form method="post" id="lec-upload-form" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="lec-csv" class="btn btn-primary file-input">
+                    Select File
+                    <input type="file" name="file" id="lec-csv">
+                </label>
+                <input type="submit" value="Upload file" class="btn btn-outline-success me-2" id="upload"> 
+            </form>
+        </div>
+    </div>
+{% endblock %}
