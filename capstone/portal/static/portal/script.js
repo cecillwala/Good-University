@@ -17,6 +17,7 @@ function ShowPage(page, section){
 
 
 function first_year_admin(){
+    document.querySelector("#upload").setAttribute('class','btn btn-outline-success me-2');
     const file_name = document.querySelector("#csv").value.split("\\");
     document.querySelector("#upload").value = file_name[2];
     document.querySelector("#status").outerHTML = `
@@ -26,11 +27,9 @@ function first_year_admin(){
     `;
     document.querySelector("#upload-form").addEventListener('submit', (event) => {
         event.preventDefault();
-        fetch('upload', {
+        fetch('upload_students', {
             method:'POST',
-            body: {file: document.querySelector("#csv").files[0],
-                    user: document
-            }
+            body: document.querySelector("#csv").files[0]
         })
         .then(response => response.json())
         .then(status => {

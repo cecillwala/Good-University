@@ -7,7 +7,7 @@
         {% endif %}
         <form action="{% url 'login' %}" method="post">
             {% csrf_token %}
-            <input type="radio" id="student" name="rank" value="Student">
+            <input type="radio" id="student" name="rank" required value="Student">
             <label for="student">Student</label>
             <input type="radio" id="employee" name="rank" value="Employee">
             <label for="employee">Employee</label>
