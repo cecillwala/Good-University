@@ -36,6 +36,9 @@ class Student(User):
 
     course = models.CharField(max_length=150, null=True)
 
+    class Meta:
+        verbose_name = "Student"
+
 
 class LecturerManager(BaseUserManager):
     def get_queryset(self, *args, **kwargs):
@@ -46,6 +49,9 @@ class LecturerManager(BaseUserManager):
 class Lecturer(User):
     base_role = User.Role.LECTURER
     lecturer = LecturerManager()
+
+    class Meta:
+        verbose_name = "Lecturer"
 
 
 class HRManager(BaseUserManager):
@@ -58,13 +64,5 @@ class HR(User):
     base_role = User.Role.HR
     hr = HRManager()
 
-
-class AdminManager(BaseUserManager):
-    def get_queryset(self, *args, **kwargs):
-        results = super().get_queryset(*args, **kwargs)
-        return results.filter(role=User.Role.ADMIN)
-
-
-class Admin(User):
-    base_role = User.Role.ADMIN
-    admin = AdminManager()
+    class Meta:
+        verbose_name = "HR"

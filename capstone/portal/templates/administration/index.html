@@ -63,17 +63,24 @@
                         <span id="filename"></span>
                         <input class="btn btn-outline-success me-2 disabled" type="submit" id="upload" value="Upload file">
                     </form>
-                    <button onclick="ShowPage('#student-registration', '#single-student')" class="btn btn-outline-primary">Register Single Student</button>
+                    <button onclick="register_student()" class="btn btn-outline-primary">Register Single Student</button>
                 </div>
+                <div class="alert alert-warning" id="state"></div>
                 <div id="single-student">
                     <h3>2024/2025 First Year Admission</h3>
                     <br>
-                    <form id="student" class="forms">
+                    <div id="single-status"></div>
+                    <form id="student-form" method="post" class="forms">
+                        {% csrf_token %}
                         <input type="text" placeholder="First Name" autocomplete="off" id="first-name" required>
+                        <br>
                         <input type="text" placeholder="Last Name"autocomplete="off" required id="last-name">
+                        <br>
                         <input type="number" placeholder="i.e 071234..." autocomplete="off" required id="phone-number">
-                        <input type="text" placeholder="National ID" autocomplete="off" required id="national-id">
-                        <select id="course">
+                        <br>
+                        <input type="number" placeholder="National ID" autocomplete="off" required id="national-id">
+                        <br>
+                        <select id="course" required>
                             <option>Select Course</option>
                             <option>B.Sc. Computer Science</option>
                             <option>B.A. Psychology</option>
@@ -81,7 +88,14 @@
                             <option>B.Ed Chemical Engineering</option>
                             <option>B.B.A. Finance</option>
                         </select>
-                        <input type="submit" class="btn btn-success me-2" value="Register Student" autocomplete="off" required =>
+                        <br>
+                        <select id="gender" required>
+                            <option>Male</option>
+                            <option>Female</option>
+                            <option>Rather Not Say</option>
+                        </select>
+                        <br>
+                        <input type="submit" class="btn btn-success me-2" value="Register Student">
                     </form>
                     <button onclick="ShowPage('#student-registration', '#file-upload')" class="btn btn-outline-primary">Upload Student File</button>
                 </div>

@@ -13,17 +13,17 @@ import datetime
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import Group, Permission
 
-# Create your views here.
 
+# Create your views here.
 
 @login_required(login_url="login")
 def index(request):
-    return render(request, "portal/index.html")
-
-
-@login_required(login_url="login")
-def emp_index(request):
-    return render(request, "administration/ass-index.html")
+    if request.user.is_superuser:
+        return render(request, "administration/hr-index.html")
+    elif request.user.groups.contains(Group.objects.get(name="HR")):
+        return render(request, "administration/hr-index.html")
+    else:
+        return render(request, "portal/index.html")
 
 
 def login_view(request):
@@ -40,10 +40,7 @@ def login_view(request):
             )
         else:
             login(request, user)
-            if request.POST["rank"] == "Student":
-                return HttpResponseRedirect(reverse("index"))
-            else:
-                return HttpResponseRedirect(reverse("emp_index"))
+            return HttpResponseRedirect(reverse("index"))
     logout(request)
     return render(request, "portal/login.html")
 
@@ -71,7 +68,7 @@ def register_view(request):
     return render(request, "portal/register.html")
 
 
-@permission_required("portal.add_user")
+@permission_required("portal.Student.add_user")
 @login_required(login_url="login")
 @csrf_exempt
 def upload_students(request):
@@ -84,11 +81,11 @@ def upload_students(request):
                 latest_student = Student.objects.order_by("-date_joined")[:1]
                 try:
                     serial = latest_student[0].username.split("-")
-                    id = serial[1]
+                    id = serial[1].strip()
                 except (AttributeError, IndexError):
                     id = 0
                 try:
-                    match row["course"]:
+                    match row["course"].strip():
                         case "B.Sc. Computer Science":
                             id = f'CS-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
                         case "B.A. Psychology":
@@ -100,21 +97,34 @@ def upload_students(request):
                         case "B.B.A. Finance":
                             id = f'FI-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
                         case _:
-                            return JsonResponse({"error": 912})
-                    try:   
-                        Student.objects.create(username=id, first_name=row["first_name"], last_name=row["last_name"], 
-                                            phone_number=row["phone_number"], national_id=row["nationalID"], 
-                                            gender=row["gender"], course=row["course"]
-                                            )
-                    except IntegrityError:
+                            return JsonResponse({"status": 912})
+                    try:
+                        Student.objects.get(national_id=row["nationalID"])
                         return JsonResponse({"status": 935})
+                    except Student.DoesNotExist:
+                        try:
+                            student = Student.objects.create(
+                                username=id,
+                                first_name=row["first_name"].strip(),
+                                last_name=row["last_name"].strip(),
+                                phone_number=row["phone_number"],
+                                national_id=row["nationalID"],
+                                gender=row["gender"].strip(),
+                                course=row["course"].strip(),
+                            )
+                            student.user_permissions.clear()
+                            comrade = Group.objects.get(name="Comrade")
+                            student.groups.add(comrade)
+                            student.save()
+                        except IntegrityError:
+                            return JsonResponse({"status": 935})
                 except KeyError:
                     return JsonResponse({"status": 900})
 
     return JsonResponse({"status": 200})
 
 
-@permission_required("portal.add_user")
+@permission_required("portal.Lecturer.add_user")
 @login_required(login_url="login")
 @csrf_exempt
 def register_lecturers(request):
@@ -124,7 +134,7 @@ def register_lecturers(request):
     return JsonResponse(200, safe=False)
 
 
-@permission_required("portal.add_user")
+@permission_required("portal.Student.add_user")
 @login_required(login_url="login")
 @csrf_exempt
 def register_student(request):
@@ -132,4 +142,44 @@ def register_student(request):
         return JsonResponse({"error": "POST method required"})
     else:
         data = json.loads(request.body)
-        return JsonResponse(200, safe=False)
+        print(data)
+        latest_student = Student.objects.order_by("-date_joined")[:1]
+        try:
+            serial = latest_student[0].username.split("-")
+            id = serial[1].strip()
+        except (AttributeError, IndexError):
+            id = 0
+        try:
+            match data["course"].strip():
+                case "B.Sc. Computer Science":
+                    id = f'CS-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                case "B.A. Psychology":
+                    id = f'PS-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                case "B.Ed. Early Childhood Education":
+                    id = f'EC-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                case "B.E. Chemical Engineering":
+                    id = f'CE-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                case "B.B.A. Finance":
+                    id = f'FI-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                case _:
+                    return JsonResponse({"status": 912})
+            try:
+                Student.objects.get(national_id=data["nationalID"])
+                return JsonResponse({"status": 935})
+            except Student.DoesNotExist:
+                student = Student.objects.create(
+                    username=id,
+                    first_name=data["first_name"].strip(),
+                    last_name=data["last_name"].strip(),
+                    phone_number=data["phone_number"],
+                    national_id=data["nationalID"].strip(),
+                    gender=data["gender"].strip(),
+                    course=data["course"].strip(),
+                )
+                student.user_permissions.clear()
+                comrade = Group.objects.get(name="Comrade")
+                student.groups.add(comrade)
+                student.save()
+        except KeyError:
+            return JsonResponse({"status": 900})
+    return JsonResponse({"status": 200})
