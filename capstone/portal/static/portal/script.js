@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     ShowPage("#main", "#profile");
     document.querySelector("#csv").addEventListener('change', () => first_year_admin());
-    document.querySelector("#lec-csv").addEventListener('change', () => register_lecturers());
 });
 
 
@@ -37,27 +36,6 @@ function first_year_admin(){
 }
 
 
-function register_lecturers(){
-    console.log("Inafika hapa");
-    const file_name = document.querySelector("#lec-csv").value.split("\\");
-    document.querySelector("#upload").value = file_name[2];
-    document.querySelector("#status").outerHTML = `
-    <div id="status" class="alert alert-danger">
-        <strong>Warning! Submitting file has no reverse process!</strong>
-    </div>
-    `;
-    document.querySelector("#lec-upload-form").addEventListener('submit', (event) => {
-        event.preventDefault();
-        fetch('upload_lecturers', {
-            method: 'POST', 
-            body: document.querySelector("#lec-csv").files[0]
-        })
-        .then(response => response.json())
-        .then(status => warnings(status, '#lec-status','Lecturer'));
-    });
-}
-
-
 function register_student(){
     ShowPage("#student-registration","#single-student");
     document.querySelector("#student-form").addEventListener('submit', (event) => {
@@ -70,7 +48,9 @@ function register_student(){
                 phone_number: document.querySelector("#phone-number").value,
                 nationalID: document.querySelector("#national-id").value,
                 gender: document.querySelector("#gender").value,
-                course: document.querySelector("#course").value
+                course: document.querySelector("#course").value,
+                faculty: document.querySelector("#faculty").value,
+                department: document.querySelector("#department").value
             })
         })
         .then(response => response.json())
@@ -85,6 +65,7 @@ function register_student(){
         });
     });
 }
+
 
 function registration_view(){
     ShowPage('#main', '#student-registration');

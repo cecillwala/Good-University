@@ -6,7 +6,7 @@
                 Profile
             </div>
         </button>
-        <button onclick="ShowPage('#main', '#lecturer-registration')" class="btn btn-light menu-options">
+        <button onclick="upload_lecturers()" class="btn btn-light menu-options">
             <div>
                 Lecturer Registration
             </div>
@@ -31,16 +31,53 @@
             {{ user.department }}
             {{ user.office }}
         </div>
-        <div id="lecturer-registration">
-            <div id="status"></div>
-            <form method="post" id="lec-upload-form" enctype="multipart/form-data">
-                {% csrf_token %}
-                <label for="lec-csv" class="btn btn-primary file-input">
-                    Select File
-                    <input type="file" name="file" id="lec-csv">
-                </label>
-                <input type="submit" value="Upload file" class="btn btn-outline-success me-2" id="upload"> 
-            </form>
+        <div class="student-registration" id="lecturer-registration">
+            <div id="file-upload">
+                <h3>Lecturer Registration</h3>
+                <br>
+                <div id="status"></div>
+                <div><strong>NOTE: </strong> File must be an excel file `file.xlsx`</div>
+                <br>
+                <form id="upload-form" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <label for="lec-csv" class="file-input btn btn-primary">
+                        Choose file
+                        <input type="file" name="file" id="lec-csv">
+                    </label>
+                    <span id="filename"></span>
+                    <input class="btn btn-outline-success me-2 disabled" type="submit" id="upload" value="Upload file">
+                </form>
+                <button class="btn btn-outline-primary" onclick="register_lecturer()">Register Single Lecturer</button>
+            </div>
+            <div class="alert alert-warning" id="state"></div>
+            <div id="single-lecturer">
+                <h3>Lecturer Registration</h3>
+                <br>
+                <div id="single-status"></div>
+                <form id="lecturer-form" method="post" class="forms">
+                    {% csrf_token %}
+                    <input type="text" placeholder="First Name" autocomplete="off" id="first-name" required>
+                    <br>
+                    <input type="text" placeholder="Last Name"autocomplete="off" required id="last-name">
+                    <br>
+                    <input type="number" placeholder="i.e 071234..." autocomplete="off" required id="phone-number">
+                    <br>
+                    <input type="number" placeholder="National ID" autocomplete="off" required id="national-id">
+                    <br>
+                    <input type="text" placeholder="Faculty" autocomplete="off" required id="faculty">
+                    <br>
+                    <input type="text" placeholder="Department" autocomplete="off" required id="department">
+                    <br>
+                    <select id="gender" required>
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Rather Not Say</option>
+                    </select>
+                    <br>
+                    <input type="submit" class="btn btn-success me-2" value="Register Student">
+                </form>
+                <button onclick="ShowPage('#lecturer-registration', '#file-upload')" class="btn btn-outline-primary">Upload Lecturer File</button>
+            </div>
         </div>
     </div>
 {% endblock %}

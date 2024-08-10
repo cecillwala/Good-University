@@ -110,6 +110,8 @@ def upload_students(request):
                                 phone_number=row["phone_number"],
                                 national_id=row["nationalID"],
                                 gender=row["gender"].strip(),
+                                faculty=row["faculty"].strip(),
+                                department=row["department"].strip(),
                                 course=row["course"].strip(),
                             )
                             student.user_permissions.clear()
@@ -124,17 +126,118 @@ def upload_students(request):
     return JsonResponse({"status": 200})
 
 
-@permission_required("portal.Lecturer.add_user")
+@permission_required("add_lecturer")
 @login_required(login_url="login")
 @csrf_exempt
-def register_lecturers(request):
+def upload_lecturers(request):
     if request.method == "POST":
         file = pd.read_excel(request.body)
         file.to_csv("portal/static/portal/lecturers.csv", index=None, header=True)
-    return JsonResponse(200, safe=False)
+        with open("portal/static/portal/lecturers.csv") as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                latest_lecturer = Lecturer.objects.order_by("-date_joined")[:1]
+                try:
+                    serial = latest_lecturer[0].username.split("-")
+                    id = serial[1].strip()
+                except (AttributeError, IndexError):
+                    id = 0
+                try:
+                    match row["department"].strip():
+                        case "Computer Science":
+                            id = f'ECS-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                        case "Psychology":
+                            id = f'EPS-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                        case "Early Childhood Education":
+                            id = f'EEC-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                        case "Chemical Engineering":
+                            id = f'ECE-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                        case "Finance":
+                            id = f'EFI-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                        case _:
+                            return JsonResponse({"status": 912})
+                    try:
+                        User.objects.get(national_id=row["nationalID"])
+                        return JsonResponse({"status": 935})
+                    except User.DoesNotExist:
+                        try:
+                            lecturer = Lecturer.objects.create(
+                                username=id,
+                                first_name=row["first_name"].strip(),
+                                last_name=row["last_name"].strip(),
+                                phone_number=row["phone_number"],
+                                national_id=row["nationalID"],
+                                gender=row["gender"].strip(),
+                                department=row["department"].strip(),
+                                faculty=row["faculty"].strip(),
+                            )
+                            lecturer.user_permissions.clear()
+                            comrade = Group.objects.get(name="Lecturer")
+                            lecturer.groups.add(comrade)
+                            lecturer.save()
+                        except IntegrityError:
+                            return JsonResponse({"status": 935})
+                except KeyError:
+                    return JsonResponse({"status": 900})
+
+    return JsonResponse({"status": 200})
+
+@permission_required("add_lecturer")
+@login_required(login_url="login")
+@csrf_exempt
+def register_lecturer(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        latest_lecturer = Lecturer.objects.order_by("-date_joined")[:1]
+        try:
+            serial = latest_lecturer[0].username.split("-")
+            id = serial[1].strip()
+        except (AttributeError, IndexError):
+            id = 0
+        try:
+            match data["department"].strip():
+                case "Computer Science":
+                    id = f'ECS-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                case "Psychology":
+                    id = f'EPS-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                case "Early Childhood Education":
+                    id = f'EEC-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                case "Chemical Engineering":
+                    id = f'ECE-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                case "Finance":
+                    id = f'EFI-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                case _:
+                    return JsonResponse({"status": 912})
+            try:
+                Lecturer.objects.get(national_id=data["nationalID"])
+                return JsonResponse({"status": 935})
+            except Lecturer.DoesNotExist:
+                try:
+                    lecturer = Lecturer.objects.create(
+                        username=id,
+                        first_name=data["first_name"].strip(),
+                        last_name=data["last_name"].strip(),
+                        phone_number=data["phone_number"],
+                        national_id=data["nationalID"],
+                        gender=data["gender"].strip(),
+                        department=data["department"].strip(),
+                        faculty=data["faculty"].strip(),
+                    )
+                    lecturer.user_permissions.clear()
+                    comrade = Group.objects.get(name="Lecturer")
+                    lecturer.groups.add(comrade)
+                    lecturer.save()
+                except IntegrityError:
+                    return JsonResponse({"status": 935})
+        except KeyError:
+                    return JsonResponse({"status": 900})
+
+        return JsonResponse({"status": 200})
+    else:
+        return JsonResponse({"status":"POST method required"})
 
 
-@permission_required("portal.Student.add_user")
+@permission_required("add_student")
 @login_required(login_url="login")
 @csrf_exempt
 def register_student(request):
@@ -174,6 +277,8 @@ def register_student(request):
                     phone_number=data["phone_number"],
                     national_id=data["nationalID"].strip(),
                     gender=data["gender"].strip(),
+                    faculty=data["faculty"].strip(),
+                    department=data["department"].strip(),
                     course=data["course"].strip(),
                 )
                 student.user_permissions.clear()

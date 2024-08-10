@@ -17,6 +17,8 @@ class User(AbstractUser):
     national_id = models.IntegerField(null=True)
     gender = models.CharField(max_length=40, null=True)
     phone_number = models.IntegerField(null=True)
+    department = models.CharField(max_length=60, null=True)
+    faculty = models.CharField(max_length=100, null=True)
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -35,6 +37,7 @@ class Student(User):
     student = StudentManager()
 
     course = models.CharField(max_length=150, null=True)
+    residence = models.CharField(max_length=100, null=True)
 
     class Meta:
         verbose_name = "Student"
@@ -49,6 +52,9 @@ class LecturerManager(BaseUserManager):
 class Lecturer(User):
     base_role = User.Role.LECTURER
     lecturer = LecturerManager()
+
+    office = models.CharField(max_length=50, null=True)
+
 
     class Meta:
         verbose_name = "Lecturer"
