@@ -11,15 +11,14 @@ import json
 import csv
 import datetime
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.models import Group, Permission
+from django.contrib.auth.models import Group
 
 
 # Create your views here.
-
 @login_required(login_url="login")
 def index(request):
     if request.user.is_superuser:
-        return render(request, "administration/hr-index.html")
+        return render(request, "administration/index.html")
     elif request.user.groups.contains(Group.objects.get(name="HR")):
         return render(request, "administration/hr-index.html")
     else:
@@ -28,7 +27,6 @@ def index(request):
 
 def login_view(request):
     if request.method == "POST":
-        print(request.POST)
         user = authenticate(
             request,
             username=request.POST["employeeId"],
@@ -78,7 +76,7 @@ def upload_students(request):
         with open("portal/static/portal/students.csv") as file:
             reader = csv.DictReader(file)
             for row in reader:
-                latest_student = Student.objects.order_by("-date_joined")[:1]
+                latest_student = Student.objects.latest("date_joined")
                 try:
                     serial = latest_student[0].username.split("-")
                     id = serial[1].strip()
@@ -136,7 +134,7 @@ def upload_lecturers(request):
         with open("portal/static/portal/lecturers.csv") as file:
             reader = csv.DictReader(file)
             for row in reader:
-                latest_lecturer = Lecturer.objects.order_by("-date_joined")[:1]
+                latest_lecturer = Lecturer.objects.latest("date_joined")
                 try:
                     serial = latest_lecturer[0].username.split("-")
                     id = serial[1].strip()
@@ -182,13 +180,14 @@ def upload_lecturers(request):
 
     return JsonResponse({"status": 200})
 
+
 @permission_required("add_lecturer")
 @login_required(login_url="login")
 @csrf_exempt
 def register_lecturer(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         data = json.loads(request.body)
-        latest_lecturer = Lecturer.objects.order_by("-date_joined")[:1]
+        latest_lecturer = Lecturer.objects.latest("date_joined")
         try:
             serial = latest_lecturer[0].username.split("-")
             id = serial[1].strip()
@@ -230,11 +229,11 @@ def register_lecturer(request):
                 except IntegrityError:
                     return JsonResponse({"status": 935})
         except KeyError:
-                    return JsonResponse({"status": 900})
+            return JsonResponse({"status": 900})
 
         return JsonResponse({"status": 200})
     else:
-        return JsonResponse({"status":"POST method required"})
+        return JsonResponse({"status": "POST method required"})
 
 
 @permission_required("add_student")
@@ -245,8 +244,7 @@ def register_student(request):
         return JsonResponse({"error": "POST method required"})
     else:
         data = json.loads(request.body)
-        print(data)
-        latest_student = Student.objects.order_by("-date_joined")[:1]
+        latest_student = Student.objects.latest("date_joined")
         try:
             serial = latest_student[0].username.split("-")
             id = serial[1].strip()
@@ -288,3 +286,73 @@ def register_student(request):
         except KeyError:
             return JsonResponse({"status": 900})
     return JsonResponse({"status": 200})
+
+
+@login_required(login_url="login")
+def faculties_view(request):
+    if request.user.is_superuser:
+        return render(request, "administration/faculties.html")
+
+
+@login_required(login_url="login")
+def faculty_details(request):
+    faculties = []
+    for faculty in Faculty.objects.all():
+        faculties.append(
+            {
+                faculty.name(): [department.serialize() for department in faculty.school.all()],
+                "courses": [course.serialize() for course in faculty.division.all()]
+            }
+        )
+    return JsonResponse(faculties, safe=False)
+
+
+@permission_required("add_department")
+@login_required(login_url="login")
+@csrf_exempt
+def upload_departments(request):
+    if request.method == "POST":
+        file = pd.read_excel(request.body)
+        file.to_csv("portal/static/portal/departments.csv", index=None, header=True)
+        with open("portal/static/portal/departments.csv") as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                try:
+                    try:
+                        try:
+                            faculty = Faculty.objects.get(faculty=row["faculty"])
+                            Department.objects.create(
+                                faculty=faculty, department=row["department"]
+                            )
+                        except KeyError:
+                            return JsonResponse({"status": 900})
+                    except IntegrityError:
+                        return JsonResponse({"status": 935})
+                except Faculty.DoesNotExist:
+                    return JsonResponse({"status": 905})
+        return JsonResponse({"status": 200})
+
+
+@permission_required("add_department")
+@login_required(login_url="login")
+@csrf_exempt
+def register_department(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        try:
+            try:
+                try:
+                    faculty = Faculty.objects.get(faculty=data["faculty"])
+                    Department.objects.create(
+                        faculty=faculty, department=data["department"]
+                    )
+                except KeyError:
+                    return JsonResponse({"status": 900})
+            except IntegrityError:
+                return JsonResponse({"status": 935})
+        except Faculty.DoesNotExist:
+            return JsonResponse({"status": 905})
+        return JsonResponse({"status": 200})
+    else:
+        return JsonResponse({"error": "POST method required"})
+    

@@ -30,7 +30,7 @@ function first_year_admin(){
         })
         .then(response => response.json())
         .then(status => {
-            warnings(status, '#status','Student');
+            warnings(status, 'status','Student');
         });
     });
 }
@@ -61,7 +61,7 @@ function register_student(){
             document.querySelector("#national-id").value = '';
             document.querySelector("#gender").value = '';
             document.querySelector("#course").value = '';
-            warnings(status, '#single-status', 'Student');
+            warnings(status, 'single-status', 'Student');
         });
     });
 }
@@ -84,32 +84,123 @@ function registration_view(){
 }
 
 
+function upload_lecturers(){
+    ShowPage("#main", "#lecturer-registration");
+    ShowPage("#lecturer-registration", "#lec-file-upload");
+    document.querySelector("#lec-csv").addEventListener('change', () => {
+        document.querySelector("#upload").setAttribute('class','btn btn-outline-success me-2');
+        const file_name = document.querySelector("#lec-csv").value.split("\\");
+        document.querySelector("#upload").value = file_name[2];
+        document.querySelector("#status").outerHTML = `
+        <div id="status" class="alert alert-danger">
+            <strong>Warning! Submitting file has no reverse process!</strong>
+        </div>
+        `;
+    });
+    document.querySelector("#file-upload").addEventListener('submit', (event) => {
+        event.preventDefault();
+        fetch('upload_lecturers', {
+            method: 'POST',
+            body: document.querySelector("#lec-csv").files[0]
+        })
+        .then(response => response.json())
+        .then(status => warnings(status, "status", "Lecturer"));
+    });
+}
+
+
+function register_lecturer(){
+    ShowPage("#lecturer-registration","#single-lecturer");
+    document.querySelector("#lecturer-form").addEventListener('submit', (event) => {
+        event.preventDefault();
+        fetch('register_lecturer', {
+            method:'POST',
+            body: JSON.stringify({
+                first_name: document.querySelector("#first-name").value,
+                last_name: document.querySelector("#last-name").value,
+                phone_number: document.querySelector("#phone-number").value,
+                nationalID: document.querySelector("#national-id").value,
+                gender: document.querySelector("#gender").value,
+                faculty: document.querySelector("#faculty").value,
+                department: document.querySelector("#department").value
+            })
+        })
+        .then(response => response.json())
+        .then(status => warnings(status, "single-status", 'Lecturer'))
+    });
+}
+
 function warnings(status, section, user){
     console.log(status);
     console.log(status.status);
     switch(status.status){
         case 935:
-            document.querySelector(section).outerHTML = `
+            document.querySelector(`#${section}`).outerHTML = `
         <div class="alert alert-danger" id=${section}>
-            <strong>935 ERROR! ${user}(s) already exists!</strong>
+            <strong>935 ERROR! ${user}(s) ALREADY exists!</strong>
         </div>`;
         case 912:
-        document.querySelector(section).outerHTML = `
+        document.querySelector(`#${section}`).outerHTML = `
             <div class="alert alert-danger" id=${section}>
                 <strong>912 ERROR! Invalid course entered!</strong>
             </div>`;
         case 900:
-            document.querySelector(section).outerHTML = `
+            document.querySelector(`#${section}`).outerHTML = `
             <div class="alert alert-danger" id=${section}>
-                <strong>900 ERROR! File is in the wrong format!
-                Ensure the following fields are present: first_name, last_name, phone_number, 
-                nationalID, gender and course!</strong>
+                <strong>900 ERROR! File is in the wrong format!</strong>
+            </div>`;
+        case 905:
+            document.querySelector(`#${section}`).outerHTML = `
+            <div class="alert alert-danger" id=${section}>
+                <strong>905 ERROR! Faculty does NOT exist!</strong>
             </div>`;
         case 200:
-            document.querySelector(section).outerHTML = `
+            document.querySelector(`#${section}`).outerHTML = `
             <div class="alert alert-success" id=${section}>
-                <strong>Success! Student's details uploaded successfully!</strong>
+                <strong>Success! ${user}'s details uploaded successfully!</strong>
             </div>
             `;
     }
+}
+
+function upload_departments(){
+    ShowPage("#main", "#dept-registration");
+    ShowPage("#dept-registration", "#dept-file-upload");
+    document.querySelector("#dept-csv").addEventListener('change', () => {
+        console.log(":)");
+        document.querySelector("#dept-upload").setAttribute('class','btn btn-outline-success me-2');
+        const file_name = document.querySelector("#dept-csv").value.split("\\");
+        document.querySelector("#dept-upload").value = file_name[2];
+        document.querySelector("#dept-status").outerHTML = `
+        <div id="dept-status" class="alert alert-danger">
+            <strong>Warning! Submitting file has no reverse process!</strong>
+        </div>
+        `;
+    });
+    document.querySelector("#upload-dept-form").addEventListener('submit', (event) => {
+        event.preventDefault();
+        fetch('upload_depts', {
+            method: 'POST',
+            body: document.querySelector("#dept-csv").files[0]
+        })
+        .then(response => response.json())
+        .then(status => warnings(status, "dept-status", "Department"));
+    });
+}
+
+
+function register_department(){
+    ShowPage("#dept-registration", "#single-dept");
+    document.querySelector("#dept-form").addEventListener('submit', (event) => {
+        event.preventDefault();
+        fetch('register_dept', {
+            method: 'POST',
+            body: JSON.stringify({
+                department: document.querySelector("#dept").value,
+                faculty: document.querySelector("#faclty").value
+            })
+        })
+        .then(response => response.json())
+        .then(status => warnings(status, "single-dept-status", "Department"));
+    });
 }
