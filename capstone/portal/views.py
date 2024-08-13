@@ -134,45 +134,39 @@ def upload_lecturers(request):
             for row in reader:
                 try:
                     latest_lecturer = Lecturer.lecturer.latest("date_joined")
-                    serial = latest_lecturer[0].username.split("-")
+                    serial = latest_lecturer.username.split("-")
                     id = serial[1].strip()
                 except (IndexError, Lecturer.DoesNotExist):
                     id = 0
                 try:
-                    match row["department"].strip():
-                        case "Computer Science":
-                            id = f'ECS-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
-                        case "Psychology":
+                    match row["faculty"].strip():
+                        case "LAW":
+                            id = f'ELL-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                        case "PHY_SCI":
                             id = f'EPS-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
-                        case "Early Childhood Education":
-                            id = f'EEC-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
-                        case "Chemical Engineering":
-                            id = f'ECE-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
-                        case "Finance":
-                            id = f'EFI-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                        case "EDU":
+                            id = f'EEDU-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                        case "SOC_SCI":
+                            id = f'ESC-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                        case "BUS":
+                            id = f'EBU-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                        case "HEALTH_SCI":
+                            id = f'EHS-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
                         case _:
                             return JsonResponse({"status": 912})
                     try:
-                        Lecturer.lecturer.get(national_id=row["nationalID"])
+                        lecturer = Lecturer.lecturer.create(
+                            username=id,
+                            first_name=row["first_name"].strip(),
+                            last_name=row["last_name"].strip(),
+                            phone_number=row["phone_number"],
+                            national_id=row["nationalID"],
+                            gender=row["gender"].strip(),
+                            department=Department.objects.get(department=row["department"].strip()),
+                            faculty=Faculty.objects.get(faculty=row["faculty"].strip()),
+                        )
+                    except IntegrityError:
                         return JsonResponse({"status": 935})
-                    except Lecturer.DoesNotExist:
-                        try:
-                            lecturer = Lecturer.lecturer.create(
-                                username=id,
-                                first_name=row["first_name"].strip(),
-                                last_name=row["last_name"].strip(),
-                                phone_number=row["phone_number"],
-                                national_id=row["nationalID"],
-                                gender=row["gender"].strip(),
-                                department=row["department"].strip(),
-                                faculty=row["faculty"].strip(),
-                            )
-                            lecturer.user_permissions.clear()
-                            comrade = Group.objects.get(name="Lecturer")
-                            lecturer.groups.add(comrade)
-                            lecturer.save()
-                        except IntegrityError:
-                            return JsonResponse({"status": 935})
                 except KeyError:
                     return JsonResponse({"status": 900})
         return JsonResponse({"status": 200})
