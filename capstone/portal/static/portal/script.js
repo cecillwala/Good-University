@@ -190,17 +190,42 @@ function upload_departments(){
 
 
 function register_department(){
-    ShowPage("#dept-registration", "#single-dept");
-    document.querySelector("#dept-form").addEventListener('submit', (event) => {
+    ShowPage("#department-registration", "#single-department");
+    document.querySelector("#single-department-form").addEventListener('submit', (event) => {
         event.preventDefault();
-        fetch('register_dept', {
+        fetch('register_department', {
             method: 'POST',
             body: JSON.stringify({
-                department: document.querySelector("#dept").value,
-                faculty: document.querySelector("#faclty").value
+                department: document.querySelector("#department-department").value,
+                faculty: document.querySelector("#department-faculty").value
             })
         })
         .then(response => response.json())
-        .then(status => warnings(status, "single-dept-status", "Department"));
+        .then(status => warnings(status, "single-department-status", "Department"));
+    });
+}
+
+
+function upload_data(data){
+    ShowPage("#main", `#${data}-registration`);
+    ShowPage(`#${data}-registration`, `#${data}-file-upload`);
+    document.querySelector(`#${data}-csv`).addEventListener('change', () => {
+        document.querySelector(`#${data}-upload`).setAttribute('class','btn btn-outline-success me-2');
+        const file_name = document.querySelector(`#${data}-csv`).value.split("\\");
+        document.querySelector(`#${data}-upload`).value = file_name[2];
+        document.querySelector(`#${data}-status`).outerHTML = `
+        <div id="${data}-status" class="alert alert-danger">
+            <strong>Warning! Submitting file has no reverse process!</strong>
+        </div>
+        `;
+    });
+    document.querySelector(`#upload-${data}-form`).addEventListener('submit', (event) => {
+        event.preventDefault();
+        fetch(`upload_${data}s`, {
+            method: 'POST',
+            body: document.querySelector(`#${data}-csv`).files[0]
+        })
+        .then(response => response.json())
+        .then(status => warnings(status, `${data}-status`, "Department"));
     });
 }

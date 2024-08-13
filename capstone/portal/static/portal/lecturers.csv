@@ -1,101 +1,31 @@
-first_name,last_name,phone_number,nationalID,gender,faculty,department,course
-Mercyline,Yoana,254729866531,558733,male,Physical Sciences,Computer Science,B.Sc. Computer Science
-George,Josephat,254755543413,560241,female,Physical Sciences,Computer Science,B.Sc. Computer Science
-Benard,Cherotich,254792120506,173674,male,Physical Sciences,Computer Science,B.Sc. Computer Science
-David,Mugo,254756158408,696587,female,Physical Sciences,Computer Science,B.Sc. Computer Science
-Henry,Avugwe,254763637480,120019,female,Physical Sciences,Computer Science,B.Sc. Computer Science
-Diana,Mose,254784165398,944996,female,Physical Sciences,Computer Science,B.Sc. Computer Science
-Timothy,Wangari,254712748501,918596,male,Physical Sciences,Computer Science,B.Sc. Computer Science
-Moraa,Muhu,254798098630,637465,male,Physical Sciences,Computer Science,B.Sc. Computer Science
-Hillary,Ndambuki,254793332692,530311,male,Physical Sciences,Computer Science,B.Sc. Computer Science
-Paul,Yoana,254765705450,685862,male,Physical Sciences,Computer Science,B.Sc. Computer Science
-Mercy,Nakiboli,254780780474,750174,male,Physical Sciences,Computer Science,B.Sc. Computer Science
-Gilbert,Jaoko,254740542880,902065,male,Physical Sciences,Computer Science,B.Sc. Computer Science
-Sheila,Muhu,254766164635,321844,female,Physical Sciences,Computer Science,B.Sc. Computer Science
-David,Kiunga,254753711723,331020,female,Physical Sciences,Computer Science,B.Sc. Computer Science
-Chepkemoi,Alusa,254773615335,928519,female,Physical Sciences,Computer Science,B.Sc. Computer Science
-Hesborne,Mulandi,254786297415,359599,male,Physical Sciences,Computer Science,B.Sc. Computer Science
-George,Tonui,254752248403,342910,male,Physical Sciences,Computer Science,B.Sc. Computer Science
-Gilbert,Thuranira,254769782192,344545,female,Physical Sciences,Computer Science,B.Sc. Computer Science
-Bakari,Karugah,254782809124,760733,female,Physical Sciences,Computer Science,B.Sc. Computer Science
-Wilson,Odhiambo,254746841840,756922,male,Physical Sciences,Computer Science,B.Sc. Computer Science
-cMogusu,Wambua,254711436561,742751,female,Social Sciences,Psychology,B.A. Psychology
-Bakari,Tonui,254740418000,814306,female,Social Sciences,Psychology,B.A. Psychology
-Emmy,Mwasame,254798816214,731905,male,Social Sciences,Psychology,B.A. Psychology
-Hesborne,Mayeku,254784021288,617092,female,Social Sciences,Psychology,B.A. Psychology
-Farida,Bigogo,254787873022,627972,female,Social Sciences,Psychology,B.A. Psychology
-Ngeno,Macharia,254710734753,142390,male,Social Sciences,Psychology,B.A. Psychology
-Gerry,Msamaria,254774161397,225786,female,Social Sciences,Psychology,B.A. Psychology
-Mercyline,Ondari,254722775788,920423,female,Social Sciences,Psychology,B.A. Psychology
-George,Kiplangat,254731050395,791925,female,Social Sciences,Psychology,B.A. Psychology
-Timothy,Momanyi,254783204379,126405,male,Social Sciences,Psychology,B.A. Psychology
-Geoffrey,Lwangasi,254778625073,462802,female,Social Sciences,Psychology,B.A. Psychology
-Nicholas,Mayeku,254792595074,439576,female,Social Sciences,Psychology,B.A. Psychology
-Bakari,Muhu,254710403521,366639,male,Social Sciences,Psychology,B.A. Psychology
-William,Macharia,254742941088,827050,female,Social Sciences,Psychology,B.A. Psychology
-Hellen,Kirimi,254797642127,757154,male,Social Sciences,Psychology,B.A. Psychology
-Wilson,Bonareri,254751727406,408831,female,Social Sciences,Psychology,B.A. Psychology
-James,Kipsccang,254742663704,119659,female,Social Sciences,Psychology,B.A. Psychology
-Catherine,Surum,254788746455,419897,female,Social Sciences,Psychology,B.A. Psychology
-Diana,Wandati,254765743184,503309,male,Social Sciences,Psychology,B.A. Psychology
-Hellen,Odhiambo,254788947232,818624,female,Social Sciences,Psychology,B.A. Psychology
-Emily,Alusa,254797719546,289558,male,Education,Early Childhood Education,B.Ed. Early Childhood Education
-Hillary,Leting,254722338752,335140,female,Education,Early Childhood Education,B.Ed. Early Childhood Education
-Ojwang,Alusa,254746260477,449819,female,Education,Early Childhood Education,B.Ed. Early Childhood Education
-Brain,Ondari,254752425599,580196,female,Education,Early Childhood Education,B.Ed. Early Childhood Education
-Paul,Tanui,254728197595,600850,male,Education,Early Childhood Education,B.Ed. Early Childhood Education
-Alfred,Mukoya,254770647428,342277,female,Education,Early Childhood Education,B.Ed. Early Childhood Education
-Emmy,Kariuki,254742904565,435528,female,Education,Early Childhood Education,B.Ed. Early Childhood Education
-Christopher,Okari,254766552523,769390,female,Education,Early Childhood Education,B.Ed. Early Childhood Education
-Juliet,Muhu,254753314292,166086,female,Education,Early Childhood Education,B.Ed. Early Childhood Education
-Maurice,Kwache,254771975961,351545,male,Education,Early Childhood Education,B.Ed. Early Childhood Education
-Selah,Wangari,254751686116,733472,female,Education,Early Childhood Education,B.Ed. Early Childhood Education
-Judith,Odhiambo,254767836391,659336,male,Education,Early Childhood Education,B.Ed. Early Childhood Education
-Moses,Nthiga,254766231131,626405,male,Education,Early Childhood Education,B.Ed. Early Childhood Education
-Omar,Omwenga,254753496394,574763,female,Education,Early Childhood Education,B.Ed. Early Childhood Education
-Jack,Matanda,254779558320,175689,female,Education,Early Childhood Education,B.Ed. Early Childhood Education
-Mark,Matanda,254780418861,436575,male,Education,Early Childhood Education,B.Ed. Early Childhood Education
-Juliet,Mwasame,254712970515,955041,male,Education,Early Childhood Education,B.Ed. Early Childhood Education
-Annex,Macharia,254716834355,761303,female,Education,Early Childhood Education,B.Ed. Early Childhood Education
-Chepkemoi,Oundo,254728486464,614059,female,Education,Early Childhood Education,B.Ed. Early Childhood Education
-Mildred,Alusa,254777355092,790341,male,Education,Early Childhood Education,B.Ed. Early Childhood Education
-George,Alusa,254787912527,459722,female,Physical Sciences,Engineering,B.E. Chemical Engineering
-Rose,Obwanda,254729811140,538313,female,Physical Sciences,Engineering,B.E. Chemical Engineering
-Joel,Riungu,254747601239,225522,male,Physical Sciences,Engineering,B.E. Chemical Engineering
-Moraa,Wanjala,254720952679,632009,female,Physical Sciences,Engineering,B.E. Chemical Engineering
-Jack,Sisa,254794958179,814868,female,Physical Sciences,Engineering,B.E. Chemical Engineering
-Hillary,Shehele,254724243032,897829,female,Physical Sciences,Engineering,B.E. Chemical Engineering
-Lilian,Jackline,254756858040,889771,female,Physical Sciences,Engineering,B.E. Chemical Engineering
-Timothy,Mwanza,254710986680,299376,male,Physical Sciences,Engineering,B.E. Chemical Engineering
-Hillary,Wandera,254755619123,318899,female,Physical Sciences,Engineering,B.E. Chemical Engineering
-Edgar,Mwanja,254746384021,897421,female,Physical Sciences,Engineering,B.E. Chemical Engineering
-Fred,Nakiboli,254735802552,284735,female,Physical Sciences,Engineering,B.E. Chemical Engineering
-George,Cherotich,254791990674,500705,female,Physical Sciences,Engineering,B.E. Chemical Engineering
-William,Geke,254719139271,897430,female,Physical Sciences,Engineering,B.E. Chemical Engineering
-Okuta,Kwache,254722945516,155616,female,Physical Sciences,Engineering,B.E. Chemical Engineering
-Esther,Mwaniki,254736641732,772929,female,Physical Sciences,Engineering,B.E. Chemical Engineering
-Diana,Muhu,254763101065,490392,male,Physical Sciences,Engineering,B.E. Chemical Engineering
-Emmy,Kiplangat,254730556206,413961,male,Physical Sciences,Engineering,B.E. Chemical Engineering
-Wilson,Avugwe,254780707609,487728,female,Physical Sciences,Engineering,B.E. Chemical Engineering
-Nahashon,Kirongeti,254797932552,321376,male,Physical Sciences,Engineering,B.E. Chemical Engineering
-Edward,Tonui,254729198284,995226,female,Physical Sciences,Engineering,B.E. Chemical Engineering
-Josphat,Omwenga,254728592881,177935,male,Business,Finance,B.B.A Finance
-David,Wekesa,254791435938,600614,female,Business,Finance,B.B.A Finance
-Edgar,Kariuki,254742255088,543466,female,Business,Finance,B.B.A Finance
-George,Kilonzo,254784937385,685907,female,Business,Finance,B.B.A Finance
-Mogusu,Mwanja,254712796368,825514,male,Business,Finance,B.B.A Finance
-Bakari,Kariuki,254723285937,830384,male,Business,Finance,B.B.A Finance
-George,Macharia,254763918108,456235,male,Business,Finance,B.B.A Finance
-Mercy,Wairimu,254783775582,248199,male,Business,Finance,B.B.A Finance
-Moses,Ondari,254798240964,680436,male,Business,Finance,B.B.A Finance
-Geoffrey,Ndambuki,254718751922,331075,female,Business,Finance,B.B.A Finance
-George,Okari,254746865537,895225,male,Business,Finance,B.B.A Finance
-Alfred,Nyamu,254734344363,497427,male,Business,Finance,B.B.A Finance
-Moses,Lwangasi,254714069813,617372,female,Business,Finance,B.B.A Finance
-Hellen,Mulwa,254752232752,987712,male,Business,Finance,B.B.A Finance
-Moses,Mwasame,254736102448,501087,female,Business,Finance,B.B.A Finance
-Colleta,Jackline,254766825245,887317,male,Business,Finance,B.B.A Finance
-Gilbert,Karugah,254767047567,825134,male,Business,Finance,B.B.A Finance
-William,Mose,254759257755,479151,male,Business,Finance,B.B.A Finance
-Lilian,Rwanda,254739060995,590951,female,Business,Finance,B.B.A Finance
-Alice,Kipsang,254730733379,173696,female,Business,Finance,B.B.A Finance
+first_name,last_name,phone_number,nationalID,gender,faculty,department
+Tabitha,Wafula,254778044562,909349,female,Physical Sciences,Computer Science
+James,Mwenda,254752619482,245092,female,Physical Sciences,Computer Science
+Erick,Nelson,254741403749,131584,female,Physical Sciences,Computer Science
+Benjamin,Ngwatu,254799235142,785134,female,Physical Sciences,Computer Science
+Charles,Omwenga,254765887663,976514,female,Physical Sciences,Computer Science
+Caroline,Judah,254774031232,165977,male,Physical Sciences,Computer Science
+Augustine,Latebo,254724512429,619303,female,Social Sciences,Psychology
+Vincent,Kinyua,254726156218,435768,male,Social Sciences,Psychology
+Ordilia,Nyariki,254748566344,478111,male,Social Sciences,Psychology
+James,Nelson,254784937957,954542,male,Social Sciences,Psychology
+Berina,Kimani,254790847490,188454,female,Social Sciences,Psychology
+Rose,Pyeko,254723451197,481404,male,Social Sciences,Psychology
+Jennifer,Boen,254790162086,821470,female,Education,Early Childhood Education
+Joseph,Lorema,254727829146,121211,male,Education,Early Childhood Education
+Stella,Sitati,254733427750,394855,male,Education,Early Childhood Education
+Tom,Ondicho,254776959915,987942,male,Education,Early Childhood Education
+Everlyn,Cherop,254752989970,523479,female,Education,Early Childhood Education
+Gilbert,Momanyi,254735103005,476257,female,Education,Early Childhood Education
+Joyce,Mwangangi,254764277857,235557,male,Physical Sciences,Chemical Engineering
+Alice Onkoba,Sivona,254712542835,288753,male,Physical Sciences,Chemical Engineering
+Janeth,Ngwatu,254728794615,845366,female,Physical Sciences,Chemical Engineering
+Mary,Osebe,254712442782,688518,male,Physical Sciences,Chemical Engineering
+Sostine,Latebo,254777058466,796545,male,Physical Sciences,Chemical Engineering
+Alice,Adero,254777551445,289410,female,Physical Sciences,Chemical Engineering
+Mercy,Nyamatenia,254789409897,997010,male,Business,Finance
+Peter,Mwenda,254743734976,230682,female,Business,Finance
+Charles,Riungu,254724057975,637346,female,Business,Finance
+Arisi,Riganda,254742765550,790916,male,Business,Finance
+Kimani,Osoro,254778835499,964567,female,Business,Finance
+Joyce,Kadenyo,254750715415,565076,female,Business,Finance

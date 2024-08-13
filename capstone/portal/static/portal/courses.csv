@@ -1,0 +1,26 @@
+course,faculty
+LL.B Law,LAW
+B.Sc. Computer Science,PHY_SCI
+B.Sc. Biology,PHY_SCI
+B.Sc. Chemistry,PHY_SCI
+B.Sc. Physics,PHY_SCI
+B.Sc. Mathematics and Statics,PHY_SCI
+B.A Political Science,SOC_SCI
+B.A Psychology,SOC_SCI
+B.A International Relations,SOC_SCI
+B.A Sociology,SOC_SCI
+B.A Anthropology,SOC_SCI
+MBBS. Medicine and Surgery,HEALTH_SCI
+BSN. Nursing,HEALTH_SCI
+BPT. Physiotherapy,HEALTH_SCI
+BPH. Public Health,HEALTH_SCI
+BDS. Dental Surgery,HEALTH_SCI
+B.Ed Education,EDU
+B.S.Ed Special Education,EDU
+B.E.C.E Early Childhood Education,EDU
+B.S.Ed Secondary Education,EDU
+B.B.A Business Administration,BUS
+B.Com Commerce,BUS
+B.F Finance,BUS
+B.Int.B International Business,BUS
+B.HRM Human Resource Management,BUS

@@ -76,52 +76,50 @@ def upload_students(request):
         with open("portal/static/portal/students.csv") as file:
             reader = csv.DictReader(file)
             for row in reader:
-                latest_student = Student.objects.latest("date_joined")
                 try:
-                    serial = latest_student[0].username.split("-")
+                    latest_student = Student.student.latest("date_joined")
+                    serial = latest_student.username.split("-")
                     id = serial[1].strip()
-                except (AttributeError, IndexError):
+                except (Student.DoesNotExist, IndexError):
                     id = 0
                 try:
-                    match row["course"].strip():
-                        case "B.Sc. Computer Science":
-                            id = f'CS-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
-                        case "B.A. Psychology":
+                    match row["faculty"].strip():
+                        case "LAW":
+                            id = f'LL-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                        case "PHY_SCI":
                             id = f'PS-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
-                        case "B.Ed. Early Childhood Education":
-                            id = f'EC-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
-                        case "B.E. Chemical Engineering":
-                            id = f'CE-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
-                        case "B.B.A. Finance":
-                            id = f'FI-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                        case "EDU":
+                            id = f'EDU-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                        case "SOC_SCI":
+                            id = f'SC-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                        case "BUS":
+                            id = f'BU-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                        case "HEALTH_SCI":
+                            id = f'HS-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
                         case _:
                             return JsonResponse({"status": 912})
                     try:
-                        Student.objects.get(national_id=row["nationalID"])
+                        Student.student.create(
+                            username=id,
+                            first_name=row["first_name"].strip(),
+                            last_name=row["last_name"].strip(),
+                            phone_number=row["phone_number"],
+                            national_id=row["nationalID"],
+                            gender=row["gender"].strip(),
+                            faculty=Faculty.objects.get(faculty=row["faculty"].strip()),
+                            course=Course.objects.get(course=row["course"].strip())
+                        )
+                        # student.user_permissions.clear()
+                        # comrade = Group.objects.get(name="Comrade")
+                        # student.groups.add(comrade)
+                        # student.save()
+                    except IntegrityError:
                         return JsonResponse({"status": 935})
-                    except Student.DoesNotExist:
-                        try:
-                            student = Student.objects.create(
-                                username=id,
-                                first_name=row["first_name"].strip(),
-                                last_name=row["last_name"].strip(),
-                                phone_number=row["phone_number"],
-                                national_id=row["nationalID"],
-                                gender=row["gender"].strip(),
-                                faculty=row["faculty"].strip(),
-                                department=row["department"].strip(),
-                                course=row["course"].strip(),
-                            )
-                            student.user_permissions.clear()
-                            comrade = Group.objects.get(name="Comrade")
-                            student.groups.add(comrade)
-                            student.save()
-                        except IntegrityError:
-                            return JsonResponse({"status": 935})
                 except KeyError:
                     return JsonResponse({"status": 900})
-
-    return JsonResponse({"status": 200})
+        return JsonResponse({"status": 200})
+    else:
+        return JsonResponse({"status": "POST method required"})
 
 
 @permission_required("add_lecturer")
@@ -134,11 +132,11 @@ def upload_lecturers(request):
         with open("portal/static/portal/lecturers.csv") as file:
             reader = csv.DictReader(file)
             for row in reader:
-                latest_lecturer = Lecturer.objects.latest("date_joined")
                 try:
+                    latest_lecturer = Lecturer.lecturer.latest("date_joined")
                     serial = latest_lecturer[0].username.split("-")
                     id = serial[1].strip()
-                except (AttributeError, IndexError):
+                except (IndexError, Lecturer.DoesNotExist):
                     id = 0
                 try:
                     match row["department"].strip():
@@ -155,11 +153,11 @@ def upload_lecturers(request):
                         case _:
                             return JsonResponse({"status": 912})
                     try:
-                        User.objects.get(national_id=row["nationalID"])
+                        Lecturer.lecturer.get(national_id=row["nationalID"])
                         return JsonResponse({"status": 935})
-                    except User.DoesNotExist:
+                    except Lecturer.DoesNotExist:
                         try:
-                            lecturer = Lecturer.objects.create(
+                            lecturer = Lecturer.lecturer.create(
                                 username=id,
                                 first_name=row["first_name"].strip(),
                                 last_name=row["last_name"].strip(),
@@ -177,8 +175,9 @@ def upload_lecturers(request):
                             return JsonResponse({"status": 935})
                 except KeyError:
                     return JsonResponse({"status": 900})
-
-    return JsonResponse({"status": 200})
+        return JsonResponse({"status": 200})
+    else:
+        return JsonResponse({"error": "POST method required"})
 
 
 @permission_required("add_lecturer")
@@ -187,11 +186,11 @@ def upload_lecturers(request):
 def register_lecturer(request):
     if request.method == "POST":
         data = json.loads(request.body)
-        latest_lecturer = Lecturer.objects.latest("date_joined")
+        latest_lecturer = Lecturer.lecturer.latest("date_joined")
         try:
             serial = latest_lecturer[0].username.split("-")
             id = serial[1].strip()
-        except (AttributeError, IndexError):
+        except (AttributeError, Lecturer.DoesNotExist, IndexError):
             id = 0
         try:
             match data["department"].strip():
@@ -208,11 +207,11 @@ def register_lecturer(request):
                 case _:
                     return JsonResponse({"status": 912})
             try:
-                Lecturer.objects.get(national_id=data["nationalID"])
+                Lecturer.lecturer.get(national_id=data["nationalID"])
                 return JsonResponse({"status": 935})
             except Lecturer.DoesNotExist:
                 try:
-                    lecturer = Lecturer.objects.create(
+                    lecturer = Lecturer.lecturer.create(
                         username=id,
                         first_name=data["first_name"].strip(),
                         last_name=data["last_name"].strip(),
@@ -244,31 +243,33 @@ def register_student(request):
         return JsonResponse({"error": "POST method required"})
     else:
         data = json.loads(request.body)
-        latest_student = Student.objects.latest("date_joined")
         try:
-            serial = latest_student[0].username.split("-")
+            latest_student = Student.student.latest("date_joined")
+            serial = latest_student.username.split("-")
             id = serial[1].strip()
-        except (AttributeError, IndexError):
+        except (AttributeError, Student.DoesNotExist, IndexError):
             id = 0
         try:
-            match data["course"].strip():
-                case "B.Sc. Computer Science":
-                    id = f'CS-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
-                case "B.A. Psychology":
+            match data["faculty"].strip():
+                case "LAW":
+                    id = f'LL-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                case "PHY_SCI":
                     id = f'PS-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
-                case "B.Ed. Early Childhood Education":
-                    id = f'EC-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
-                case "B.E. Chemical Engineering":
-                    id = f'CE-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
-                case "B.B.A. Finance":
-                    id = f'FI-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                case "EDU":
+                    id = f'EDU-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                case "SOC_SCI":
+                    id = f'SC-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                case "BUS":
+                    id = f'BU-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                case "HEALTH_SCI":
+                    id = f'HS-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
                 case _:
                     return JsonResponse({"status": 912})
             try:
-                Student.objects.get(national_id=data["nationalID"])
+                Student.student.get(national_id=data["nationalID"])
                 return JsonResponse({"status": 935})
             except Student.DoesNotExist:
-                student = Student.objects.create(
+                student = Student.student.create(
                     username=id,
                     first_name=data["first_name"].strip(),
                     last_name=data["last_name"].strip(),
@@ -276,7 +277,6 @@ def register_student(request):
                     national_id=data["nationalID"].strip(),
                     gender=data["gender"].strip(),
                     faculty=data["faculty"].strip(),
-                    department=data["department"].strip(),
                     course=data["course"].strip(),
                 )
                 student.user_permissions.clear()
@@ -300,8 +300,10 @@ def faculty_details(request):
     for faculty in Faculty.objects.all():
         faculties.append(
             {
-                faculty.name(): [department.serialize() for department in faculty.school.all()],
-                "courses": [course.serialize() for course in faculty.division.all()]
+                faculty.name(): [
+                    department.serialize() for department in faculty.school.all()
+                ],
+                "courses": [course.serialize() for course in faculty.division.all()],
             }
         )
     return JsonResponse(faculties, safe=False)
@@ -337,7 +339,7 @@ def upload_departments(request):
 @login_required(login_url="login")
 @csrf_exempt
 def register_department(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         data = json.loads(request.body)
         try:
             try:
@@ -355,4 +357,49 @@ def register_department(request):
         return JsonResponse({"status": 200})
     else:
         return JsonResponse({"error": "POST method required"})
-    
+
+
+@permission_required("add_course")
+@login_required(login_url="login")
+@csrf_exempt
+def upload_courses(request):
+    if request.method == "POST":
+        file = pd.read_excel(request.body)
+        file.to_csv("portal/static/portal/courses.csv", index=None, header=True)
+        with open("portal/static/portal/courses.csv") as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                try:
+                    try:
+                        try:
+                            faculty = Faculty.objects.get(faculty=row["faculty"])
+                            Course.objects.create(faculty=faculty, course=row["course"])
+                        except KeyError:
+                            return JsonResponse({"status": 900})
+                    except IntegrityError:
+                        return JsonResponse({"status": 935})
+                except Faculty.DoesNotExist:
+                    return JsonResponse({"status": 905})
+        return JsonResponse({"status": 200})
+
+
+@permission_required("add_course")
+@login_required(login_url="login")
+@csrf_exempt
+def register_course(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        try:
+            try:
+                try:
+                    faculty = Faculty.objects.get(faculty=data["faculty"])
+                    Course.objects.create(faculty=faculty, course=data["course"])
+                except KeyError:
+                    return JsonResponse({"status": 900})
+            except IntegrityError:
+                return JsonResponse({"status": 935})
+        except Faculty.DoesNotExist:
+            return JsonResponse({"status": 905})
+        return JsonResponse({"status": 200})
+    else:
+        return JsonResponse({"error": "POST method required"})
