@@ -38,13 +38,13 @@ class Department(models.Model):
     department = models.CharField(max_length=100, null=True, unique=True)
 
     def serialize(self):
-        return {"department": self.department}
-
+        return {
+            "department": self.department,
+            "lecturers": [lecturer.username for lecturer in self.sector.all()],
+        }
 
 class Course(models.Model):
-    faculty = models.ForeignKey(
-        Faculty, on_delete=models.DO_NOTHING, related_name="division", null=True
-    )
+    faculty = models.ForeignKey(Faculty, on_delete=models.DO_NOTHING, related_name="division", null=True)
     course = models.CharField(max_length=100, null=True, unique=True)
 
     def serialize(self):
@@ -52,15 +52,15 @@ class Course(models.Model):
 
 
 class Unit(models.Model):
-    course = models.ManyToManyField(Course, related_name="program")
-    department = models.ForeignKey(
-        Department, on_delete=models.DO_NOTHING, null=True, related_name="syllabus"
-    )
-    unit_code = models.CharField(max_length=20, unique=True)
-    unit = models.CharField(max_length=100, unique=True)
+    department = models.ForeignKey(Department, on_delete=models.DO_NOTHING, related_name="syllabus")
+    unit_code = models.CharField(max_length=20)
+    unit = models.CharField(max_length=100)
+    course = models.ManyToManyField(Course, related_name="topics", null=True)
+    year_sem = models.FloatField()
 
     def serialize(self):
         return {"unit_code": self.unit_code, "unit": self.unit}
+
 
 
 class User(AbstractUser):
@@ -105,9 +105,8 @@ class Student(User):
     base_role = User.Role.STUDENT
     student = StudentManager()
 
-    course = models.ForeignKey(
-        Course, on_delete=models.DO_NOTHING, null=True, related_name="study"
-    )
+    course = models.ForeignKey(Course, on_delete=models.DO_NOTHING, null=True, related_name="study")
+    units = models.ManyToManyField(Unit, related_name="apprentice", null=True)
     residence = models.CharField(max_length=100, null=True)
 
     def serialize(self):
@@ -136,9 +135,8 @@ class Lecturer(User):
     base_role = User.Role.LECTURER
     lecturer = LecturerManager()
 
-    department = models.ForeignKey(
-        Department, on_delete=models.DO_NOTHING, null=True, related_name="sector"
-    )
+    department = models.ForeignKey(Department, on_delete=models.DO_NOTHING, null=True, related_name="sector")
+    units = models.ManyToManyField(Unit, related_name="professor", null=True)
     office = models.CharField(max_length=50, null=True)
 
     def serialize(self):
@@ -169,3 +167,6 @@ class HR(User):
 
     class Meta:
         verbose_name = "HR"
+
+
+

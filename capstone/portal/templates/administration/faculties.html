@@ -1,36 +1,17 @@
 {% extends "administration/layout.html" %}
 {% block body %}
-<nav class="menu">
-    <button class="btn btn-light menu-options">
-        <div>
-            School of Physical Science
-        </div>
-    </button>
-    <button class="btn btn-light menu-options">
-        <div>
-            School of Social Science
-        </div>
-    </button>
-    <button class="btn btn-light menu-options">
-        <div>
-            School of Health Science
-        </div>
-    </button>
-    <button class="btn btn-light menu-options">
-        <div>
-            School of Law
-        </div>
-    </button>
-    <button class="btn btn-light menu-options">
-        <div>
-            School of Business
-        </div>
-    </button>
-    <button class="btn btn-light menu-options">
-        <div>
-            School of Education
-        </div>
-    </button>
+<nav id="menu" class="menu">
 </nav>
-<div class="main" id="main"></div>
+<div id="main">
+    <div id="options"></div>
+    <div id="courses" class="list">
+        <h3>Courses: </h3>
+    </div>
+    <div id="departments" class="list">
+        <h3>Departments: </h3>
+    </div>
+    <div id="dept-details">
+        <h4 id="dept-name"></h4>
+    </div>
+</div>
 {% endblock %}

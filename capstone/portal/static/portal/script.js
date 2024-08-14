@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
     ShowPage("#main", "#profile");
-    document.querySelector("#csv").addEventListener('change', () => first_year_admin());
 });
 
 
@@ -10,29 +9,6 @@ function ShowPage(page, section){
         child.style.display = 'none';
     });
     document.querySelector(section).style.display = 'block';
-} 
-
-
-function first_year_admin(){
-    document.querySelector("#upload").setAttribute('class','btn btn-outline-success me-2');
-    const file_name = document.querySelector("#csv").value.split("\\");
-    document.querySelector("#upload").value = file_name[2];
-    document.querySelector("#status").outerHTML = `
-    <div id="status" class="alert alert-danger">
-        <strong>Warning! Submitting file has no reverse process!</strong>
-    </div>
-    `;
-    document.querySelector("#upload-form").addEventListener('submit', (event) => {
-        event.preventDefault();
-        fetch('upload_students', {
-            method:'POST',
-            body: document.querySelector("#csv").files[0]
-        })
-        .then(response => response.json())
-        .then(status => {
-            warnings(status, 'status','Student');
-        });
-    });
 }
 
 

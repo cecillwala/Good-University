@@ -16,7 +16,7 @@
               </nav>
             {% endif %}
         </div>
-        <nav class="menu">
+        <nav id="menu" class="menu">
             <button onclick="ShowPage('#main', '#profile')" class="btn btn-light menu-options">
                 <div>
                     Profile
@@ -45,6 +45,11 @@
             <button onclick="upload_data('course')" class="btn btn-light menu-options">
                 <div>
                     Upload Courses
+                </div>
+            </button>
+            <button onclick="upload_data('unit')" class="btn btn-light menu-options">
+                <div>
+                    Upload Units
                 </div>
             </button>
         </nav>
@@ -235,6 +240,23 @@
                     <button onclick="ShowPage('#course-registration', '#course-file-upload')" class="btn btn-outline-primary">Upload Course(s) File</button>
                 </div>
             </div>
+            <div class="student-registration" id="unit-registration">
+                <div id="unit-file-upload">
+                    <h3>Unit Registration</h3>
+                    <br>
+                    <div id="unit-status"></div>
+                    <div><strong>NOTE: </strong> File must be an excel file `file.xlsx`</div>
+                    <br>
+                    <form id="upload-unit-form" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <label for="unit-csv" class="file-input btn btn-primary">
+                            Choose file
+                            <input type="file" name="file" id="unit-csv">
+                        </label>
+                        <input class="btn btn-outline-success me-2 disabled" type="submit" id="unit-upload" value="Upload file">
+                    </form>
+                    <button class="btn btn-outline-primary" onclick="register_unit()">Register Single unit</button>
+                </div>
         </div>
     </div>
 {% endblock %}

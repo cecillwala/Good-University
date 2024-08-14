@@ -2,47 +2,8 @@ department,faculty
 Math,PHY_SCI
 Physics,PHY_SCI
 Computer Science,PHY_SCI
-Chemistry,PHY_SCI
-Environmental science,PHY_SCI
-Public law,LAW
-Private law,LAW
-Jurisprudence and legal theory,LAW
-Commercial law,LAW
-International law,LAW
-Sociology,SOC_SCI
-Psychology,SOC_SCI
-Political science,SOC_SCI
-Anthropology,SOC_SCI
-Economics,SOC_SCI
-Accounting and finance,BUS
-Marketing,BUS
-Management,BUS
-Operations and supply chain management,BUS
-Public health,HEALTH_SCI
-Medical laboratory sciences,HEALTH_SCI
-Pharmacy,HEALTH_SCI
-Physiotherapy,HEALTH_SCI
-Curriculum and Instruction,EDU
-Educational Administration and Planning,EDU
-Educational Psychology,EDU
-Science and Mathematics Education,EDU
-Humanities and Social Sciences Education,EDU
-Language and Literacy Education,EDU
-Arts and Physical Education,EDU
-Technical and Vocational Education,EDU
-History and Political Science,SOC_SCI
-Communication and Media Studies,SOC_SCI
-Public Administration,SOC_SCI
-Philosophy,SOC_SCI
-Business Administration,BUS
-Human Resource Management,BUS
-Supply Chain and Logistics,BUS
-International Business,BUS
-Strategic Management,BUS
-Health Management,HEALTH_SCI
-Dentistry,HEALTH_SCI
-Nutrition and Dietetics,HEALTH_SCI
+Public Law,LAW
+Private Law,LAW
+Jurisprudence and Legal Theory,LAW
+Legal Skills,LAW
 Criminal Law,LAW
-International Law,LAW
-Labour and Employment Law,LAW
-Human Rights Law,LAW

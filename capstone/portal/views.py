@@ -107,7 +107,7 @@ def upload_students(request):
                             national_id=row["nationalID"],
                             gender=row["gender"].strip(),
                             faculty=Faculty.objects.get(faculty=row["faculty"].strip()),
-                            course=Course.objects.get(course=row["course"].strip())
+                            course=Course.objects.get(course=row["course"].strip()),
                         )
                         # student.user_permissions.clear()
                         # comrade = Group.objects.get(name="Comrade")
@@ -162,7 +162,9 @@ def upload_lecturers(request):
                             phone_number=row["phone_number"],
                             national_id=row["nationalID"],
                             gender=row["gender"].strip(),
-                            department=Department.objects.get(department=row["department"].strip()),
+                            department=Department.objects.get(
+                                department=row["department"].strip()
+                            ),
                             faculty=Faculty.objects.get(faculty=row["faculty"].strip()),
                         )
                     except IntegrityError:
@@ -294,10 +296,14 @@ def faculty_details(request):
     for faculty in Faculty.objects.all():
         faculties.append(
             {
-                faculty.name(): [
-                    department.serialize() for department in faculty.school.all()
-                ],
-                "courses": [course.serialize() for course in faculty.division.all()],
+                faculty.name(): {
+                    "departments": [
+                        department.serialize() for department in faculty.school.all()
+                    ],
+                    "courses": [
+                        course.serialize() for course in faculty.division.all()
+                    ],
+                }
             }
         )
     return JsonResponse(faculties, safe=False)
@@ -327,7 +333,9 @@ def upload_departments(request):
                 except Faculty.DoesNotExist:
                     return JsonResponse({"status": 905})
         return JsonResponse({"status": 200})
-
+    else:
+        return JsonResponse({"error":"POST method required."})
+    
 
 @permission_required("add_department")
 @login_required(login_url="login")
@@ -375,7 +383,8 @@ def upload_courses(request):
                 except Faculty.DoesNotExist:
                     return JsonResponse({"status": 905})
         return JsonResponse({"status": 200})
-
+    else:
+        return JsonResponse({"error":"POST method required"})
 
 @permission_required("add_course")
 @login_required(login_url="login")
@@ -397,3 +406,37 @@ def register_course(request):
         return JsonResponse({"status": 200})
     else:
         return JsonResponse({"error": "POST method required"})
+
+
+@permission_required("add_unit")
+@login_required(login_url="login")
+@csrf_exempt
+def upload_units(request):
+    if request.method == "POST":
+        file = pd.read_excel(request.body)
+        file.to_csv("portal/static/portal/units.csv", index=None, header=True)
+        with open("portal/static/portal/units.csv") as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                try:
+                    try:
+                        try:
+                            dept = Department.objects.get(department=row["department"])
+                            unit = Unit(
+                                department=dept,
+                                unit=row["unit"],
+                                unit_code=row["unit_code"],
+                                year_sem=row["year_sem"]
+                            )
+                            unit.save()
+                            course = Course.objects.get(course=row["course"])
+                            unit.course.add(course)
+                        except KeyError:
+                            return JsonResponse({"status": 900})
+                    except IntegrityError:
+                        return JsonResponse({"status": 935})
+                except Course.DoesNotExist:
+                    return JsonResponse({"status": 905})
+        return JsonResponse({"status": 200})
+    else:
+        return JsonResponse({"error":"POST method required"})
