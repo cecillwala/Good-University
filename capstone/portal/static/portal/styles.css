@@ -110,7 +110,15 @@ input[type="file"]{
 
 
 .list{
+    width: 100%;
     display: flex;
     flex-flow: column wrap;
-    padding: 20x;
+    padding: 20px;
+}
+
+.row-flex{
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
 }

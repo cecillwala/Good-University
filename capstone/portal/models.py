@@ -1,9 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.contrib.auth.models import AbstractUser, BaseUserManager, Group
 
 
 # Create your models here
-
 
 class Faculty(models.Model):
     class Faculties(models.TextChoices):
@@ -41,6 +40,7 @@ class Department(models.Model):
         return {
             "department": self.department,
             "lecturers": [lecturer.username for lecturer in self.sector.all()],
+            "units": [unit.serialize() for unit in self.syllabus.all()]
         }
 
 class Course(models.Model):
@@ -48,7 +48,9 @@ class Course(models.Model):
     course = models.CharField(max_length=100, null=True, unique=True)
 
     def serialize(self):
-        return {"course": self.course, "faculty": self.faculty.faculty}
+        return {"course": self.course, 
+                "units": [unit.serialize() for unit in self.topics.order_by("year_sem")]
+            }
 
 
 class Unit(models.Model):
@@ -59,7 +61,10 @@ class Unit(models.Model):
     year_sem = models.FloatField()
 
     def serialize(self):
-        return {"unit_code": self.unit_code, "unit": self.unit}
+        return {"unit_code": self.unit_code, 
+                "unit": self.unit,
+                "yr/sem": self.year_sem
+                }
 
 
 

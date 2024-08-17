@@ -60,31 +60,6 @@ function registration_view(){
 }
 
 
-function upload_lecturers(){
-    ShowPage("#main", "#lecturer-registration");
-    ShowPage("#lecturer-registration", "#lec-file-upload");
-    document.querySelector("#lec-csv").addEventListener('change', () => {
-        document.querySelector("#upload").setAttribute('class','btn btn-outline-success me-2');
-        const file_name = document.querySelector("#lec-csv").value.split("\\");
-        document.querySelector("#upload").value = file_name[2];
-        document.querySelector("#status").outerHTML = `
-        <div id="status" class="alert alert-danger">
-            <strong>Warning! Submitting file has no reverse process!</strong>
-        </div>
-        `;
-    });
-    document.querySelector("#file-upload").addEventListener('submit', (event) => {
-        event.preventDefault();
-        fetch('upload_lecturers', {
-            method: 'POST',
-            body: document.querySelector("#lec-csv").files[0]
-        })
-        .then(response => response.json())
-        .then(status => warnings(status, "status", "Lecturer"));
-    });
-}
-
-
 function register_lecturer(){
     ShowPage("#lecturer-registration","#single-lecturer");
     document.querySelector("#lecturer-form").addEventListener('submit', (event) => {
@@ -115,27 +90,36 @@ function warnings(status, section, user){
         <div class="alert alert-danger" id=${section}>
             <strong>935 ERROR! ${user}(s) ALREADY exists!</strong>
         </div>`;
+        break;
         case 912:
         document.querySelector(`#${section}`).outerHTML = `
             <div class="alert alert-danger" id=${section}>
                 <strong>912 ERROR! Invalid course entered!</strong>
             </div>`;
+            break;
         case 900:
             document.querySelector(`#${section}`).outerHTML = `
             <div class="alert alert-danger" id=${section}>
                 <strong>900 ERROR! File is in the wrong format!</strong>
             </div>`;
+            break;
         case 905:
             document.querySelector(`#${section}`).outerHTML = `
             <div class="alert alert-danger" id=${section}>
                 <strong>905 ERROR! Faculty does NOT exist!</strong>
             </div>`;
+            break;
         case 200:
             document.querySelector(`#${section}`).outerHTML = `
             <div class="alert alert-success" id=${section}>
                 <strong>Success! ${user}'s details uploaded successfully!</strong>
-            </div>
-            `;
+            </div>`;
+            break;
+        default:
+            document.querySelector(`#${section}`).outerHTML = `
+            <div class="alert alert-danger" id=${section}>
+                <strong>UNKNOWN ERROR!Something Went horribly wrong!</strong>
+            </div>`;
     }
 }
 
@@ -202,6 +186,6 @@ function upload_data(data){
             body: document.querySelector(`#${data}-csv`).files[0]
         })
         .then(response => response.json())
-        .then(status => warnings(status, `${data}-status`, "Department"));
+        .then(status => warnings(status, `${data}-status`, `${data[0].toUpperCase()}${data.slice(1)}`));
     });
 }

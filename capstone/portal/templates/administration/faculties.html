@@ -5,13 +5,22 @@
 <div id="main">
     <div id="options"></div>
     <div id="courses" class="list">
-        <h3>Courses: </h3>
+    </div>
+    <div id="course-details" class="list">
+        <form method="post" id="add-unit">
+            {% csrf_token %}
+            <input type="text" id="unit" placeholder="Add Unit" autocomplete="off">
+            </hr style="border: 1px #ccc solid;">
+            <input type="submit" value="Add Unit">
+        </form>
+        <div id="course-units" class="list"></div>
     </div>
     <div id="departments" class="list">
-        <h3>Departments: </h3>
     </div>
     <div id="dept-details">
-        <h4 id="dept-name"></h4>
+        <div id="dept-options"></div>
+        <div id="dept-units" class="list"></div>
+        <div id="dept-lecs" class="list"></div>
     </div>
 </div>
 {% endblock %}

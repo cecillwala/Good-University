@@ -1,201 +1,31 @@
 first_name,last_name,phone_number,nationalID,gender,faculty,course
-Ronoh,Mwasi,254746673466,849569,female,PHY_SCI,B.Sc. Mathematics and Statics
-William,Chepkemoi,254775519183,952180,female,SOC_SCI,B.A Anthropology
-Sarah,Anaya,254766542124,677224,female,PHY_SCI,B.Sc. Biology
-Jemimah,Wanyonyi,254791112923,294475,female,EDU,B.S.Ed Secondary Education
-Brain,Mongare,254737979872,701210,male,PHY_SCI,B.Sc. Computer Science
-Faith,Ireri,254710788245,177436,female,BUS,B.Com Commerce
-Judy,Gitonga,254760387134,107399,female,HEALTH_SCI,BPH. Public Health
-Thomas,Mubichakani,254712936476,370800,female,BUS,B.HRM Human Resource Management
-Francis,Torotich,254747127006,269061,male,SOC_SCI,B.A International Relations
-Nicholas,Omagwa,254799689390,490650,male,EDU,B.S.Ed Secondary Education
-Ngeno,Ndang'a,254773989689,139982,male,HEALTH_SCI,BPT. Physiotherapy
-Dorothy,Mwishe,254784819412,598659,female,PHY_SCI,B.Sc. Chemistry
-Irene,Syongok,254771142785,944843,female,SOC_SCI,B.A International Relations
-Rosaline,Mwenda,254779749147,933225,male,HEALTH_SCI,BSN. Nursing
-Hespon,Kinoti,254789213383,158159,female,BUS,B.Int.B International Business
-Stephen,Waweru,254791180748,746606,male,PHY_SCI,B.Sc. Computer Science
-Fred,Mwenda,254733601724,863246,female,LAW,LL.B Law
-Lucy,Juma,254736978986,308934,male,BUS,B.B.A Business Administration
-William,Gichohi,254793142351,326191,female,SOC_SCI,B.A Anthropology
-Juliet,Musembi,254726546784,592104,male,EDU,B.E.C.E Early Childhood Education
-Job,Misoi,254739232494,700198,female,SOC_SCI,B.A Political Science
-Maureen,Wafula,254724279296,467755,female,EDU,B.S.Ed Secondary Education
-David,Majoni,254736414883,287749,male,EDU,B.S.Ed Secondary Education
-Douglas,Bundi,254752610298,550803,female,HEALTH_SCI,MBBS. Medicine and Surgery
-Jack,Torotich,254722581367,710433,male,PHY_SCI,B.Sc. Chemistry
-Edwin,Ahmed,254722315855,911414,female,EDU,B.E.C.E Early Childhood Education
-Jaspher,Ireri,254788338752,463049,female,SOC_SCI,B.A Psychology
-Zachary,Madungu,254715338826,129426,male,BUS,B.HRM Human Resource Management
-Wilson,Omagwa,254782832520,212510,female,SOC_SCI,B.A Sociology
-Emma,Kasoa,254736826936,345993,male,SOC_SCI,B.A Psychology
-Eliud,Mulinge,254762755318,339875,male,HEALTH_SCI,MBBS. Medicine and Surgery
-Chepkemoi,Nyaundi,254720886205,632463,male,HEALTH_SCI,BPT. Physiotherapy
-Judy,Rioba,254745460708,963920,male,SOC_SCI,B.A Sociology
-Ronald,Njoroge,254719386990,290880,male,SOC_SCI,B.A Political Science
-Ronald,Ayuma,254713467579,587023,male,SOC_SCI,B.A International Relations
-Peter,Mukangai,254737887346,192879,male,BUS,B.Com Commerce
-Ronald,Mwasi,254722684373,529894,male,PHY_SCI,B.Sc. Computer Science
-Hesbon,Cherotich,254759466078,186845,male,HEALTH_SCI,BSN. Nursing
-Agnes,Njoroge,254788509072,867411,female,SOC_SCI,B.A Anthropology
-Jonathan,Mutua,254777194398,815094,female,PHY_SCI,B.Sc. Chemistry
-John,Rotich,254726050777,676017,male,LAW,LL.B Law
-Lydia,Mwanthi,254780262161,368418,female,EDU,B.E.C.E Early Childhood Education
-Irene,Mwenda,254760044856,178073,male,SOC_SCI,B.A International Relations
-Hargreves,Obuya,254780256222,585043,male,EDU,B.S.Ed Special Education
-Edwin,Kipsang,254770956225,295751,male,SOC_SCI,B.A Political Science
-Naftal,Bundi,254724891232,345636,female,PHY_SCI,B.Sc. Physics
-Sarah,Njeri,254721452272,988727,female,HEALTH_SCI,BPH. Public Health
-Fred,Kahuthu,254732839207,443078,female,BUS,B.Com Commerce
-Ruben,Gitonga,254735428363,901714,female,BUS,B.F Finance
-Edwin,Maina,254711135422,694057,female,EDU,B.Ed Education
-Daniel,Makokha,254794559093,883810,male,PHY_SCI,B.Sc. Physics
-Douglas,Marire,254767548216,895715,male,EDU,B.E.C.E Early Childhood Education
-Jared,Nyameino,254769776425,182147,female,PHY_SCI,B.Sc. Computer Science
-Leah,Mwiti,254746045362,340818,male,HEALTH_SCI,MBBS. Medicine and Surgery
-Zachaeus,Gatende,254798260878,776074,female,PHY_SCI,B.Sc. Biology
-Geoffrey,Jepkemei,254750118912,594593,male,SOC_SCI,B.A International Relations
-Stephen,Misoi,254720229704,702452,male,HEALTH_SCI,BSN. Nursing
-Wilfred,Gichana,254792235109,616918,female,PHY_SCI,B.Sc. Chemistry
-Lilian,Mirimo,254714803638,862949,female,BUS,B.B.A Business Administration
-Koome,Wangwe,254766291603,807688,male,PHY_SCI,B.Sc. Mathematics and Statics
-Selah,Yogo,254744661265,193117,male,HEALTH_SCI,BPH. Public Health
-Moses,Ireri,254760995904,924154,female,BUS,B.Com Commerce
-Brain,Temba,254782757774,187328,male,HEALTH_SCI,BPH. Public Health
-Solomon,Chepkemoi,254794441949,493123,female,BUS,B.B.A Business Administration
-Peter,Nduati,254729045155,754823,female,LAW,LL.B Law
-Onesmus,Paul Kioko,254742255784,240357,female,HEALTH_SCI,BPT. Physiotherapy
-Hillary,Singoei,254788361628,904384,male,SOC_SCI,B.A Anthropology
-Migiro,Bundi,254763314870,942677,female,BUS,B.B.A Business Administration
-Nicholas,Ouma,254737012293,195003,male,HEALTH_SCI,BPH. Public Health
-Alex,Kirimi,254771369257,778983,female,EDU,B.S.Ed Special Education
-Hesborne,Shiundu,254753933767,983898,male,HEALTH_SCI,BDS. Dental Surgery
-Timothy,Mubichakani,254750153089,230662,female,SOC_SCI,B.A Anthropology
-Vincent,Rayola,254793779820,916287,female,BUS,B.Com Commerce
-Hillary,Ochoi,254789168760,958045,male,SOC_SCI,B.A Sociology
-Kitilit,Gatende,254755963157,881953,male,HEALTH_SCI,BDS. Dental Surgery
-Moses,Njeri,254716728260,970696,male,EDU,B.S.Ed Special Education
-Erick,Mwenda,254718328734,649937,male,PHY_SCI,B.Sc. Biology
-Jemimah,Juma,254794811896,805936,female,PHY_SCI,B.Sc. Chemistry
-Jaspher,Torotich,254756586281,533174,male,PHY_SCI,B.Sc. Physics
-Irene,Mwenda,254747410941,535035,male,PHY_SCI,B.Sc. Physics
-Chepkemoi,Ochola,254719031220,524551,male,PHY_SCI,B.Sc. Chemistry
-Alex,Mwanthi,254729178396,395127,male,BUS,B.Com Commerce
-Lucy,Marire,254745369340,700254,female,HEALTH_SCI,MBBS. Medicine and Surgery
-Collins,Obuya,254772449807,188791,female,LAW,LL.B Law
-Nancy,Mwenda,254717230557,665606,male,BUS,B.HRM Human Resource Management
-Agnes,Kegode,254756191961,683864,female,BUS,B.HRM Human Resource Management
-Diana,Mwaura,254754376354,308925,female,SOC_SCI,B.A Psychology
-Manases,Nyaga,254735886530,909736,female,HEALTH_SCI,BDS. Dental Surgery
-George,Juma,254746471752,108788,male,EDU,B.S.Ed Special Education
-Migiro,Mirimo,254757402635,497286,female,PHY_SCI,B.Sc. Mathematics and Statics
-Timothy,Syongok,254755862885,105931,female,SOC_SCI,B.A Psychology
-Ronald,Kegode,254723006958,434292,male,BUS,B.Int.B International Business
-Job,Mbuthia,254799595782,887831,female,SOC_SCI,B.A International Relations
-Ngeno,Shiundu,254767097430,654341,female,EDU,B.Ed Education
-Hillary,Otieno,254767735377,528797,male,BUS,B.Com Commerce
-Edwin,Irungu,254712745999,387351,male,HEALTH_SCI,BDS. Dental Surgery
-Jennifer,Bwire,254771010458,829059,female,SOC_SCI,B.A Psychology
-Esther,Nero,254742666579,344486,female,SOC_SCI,B.A International Relations
-Catherine,Wanyonyi,254788213190,705247,male,EDU,B.Ed Education
-Koome,Odhiambo,254771898960,355937,female,PHY_SCI,B.Sc. Mathematics and Statics
-Mark,Anaya,254796695785,703433,female,BUS,B.Int.B International Business
-Maurice,Nzioki,254742035986,264107,female,EDU,B.Ed Education
-Alex,Odhiambo,254712994947,950042,male,HEALTH_SCI,MBBS. Medicine and Surgery
-Moses,Paul Kioko,254763681809,569236,female,EDU,B.S.Ed Special Education
-Effie,Nakhumicha,254773449702,946873,female,EDU,B.S.Ed Secondary Education
-Hellen,Riungu,254726597942,640669,male,BUS,B.HRM Human Resource Management
-Emma,Egesa,254780884279,712126,male,HEALTH_SCI,BDS. Dental Surgery
-Mogusu,Songa,254748420265,980183,male,EDU,B.Ed Education
-Thomas,Ngumbi,254774259971,530511,male,PHY_SCI,B.Sc. Computer Science
-Edwin,Egesa,254757662690,656910,female,HEALTH_SCI,MBBS. Medicine and Surgery
-Fred,Ibelia,254736676218,860571,male,BUS,B.Int.B International Business
-Douglas,Amusala,254759835236,284206,male,SOC_SCI,B.A Political Science
-Jack,Sakwa,254780663097,142514,male,PHY_SCI,B.Sc. Physics
-Jennifer,Gathoni,254716707796,730697,male,HEALTH_SCI,MBBS. Medicine and Surgery
-Bakari,Nthoki,254745312322,341943,female,EDU,B.S.Ed Secondary Education
-Moses,Mutaki,254740700671,136822,male,EDU,B.S.Ed Special Education
-Phenuel,Ongwae,254760260816,443884,male,SOC_SCI,B.A Anthropology
-Eliud,Mulinge,254795494846,176106,male,EDU,B.S.Ed Secondary Education
-Ronald,Mwasi,254745984456,917592,female,PHY_SCI,B.Sc. Mathematics and Statics
-Fred,Mutaki,254774266460,833680,female,HEALTH_SCI,BDS. Dental Surgery
-Thomas,Juma,254767364721,801807,female,HEALTH_SCI,BSN. Nursing
-William,Nyaundi,254766914991,259521,female,SOC_SCI,B.A Political Science
-William,Maina,254773414117,421713,male,PHY_SCI,B.Sc. Chemistry
-James,Gathoni,254757538445,618609,male,HEALTH_SCI,BPH. Public Health
-Fred,Adika,254728505615,631174,female,BUS,B.F Finance
-Maxwell,Riungu,254764715863,245480,male,PHY_SCI,B.Sc. Computer Science
-Koome,Okeyo,254723127541,452249,female,BUS,B.B.A Business Administration
-Sheillah,Mutungu,254723838111,622456,male,BUS,B.Com Commerce
-Moses,Juma,254782756704,313691,male,BUS,B.B.A Business Administration
-Januaris,Singoei,254768298560,263703,female,PHY_SCI,B.Sc. Physics
-Linet,Juma,254734021237,733387,male,LAW,LL.B Law
-Okuta,Odero,254772505581,285062,male,EDU,B.S.Ed Secondary Education
-Victor,Ahmed,254783294305,289401,female,EDU,B.E.C.E Early Childhood Education
-Nicholas,Nyakundi,254771648162,756568,female,HEALTH_SCI,BPH. Public Health
-Annex,Mutheki,254777298820,448859,female,EDU,B.E.C.E Early Childhood Education
-Esther,Mbithi,254741603000,606702,female,HEALTH_SCI,BSN. Nursing
-Solomon,Micere,254794007071,418478,male,SOC_SCI,B.A Political Science
-Mark,Mwishe,254742394336,280723,female,SOC_SCI,B.A International Relations
-Effie,Waweru,254761494568,125807,female,EDU,B.Ed Education
-Ibrahim,Ongwae,254730802692,214570,female,BUS,B.F Finance
-Wilfred,Kipsang,254796077727,204121,male,PHY_SCI,B.Sc. Physics
-James,Otieno,254710053532,947241,male,BUS,B.Int.B International Business
-Moses,Ng'ang'a,254725570470,698656,male,SOC_SCI,B.A Political Science
-William,Odhiambo,254763885721,427513,female,BUS,B.Int.B International Business
-Delvin,Ngumbi,254743939666,603313,female,PHY_SCI,B.Sc. Computer Science
-Hesbon,Torotich,254758374931,198792,male,HEALTH_SCI,MBBS. Medicine and Surgery
-Alex,Maina,254729487365,939827,female,PHY_SCI,B.Sc. Biology
-Jared,Maguru,254793051314,417830,male,EDU,B.E.C.E Early Childhood Education
-Silveria,Ndoni,254795203873,224680,female,SOC_SCI,B.A Political Science
-Alfred,Ali,254791927096,341357,male,EDU,B.E.C.E Early Childhood Education
-George,Wanjii,254793745581,911565,female,SOC_SCI,B.A Sociology
-Alex,Kaguamba,254777620243,763032,female,PHY_SCI,B.Sc. Physics
-Mark,Ndeto,254711266945,262032,female,SOC_SCI,B.A Political Science
-Christine,Araya,254716299443,213056,male,PHY_SCI,B.Sc. Mathematics and Statics
-Hespon,Omulimi,254720649667,415606,female,SOC_SCI,B.A Psychology
-Ruben,Mose,254714077529,176793,male,EDU,B.S.Ed Special Education
-Obadiah,Ndoni,254711310911,875376,male,EDU,B.S.Ed Secondary Education
-Moses,Chege,254760775260,259030,male,PHY_SCI,B.Sc. Biology
-Ruth,Lekodesa,254733838384,997810,female,BUS,B.HRM Human Resource Management
-Ruben,Obuya,254791195285,971864,male,EDU,B.E.C.E Early Childhood Education
-Festus,Nduati,254712158706,821510,female,BUS,B.F Finance
-Selah,Ongoma,254783886348,354943,male,PHY_SCI,B.Sc. Computer Science
-Ayalo,Chepkemoi,254797291919,944341,female,EDU,B.E.C.E Early Childhood Education
-Erick,Nthoki,254783425731,520444,female,PHY_SCI,B.Sc. Mathematics and Statics
-Isaac,Mwiti,254725771467,307300,female,PHY_SCI,B.Sc. Biology
-Moses,Gichana,254773501124,969956,male,EDU,B.E.C.E Early Childhood Education
-Kiplangat,Mose,254752493845,901660,female,PHY_SCI,B.Sc. Chemistry
-Geoffrey,Kirui,254711613358,107714,male,BUS,B.B.A Business Administration
-Jared,Mutua,254732259261,989958,male,SOC_SCI,B.A Psychology
-Andrew,Mutwiri,254747462379,693544,male,PHY_SCI,B.Sc. Physics
-Chepkemoi,Wafula,254763198544,521285,male,BUS,B.B.A Business Administration
-Mark,Ajuk,254786735043,594427,male,BUS,B.Int.B International Business
-Farida,Amusala,254744544531,575485,male,SOC_SCI,B.A International Relations
-Maxwell,Saiti,254773452609,430732,male,SOC_SCI,B.A Anthropology
-Maxwell,Ngumbi,254726241852,810994,female,SOC_SCI,B.A Anthropology
-Joyline,Waweru,254776246761,897798,male,BUS,B.Int.B International Business
-Esther,Ali,254794218032,373006,male,EDU,B.S.Ed Secondary Education
-Shadrack,Kiringa,254754724057,809137,male,BUS,B.B.A Business Administration
-David,Mbithi,254774878342,828964,male,SOC_SCI,B.A International Relations
-Hesborne,Wangwe,254718630497,466875,male,PHY_SCI,B.Sc. Biology
-Mogusu,Nyaundi,254783217701,116658,female,EDU,B.S.Ed Special Education
-Leah,Mwasi,254798815308,446704,male,PHY_SCI,B.Sc. Mathematics and Statics
-Frank,Gathoni,254751883108,737811,male,BUS,B.B.A Business Administration
-Okuta,Mukangai,254755668696,256390,female,SOC_SCI,B.A International Relations
-Isaac,Nakhumicha,254720113384,125164,female,BUS,B.B.A Business Administration
-Ronald,Jemeli,254781007974,371682,female,HEALTH_SCI,MBBS. Medicine and Surgery
-Anastacia,Okeyo,254741787045,636423,male,SOC_SCI,B.A International Relations
-Nancy,Gitonga,254788240123,773534,female,SOC_SCI,B.A Psychology
-Claris,Nandeke,254718906117,839126,male,EDU,B.S.Ed Secondary Education
-Peter,Njoroge,254721471639,785125,female,EDU,B.E.C.E Early Childhood Education
-Owuor,Mutungu,254734728553,672987,female,SOC_SCI,B.A Anthropology
-Hesborne,Kahuthu,254728744149,994429,female,BUS,B.B.A Business Administration
-Elijah,Anaya,254715693444,315992,female,EDU,B.E.C.E Early Childhood Education
-Moses,Anaya,254749513440,863063,male,PHY_SCI,B.Sc. Biology
-William,Mbithi,254744212819,349919,female,EDU,B.S.Ed Secondary Education
-George,Mukangai,254778839402,296546,male,SOC_SCI,B.A Anthropology
-Rosaline,Mutwiri,254778390708,461647,female,HEALTH_SCI,BSN. Nursing
-Januaris,Adavaji,254778087179,974118,female,PHY_SCI,B.Sc. Physics
-Judith,Mutua,254755861773,492873,female,PHY_SCI,B.Sc. Biology
-Mark,Opati,254787850103,360059,female,BUS,B.B.A Business Administration
+Juliet,Shiundu,254736185036,318229,female,PHY_SCI,B.Sc. Computer Science
+George,Nekesa,254767766608,296968,female,PHY_SCI,B.Sc. Computer Science
+Delvin,Chepchirchir,254743283737,295653,female,PHY_SCI,B.Sc. Computer Science
+Erick,Nyakundi,254784699673,322532,male,PHY_SCI,B.Sc. Computer Science
+William,Mutaki,254724233364,314376,male,PHY_SCI,B.Sc. Computer Science
+Fredrick,Ng'ang'a,254763702290,290258,female,PHY_SCI,B.Sc. Computer Science
+Dorcah,Mbuthia,254774403041,328446,male,PHY_SCI,B.Sc. Computer Science
+Onesmus,Mutaki,254731616825,306241,male,PHY_SCI,B.Sc. Computer Science
+Onesmus,Anaya,254781654774,298146,female,PHY_SCI,B.Sc. Computer Science
+Fred,Mutua,254751913805,305260,female,PHY_SCI,B.Sc. Computer Science
+Gilbert,Nekesa,254729548847,305922,female,PHY_SCI,B.Sc. Computer Science
+Moraa,Sila,254770104739,292581,male,PHY_SCI,B.Sc. Computer Science
+Emmy,Ahmed,254728569999,316351,female,PHY_SCI,B.Sc. Computer Science
+Fred,Hudson,254723393497,304306,female,PHY_SCI,B.Sc. Computer Science
+Ruth,Ochieng,254799206361,315430,male,PHY_SCI,B.Sc. Computer Science
+Jennifer,Mulinge,254785775395,308790,female,PHY_SCI,B.Sc. Computer Science
+Esther,Musembi,254798426036,311414,male,PHY_SCI,B.Sc. Computer Science
+Erick,Gichohi,254771805583,324801,male,PHY_SCI,B.Sc. Computer Science
+Sonia,Akinyi,254790079262,309162,male,PHY_SCI,B.Sc. Computer Science
+Luke,Kegode,254784353965,311578,male,PHY_SCI,B.Sc. Computer Science
+Nancy,Kiringa,254711771172,303338,male,PHY_SCI,B.Sc. Computer Science
+Padson,Kahuthu,254728883007,296147,male,PHY_SCI,B.Sc. Computer Science
+Bernard,Waweru,254727300143,318476,male,PHY_SCI,B.Sc. Computer Science
+Maureen,Egesa,254717201019,301761,female,PHY_SCI,B.Sc. Computer Science
+Delvin,Omae,254752479268,304986,male,PHY_SCI,B.Sc. Computer Science
+Andrew,Madungu,254797738742,320913,female,PHY_SCI,B.Sc. Computer Science
+Ronald,Murango,254754402086,313057,male,PHY_SCI,B.Sc. Computer Science
+Hesborne,Kioko,254721231064,311786,male,PHY_SCI,B.Sc. Computer Science
+John,Mutaki,254744717662,319557,female,PHY_SCI,B.Sc. Computer Science
+William,Wafula,254740676977,309662,female,PHY_SCI,B.Sc. Computer Science

@@ -18,7 +18,7 @@ from django.contrib.auth.models import Group
 @login_required(login_url="login")
 def index(request):
     if request.user.is_superuser:
-        return render(request, "administration/index.html")
+        return render(request, "administration/hod-index.html")
     elif request.user.groups.contains(Group.objects.get(name="HR")):
         return render(request, "administration/hr-index.html")
     else:
@@ -80,26 +80,27 @@ def upload_students(request):
                     latest_student = Student.student.latest("date_joined")
                     serial = latest_student.username.split("-")
                     id = serial[1].strip()
+                    yr = datetime.datetime.now().strftime("%y")
                 except (Student.DoesNotExist, IndexError):
                     id = 0
                 try:
                     match row["faculty"].strip():
                         case "LAW":
-                            id = f'LL-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                            id = f'LL-{int(id) + 1}-{yr}'
                         case "PHY_SCI":
-                            id = f'PS-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                            id = f'PS-{int(id) + 1}-{yr}'
                         case "EDU":
-                            id = f'EDU-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                            id = f'EDU-{int(id) + 1}-{yr}'
                         case "SOC_SCI":
-                            id = f'SC-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                            id = f'SC-{int(id) + 1}-{yr}'
                         case "BUS":
-                            id = f'BU-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                            id = f'BU-{int(id) + 1}-{yr}'
                         case "HEALTH_SCI":
-                            id = f'HS-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                            id = f'HS-{int(id) + 1}-{yr}'
                         case _:
                             return JsonResponse({"status": 912})
                     try:
-                        Student.student.create(
+                        student = Student.student.create(
                             username=id,
                             first_name=row["first_name"].strip(),
                             last_name=row["last_name"].strip(),
@@ -109,10 +110,10 @@ def upload_students(request):
                             faculty=Faculty.objects.get(faculty=row["faculty"].strip()),
                             course=Course.objects.get(course=row["course"].strip()),
                         )
-                        # student.user_permissions.clear()
-                        # comrade = Group.objects.get(name="Comrade")
-                        # student.groups.add(comrade)
-                        # student.save()
+                        student.user_permissions.clear()
+                        comrade = Group.objects.get(name="Comrade")
+                        student.groups.add(comrade)
+                        student.save()
                     except IntegrityError:
                         return JsonResponse({"status": 935})
                 except KeyError:
@@ -440,3 +441,58 @@ def upload_units(request):
         return JsonResponse({"status": 200})
     else:
         return JsonResponse({"error":"POST method required"})
+    
+
+@permission_required("add_lecturer")
+@login_required(login_url="login")
+@csrf_exempt
+def add_unit(request):
+    if request.method == "POST":
+       data = json.loads(request.body)
+       try:
+           course = Course.objects.get(course=data["course"]) 
+       except Course.DoesNotExist:
+           return JsonResponse({"status": 935})
+       try:
+           unit  = Unit.objects.get(unit_code=data["unit"])
+           unit.course.add(course)
+       except Unit.DoesNotExist:
+           return JsonResponse({"status": 405 })
+       return JsonResponse({"status": 200})
+    else:
+        return JsonResponse({"error": "POST method required"})
+    
+
+@permission_required("add_lecturer")
+@login_required(login_url="login")
+@csrf_exempt
+def remove_unit(request):
+    if request.method == 'PUT':
+        data = json.loads(request.body)
+        try:
+            course = Course.objects.get(course=data["course"])
+        except Course.DoesNotExist:
+            return JsonResponse({"status": 935})
+        try:
+            unit = Unit.objects.get(unit_code=data["unit"])
+        except:
+            return JsonResponse({"status": 405})
+        unit.course.remove(course)
+        return JsonResponse({"status": 200})
+    else:
+        return JsonResponse({"error": "PUT method required"})
+    
+
+@permission_required("change_lecturer")
+@login_required(login_url="login")
+@csrf_exempt
+def make_hod(request):
+    if request.method == "PUT":
+        data = json.loads(request.body)
+        hod = Lecturer.lecturer.get(username=data["lecturer"])
+        perms = Group.objects.get(name="hod")
+        if data["status"]:
+            hod.groups.add(perms)
+        else:
+            hod.groups.remove(perms)
+        return JsonResponse({"status":200})

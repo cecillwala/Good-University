@@ -1,201 +1,51 @@
 first_name,last_name,gender,nationalID,phone_number,department,faculty
-Solomon,Wafula,Female,48839,254741136899,Public law,LAW
-Sonia,Ooko,Female,28512,254721751689,Physics,PHY_SCI
-Jack,Ochanda,Female,39150,254745022538,Health Management,HEALTH_SCI
-Fredrick,Saiti,Male,91099,254763691653,Humanities and Social Sciences Education,EDU
-Ayalo,Mutaki,Male,42994,254797683346,Human Rights Law,LAW
-Daniel,Kegode,Female,94446,254756052213,Commercial law,LAW
-Fred,Masinde,Male,53944,254722079002,Medical laboratory sciences,HEALTH_SCI
-Millicent,Karori,Male,87451,254727884565,International law,LAW
-Benard,Nduati,Female,35545,254711361759,Computer Science,PHY_SCI
-Judy,Nandeke,Male,58582,254741883576,Communication and Media Studies,SOC_SCI
-Leah,Nasambu,Male,54498,254799417527,International Law,LAW
-Franciscar,Akinyi,Male,92587,254723501513,Human Rights Law,LAW
-Moses,Ochoki,Female,73598,254736391791,Health Management,HEALTH_SCI
-Akumu,Mutheu,Female,83833,254758610980,Pharmacy,HEALTH_SCI
-Maiso,Bethwell,Female,96683,254764119438,Jurisprudence and legal theory,LAW
-Leah,Kirui,Male,38822,254747558011,Language and Literacy Education,EDU
-David,Kipsang,Female,91660,254750025063,Labour and Employment Law,LAW
-Hillary,Marete,Female,95089,254763984241,Educational Psychology,EDU
-Omar,Ali,Male,82458,254779121587,Philosophy,SOC_SCI
-Moses,Wafula,Male,30252,254766620312,Communication and Media Studies,SOC_SCI
-Okuta,Njeri,Male,12547,254731891560,Health Management,HEALTH_SCI
-Christopher,Mibei,Female,86530,254722242793,Jurisprudence and legal theory,LAW
-Annex,Bundi,Female,31789,254756172314,International law,LAW
-Moses,Sakwa,Male,71869,254722003211,Psychology,SOC_SCI
-Vincent,Mwenda,Female,98932,254769107594,Human Rights Law,LAW
-Gilbert,Ooko,Female,71079,254752874359,Computer Science,PHY_SCI
-Ruben,Musonye,Male,71527,254719433577,Management,BUS
-Festus,Jepkemei,Male,64943,254786354898,Arts and Physical Education,EDU
-Irene,Munyoki,Male,14094,254789956393,Sociology,SOC_SCI
-Jonathan,Madungu,Female,45439,254737728939,Supply Chain and Logistics,BUS
-Peterson,Gikonyo,Female,59100,254769681997,Sociology,SOC_SCI
-Winrose,Ahmed,Female,48035,254746483260,Educational Psychology,EDU
-Gladys,Wafula,Male,52436,254765456399,Physics,PHY_SCI
-Douglas,Nzioki,Female,92259,254795770545,Public law,LAW
-Farida,Torotich,Female,98141,254764336485,Psychology,SOC_SCI
-Moses,Kili,Male,54236,254750606785,International Law,LAW
-Ruth,Wafula,Male,19027,254786191695,Arts and Physical Education,EDU
-Peterson,Nyongesa,Male,39190,254749875563,Physiotherapy,HEALTH_SCI
-Silveria,Kimani,Female,19209,254727438669,International Law,LAW
-Christopher,Odero,Male,87922,254791897788,Supply Chain and Logistics,BUS
-Peter,Obuya,Female,45625,254796035229,Chemistry,PHY_SCI
-Edwin,Opana,Male,57150,254785492519,Language and Literacy Education,EDU
-Fred,Amusala,Male,80573,254733470633,Private law,LAW
-Daniel,Mwiti,Female,37531,254716266413,Educational Administration and Planning,EDU
-Alexandra,Bundi,Female,21431,254789931870,Educational Psychology,EDU
-Mildred,Lekodesa,Female,50449,254753589869,Public health,HEALTH_SCI
-Wilfred,Onsombi,Female,85735,254725534322,Economics,SOC_SCI
-James,Maguru,Female,71852,254726282134,Philosophy,SOC_SCI
-Faith,Iminza,Male,48440,254726377806,Curriculum and Instruction,EDU
-Benard,Kipkemoi,Male,92243,254756143663,Management,BUS
-Hargreves,Mwanthi,Female,89708,254734732888,Arts and Physical Education,EDU
-Phenuel,Jepkemei,Female,95843,254734532060,Political science,SOC_SCI
-Moraa,Omae,Female,40064,254712294436,Marketing,BUS
-Nancy,Egesa,Male,38974,254755475016,Computer Science,PHY_SCI
-Erick,Rotich,Male,56696,254719395781,Educational Psychology,EDU
-Andrew,Bwire,Female,88778,254755205448,International Law,LAW
-Zachaeus,Wambiru,Female,95108,254749426860,Human Rights Law,LAW
-Anastacia,Nthoki,Female,40489,254714840456,Human Resource Management,BUS
-Leah,Chepkemoi,Male,38052,254775211305,Educational Administration and Planning,EDU
-Mark,Gathoni,Female,42198,254792650407,Dentistry,HEALTH_SCI
-Calvince,Rioba,Female,43081,254799892548,Chemistry,PHY_SCI
-Hillary,Ndeke,Male,58268,254735228321,Nutrition and Dietetics,HEALTH_SCI
-Diana,Mucheru,Male,46156,254783099077,Human Resource Management,BUS
-Aggrey,Mumalla,Female,77547,254752348078,Technical and Vocational Education,EDU
-Edwin,Nasambu,Male,93092,254798985223,Operations and supply chain management,BUS
-Moraa,Wanjii,Female,30418,254715855593,International Law,LAW
-Moses,Maguru,Male,63152,254778134351,Arts and Physical Education,EDU
-Erick,Mongare,Female,70415,254773819101,Science and Mathematics Education,EDU
-Hellen,Torotich,Male,58080,254725331726,Operations and supply chain management,BUS
-Padson,Torotich,Male,32498,254767496907,Sociology,SOC_SCI
-Margaret,Cherotich,Male,85988,254747971835,History and Political Science,SOC_SCI
-Emma,Chege,Female,96149,254757027773,Pharmacy,HEALTH_SCI
-Judith,Mukangai,Male,48186,254795236875,Marketing,BUS
-Ronald,Mwaura,Male,64575,254716166886,Supply Chain and Logistics,BUS
-Francis,Riungu,Male,97804,254765362890,Arts and Physical Education,EDU
-Hespon,Odhiambo,Male,11151,254733675577,Commercial law,LAW
-Victor,Gathoni,Female,61328,254760855216,Human Resource Management,BUS
-Ibrahim,Omulimi,Male,21706,254736401328,Language and Literacy Education,EDU
-Jared,Ng'ang'a,Male,19870,254714171490,Political science,SOC_SCI
-Francis,Sakwa,Male,56695,254783922195,Educational Psychology,EDU
-Polyne,Mose,Female,11652,254741165130,Medical laboratory sciences,HEALTH_SCI
-Richard,Wanjiru,Female,11148,254767742288,Marketing,BUS
-Stephen,Mukangai,Female,19425,254792941648,Math,PHY_SCI
-Wilson,Ondachi,Male,29415,254787804140,Technical and Vocational Education,EDU
-Geoffrey,Ochieng,Male,38487,254776586554,Physiotherapy,HEALTH_SCI
-Fred,Kitulu,Male,66151,254739715060,Human Resource Management,BUS
-Naftal,Ongoma,Female,62571,254787364782,Physiotherapy,HEALTH_SCI
-George,Otunga,Female,73633,254757801609,Supply Chain and Logistics,BUS
-Hargreves,Kirimi,Female,21653,254750471057,Chemistry,PHY_SCI
-Fred,Odhiambo,Female,66733,254727054195,Pharmacy,HEALTH_SCI
-Judith,Madungu,Male,99303,254763077993,Human Rights Law,LAW
-Moses,Kipkemoi,Male,57600,254718557328,Communication and Media Studies,SOC_SCI
-Okuta,Nyakundi,Male,29729,254796288798,Psychology,SOC_SCI
-Betty,Odenda,Male,94496,254731964400,Business Administration,BUS
-Faith,Egesa,Female,97853,254733251685,Strategic Management,BUS
-Judy,Mibei,Female,27625,254785438497,Political science,SOC_SCI
-Maxwell,Mbithi,Female,59960,254782393595,Business Administration,BUS
-Wilson,Nasambu,Female,37073,254793812388,Psychology,SOC_SCI
-Kombe,Mwaura,Male,27112,254752690608,Strategic Management,BUS
-Audrey,Mutaki,Female,51954,254721146843,Humanities and Social Sciences Education,EDU
-Irene,Mbithi,Female,66999,254734703096,Public health,HEALTH_SCI
-Hargreves,Ochola,Female,50458,254734063090,Educational Psychology,EDU
-Emma,Ahmed,Female,56472,254780480635,Accounting and finance,BUS
-Emmy,Karoli,Male,13913,254787955940,Management,BUS
-Francis,Iminza,Male,10338,254765710342,Educational Psychology,EDU
-Luke,Mose,Female,87425,254791135012,Anthropology,SOC_SCI
-Ayalo,Nandeke,Male,86528,254749453062,International Business,BUS
-Jennifer,Amusala,Female,49770,254714703894,Curriculum and Instruction,EDU
-Edwin,Nekesa,Male,86877,254759087346,Commercial law,LAW
-Annex,Gikonyo,Female,93467,254713688190,Physics,PHY_SCI
-Maurice,Ouma,Female,24557,254789444943,Public Administration,SOC_SCI
-Antony,Kitulu,Female,61716,254788172992,Political science,SOC_SCI
-Eliud,Gitonga,Female,84494,254720255979,Management,BUS
-Hesborne,Ochoi,Male,60285,254752516187,Arts and Physical Education,EDU
-Fred,Araya,Male,17310,254737343225,Math,PHY_SCI
-Lilian,Kiringa,Female,23565,254758725596,Computer Science,PHY_SCI
-Hesbon,Mutheki,Female,89258,254759902111,Nutrition and Dietetics,HEALTH_SCI
-Leah,Maguru,Female,54562,254765839520,Labour and Employment Law,LAW
-Millicent,Lekodesa,Female,17666,254727947309,Psychology,SOC_SCI
-Thomas,Gichana,Female,20473,254735861685,Human Rights Law,LAW
-Gerry,Otunga,Male,36268,254717389950,Anthropology,SOC_SCI
-Dorothy,Syongok,Male,17899,254794107386,Sociology,SOC_SCI
-Diana,Odhiambo,Male,72883,254741699563,Dentistry,HEALTH_SCI
-William,Mutheki,Male,70564,254755961764,Pharmacy,HEALTH_SCI
-Jaspher,Madungu,Female,25893,254792154099,Curriculum and Instruction,EDU
-Douglas,Libese,Male,73622,254736999269,Anthropology,SOC_SCI
-Benard,Bethwell,Female,52219,254731935863,Nutrition and Dietetics,HEALTH_SCI
-Winrose,Torotich,Male,27156,254717457733,Nutrition and Dietetics,HEALTH_SCI
-Obadiah,Nyaundi,Male,65125,254756990725,Humanities and Social Sciences Education,EDU
-Maureen,Ibelia,Female,27283,254753141789,Business Administration,BUS
-Irene,Nduati,Male,77694,254731634644,Management,BUS
-Phenuel,Juma,Male,73542,254740234839,Physiotherapy,HEALTH_SCI
-Thomas,Gitau,Male,13471,254734217653,Supply Chain and Logistics,BUS
-Winrose,Ongoma,Female,12550,254710648093,Commercial law,LAW
-Andrew,Muleke,Male,74065,254777795047,Strategic Management,BUS
-Audrey,Kyuu,Female,38724,254799167775,Health Management,HEALTH_SCI
-Leah,Njoroge,Male,61805,254783680046,Operations and supply chain management,BUS
-Kennedy,Mwaura,Female,74975,254722898625,Chemistry,PHY_SCI
-Edwin,Paul Kioko,Female,42821,254727467171,Physics,PHY_SCI
-Lena,Wamalwa,Female,88763,254742926969,Human Rights Law,LAW
-Kipkorir,Murango,Male,84388,254772281380,Human Rights Law,LAW
-Ruben,Nduati,Male,40013,254792161917,Psychology,SOC_SCI
-Mark,Wafula,Female,76822,254767134134,Marketing,BUS
-Joel,Temba,Female,30389,254790656670,Math,PHY_SCI
-Janeth,Rono,Female,25248,254730247542,Curriculum and Instruction,EDU
-Vincent,Kiringa,Male,44690,254793882515,Psychology,SOC_SCI
-Isaiah,Shitekha,Female,48373,254717073162,Medical laboratory sciences,HEALTH_SCI
-Edwin,Kerubo,Male,65028,254729271529,Physiotherapy,HEALTH_SCI
-Ronoh,Gitonga,Male,26862,254752860645,Public health,HEALTH_SCI
-Doreen,Gitau,Female,77664,254782141675,Private law,LAW
-Luke,Omukanda,Female,27684,254716075131,Language and Literacy Education,EDU
-Polyne,Kinoti,Female,78247,254728797695,Criminal Law,LAW
-Kombe,Micere,Female,11630,254775359966,Economics,SOC_SCI
-Ruth,Nzioki,Female,54312,254791295490,Language and Literacy Education,EDU
-Naftal,Mule,Male,36347,254754675687,Pharmacy,HEALTH_SCI
-Lilian,Okeyo,Female,25575,254781581911,Public health,HEALTH_SCI
-Hellen,Gicheru,Male,62143,254763546880,Humanities and Social Sciences Education,EDU
-Alexandra,Lusigi,Male,22417,254775660883,Operations and supply chain management,BUS
-Elijah,Omukanda,Male,81382,254758660771,International Law,LAW
-Mogusu,Ibelia,Male,25334,254795308418,Economics,SOC_SCI
-Wilson,Ndoni,Male,99822,254735467534,Human Resource Management,BUS
-Ngeno,Maina,Male,10331,254724209475,Accounting and finance,BUS
-Polyne,Gatende,Female,84958,254736015988,Dentistry,HEALTH_SCI
-Fred,Madungu,Male,91445,254734834777,Curriculum and Instruction,EDU
-Jonathan,Kimani,Female,95204,254748245525,Physiotherapy,HEALTH_SCI
-Omar,Kiringa,Female,35364,254786778913,Commercial law,LAW
-Sonia,Ireri,Male,88477,254745625729,Economics,SOC_SCI
-Esther,Ndeta,Male,71538,254711743897,Humanities and Social Sciences Education,EDU
-Padson,Mbithi,Male,50960,254711269232,Psychology,SOC_SCI
-Mogusu,Wanyonyi,Female,97524,254793258983,Computer Science,PHY_SCI
-Moses,Cherotich,Female,14253,254756964162,Health Management,HEALTH_SCI
-Christine,Muleke,Male,87130,254733086766,Anthropology,SOC_SCI
-Nicholas,Ondari,Male,18221,254784289638,Human Rights Law,LAW
-Luke,Karoli,Male,86709,254726396741,Physiotherapy,HEALTH_SCI
-Lydia,Wanjiru,Female,81357,254728745158,Public health,HEALTH_SCI
-Maurice,Rono,Female,56037,254761730126,Strategic Management,BUS
-Richard,Gitonga,Male,99753,254781059826,Public law,LAW
-Hillary,Makokha,Female,64616,254784768019,Public law,LAW
-Gerry,Temba,Female,40650,254725114740,History and Political Science,SOC_SCI
-Robina,Mutua,Male,65263,254755593607,Philosophy,SOC_SCI
-Naftal,Nthoki,Female,22997,254712109324,Strategic Management,BUS
-Antony,Rasto,Male,60179,254711561083,Anthropology,SOC_SCI
-Wilson,Ndeta,Male,40040,254730679915,Marketing,BUS
-Emma,Temba,Female,21594,254790598759,Curriculum and Instruction,EDU
-Millicent,Makokha,Male,42624,254710314990,Accounting and finance,BUS
-Moraa,Misoi,Female,40022,254742541410,Operations and supply chain management,BUS
-Janeth,Nduati,Male,70652,254733967019,Strategic Management,BUS
-Peter,Ochieng,Male,72284,254765714102,Marketing,BUS
-Padson,Marete,Male,34944,254768019274,Psychology,SOC_SCI
-Zachaeus,Ibelia,Male,70205,254712822851,Supply Chain and Logistics,BUS
-Doreen,Mutungu,Male,17204,254717960138,Anthropology,SOC_SCI
-Hellen,Simion,Male,15175,254733428753,Nutrition and Dietetics,HEALTH_SCI
-Collins,Ndeta,Female,33027,254781875636,Math,PHY_SCI
-Doreen,Ngumbi,Male,25972,254784830059,Dentistry,HEALTH_SCI
-Kombe,Hudson,Female,79680,254758992051,Science and Mathematics Education,EDU
-Migiro,Ndeke,Female,10728,254718554109,Language and Literacy Education,EDU
-Caleb,Bwire,Female,88605,254799494537,Psychology,SOC_SCI
-Antony,Kirimi,Male,49747,254750025400,Jurisprudence and legal theory,LAW
-Zachary,Karori,Female,72457,254788318665,Environmental science,PHY_SCI
-David,Mwaura,Male,16521,254752679538,Commercial law,LAW
+Emily,Munyoki,Female,688479,254786876104,Criminal Law,LAW
+Emily,Ogechi,Male,643245,254787792958,Physics,PHY_SCI
+Audrey,Nakhumicha,Male,652263,254722790261,Physics,PHY_SCI
+Emily,Wafula,Female,632439,254725339556,Jurisprudence and Legal Theory,LAW
+Frank,Nyabios,Male,675416,254780256541,Legal Skills,LAW
+Peter,Ireri,Male,634996,254753488161,Public Law,LAW
+Zachaeus,Musembi,Female,653310,254779733485,Math,PHY_SCI
+Douglas,Jemeli,Female,615353,254796670462,Legal Skills,LAW
+Omar,Chepchirchir,Male,680650,254710721902,Private Law,LAW
+Andrew,Ng'ang'a,Female,616359,254724213208,Physics,PHY_SCI
+William,Gitura,Male,661081,254749742803,Computer Science,PHY_SCI
+Joyline,Lusigi,Male,641487,254759050141,Criminal Law,LAW
+Naftal,Bwire,Female,628548,254727336275,Public Law,LAW
+Thomas,Wamalwa,Female,636728,254719693240,Criminal Law,LAW
+Luke,Ngumbi,Female,690490,254792119656,Computer Science,PHY_SCI
+Wesley,Mucheru,Female,653201,254712036002,Criminal Law,LAW
+Ronoh,Kirui,Female,619136,254767750534,Math,PHY_SCI
+Mark,Nzioki,Male,666774,254760139202,Criminal Law,LAW
+Obadiah,Ndeke,Female,625223,254713527274,Math,PHY_SCI
+Bonface,Saiti,Female,610824,254798099215,Legal Skills,LAW
+Alexandra,Ooko,Female,664759,254711527812,Jurisprudence and Legal Theory,LAW
+Omar,Ndang'a,Female,672591,254793724162,Jurisprudence and Legal Theory,LAW
+Richard,Anaya,Male,667129,254728267186,Math,PHY_SCI
+Josphat,Madungu,Female,615742,254748162260,Physics,PHY_SCI
+Zachaeus,Ajuk,Male,675240,254770054523,Private Law,LAW
+Obadiah,Odhiambo,Female,677809,254764825787,Legal Skills,LAW
+Francis,Iminza,Female,633071,254784672715,Private Law,LAW
+Moses,Mbithi,Male,688876,254775242790,Computer Science,PHY_SCI
+Moses,Riungu,Male,623552,254735005488,Math,PHY_SCI
+James,Omukanda,Female,655703,254733761375,Physics,PHY_SCI
+Mildred,Gichana,Female,690523,254799804595,Jurisprudence and Legal Theory,LAW
+Kennedy,Nandeke,Female,670821,254721721490,Math,PHY_SCI
+Mark,Maluli,Female,641880,254749887866,Private Law,LAW
+Betty,Mutheki,Female,665176,254762990882,Computer Science,PHY_SCI
+Fred,Omae,Male,629264,254725769200,Public Law,LAW
+Effie,Muleke,Female,657905,254740105618,Jurisprudence and Legal Theory,LAW
+Lilian,Chege,Male,686393,254721729023,Jurisprudence and Legal Theory,LAW
+Okuta,Bethwell,Female,698202,254789676091,Math,PHY_SCI
+Shadrack,Rotich,Male,617132,254778796948,Physics,PHY_SCI
+Eliud,Mwishe,Male,653768,254758634394,Public Law,LAW
+Catherine,Kioko,Female,689669,254716767008,Computer Science,PHY_SCI
+Kipkorir,Mulinge,Male,613389,254752065412,Computer Science,PHY_SCI
+Delvin,Ndeke,Female,700325,254722601107,Computer Science,PHY_SCI
+Jack,Kaguamba,Female,700120,254773569660,Computer Science,PHY_SCI
+Farida,Ogechi,Male,645284,254769967122,Computer Science,PHY_SCI
+Peter,Wangwe,Male,652459,254791060850,Computer Science,PHY_SCI
+Eliud,Njerera,Male,667588,254780135961,Computer Science,PHY_SCI
+Moses,Mbithi,Female,629578,254783586993,Computer Science,PHY_SCI
+Moraa,Lekodesa,Female,664140,254739553810,Computer Science,PHY_SCI
+Fred,Ndeto,Male,693955,254715337650,Computer Science,PHY_SCI

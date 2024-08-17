@@ -1,4 +1,26 @@
 {% extends "portal/layout.html"%}
 {% block body %}
-<a href="{% url 'login' %}">LogOut</a>
+<nav class="menu">
+    <button class="menu-options btn btn-light">
+        <div>
+            Profile
+        </div>
+    </button>
+    <button class="menu-options btn btn-light">
+        <div>
+            Unit Registration
+        </div>
+    </button>
+    <button class="menu-options btn btn-light">
+        <div>
+            Accomodation Registration
+        </div>
+    </button>
+    <button class="menu-options btn btn-light">
+        <div>
+            Resit/Special Registration
+        </div>
+    </button>
+</nav>
+<div class="main"></div>
 {% endblock %}
