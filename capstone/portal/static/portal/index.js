@@ -71,7 +71,7 @@ async function faculty_details(){
                                         fetch('make_hod', {
                                             method: 'PUT',
                                             body: JSON.stringify({
-                                                "lecturer": `${lec}`,
+                                                "lecturer": `${lec.username}`,
                                                 "status": true
                                             })
                                         })

@@ -18,5 +18,7 @@ urlpatterns = [
     path("upload_courses", views.upload_courses, name="upload_departments"),
     path("register_course", views.register_course, name="register_dept"),
     path("upload_units", views.upload_units, name="upload_units"),
-    path("make_hod", views.make_hod, name="hod")
+    path("make_hod", views.make_hod, name="hod"),
+    path("dept_details", views.dept_details, name="dept_details"),
+    path("assign_unit", views.assign_unit, name="assign_unit")
 ]

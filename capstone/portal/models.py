@@ -21,7 +21,7 @@ class Faculty(models.Model):
         for label in Faculty.Faculties:
             if self.faculty.capitalize() in label.label:
                 self.faculty = label
-                return super().save(*args, **kwargs)
+                return super().save(self, *args, **kwargs)
 
     def name(self):
         for label in Faculty.Faculties:
@@ -39,7 +39,7 @@ class Department(models.Model):
     def serialize(self):
         return {
             "department": self.department,
-            "lecturers": [lecturer.username for lecturer in self.sector.all()],
+            "lecturers": [lecturer.serialize() for lecturer in self.sector.all()],
             "units": [unit.serialize() for unit in self.syllabus.all()]
         }
 
@@ -87,7 +87,7 @@ class User(AbstractUser):
     def save(self, *args, **kwargs):
         if not self.pk:
             self.role = self.base_role
-            return super().save(*args, **kwargs)
+        return super().save(*args, **kwargs)
 
     def serialize(self):
         return {
@@ -141,8 +141,8 @@ class Lecturer(User):
     lecturer = LecturerManager()
 
     department = models.ForeignKey(Department, on_delete=models.DO_NOTHING, null=True, related_name="sector")
-    units = models.ManyToManyField(Unit, related_name="professor", null=True)
-    office = models.CharField(max_length=50, null=True)
+    units = models.ManyToManyField(Unit, related_name="professor", null=True, blank=True)
+    office = models.CharField(max_length=50, null=True, blank=True)
 
     def serialize(self):
         return {
@@ -151,9 +151,9 @@ class Lecturer(User):
             "last_name": self.last_name,
             "gender": self.gender,
             "phone_number": self.phone_number,
-            "department": self.department,
-            "faculty": self.faculty,
-            "office": self.office,
+            "department": self.department.department,
+            "faculty": self.faculty.faculty,
+            "units": [unit.serialize() for unit in self.units.all()]
         }
 
     class Meta:

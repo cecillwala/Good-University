@@ -7,7 +7,7 @@
             Profile
         </div>
     </button>
-    <button onclick="ShowPage('#main','#lecturers')" class="menu-options btn btn-light">
+    <button id="dept-lec-view" class="menu-options btn btn-light">
         <div>
             Lecturers
         </div>
@@ -24,20 +24,28 @@
         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
         <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
         </svg>
-        {{ user.first_name }}
-        {{ user.last_name }}
-        {% if user.is_active %}
+        {{ lecturer.first_name }}
+        {{ lecturer.last_name }}
+        {% if lecturer.is_active %}
         Yes
         {% else %}
         No
         {% endif %}
-        {{ user.email }}
-        {{ user.gender }}
-        {{ user.position }}
-        {{ user.department }}
-        {{ user.office }}
+        {{ lecturer.email }}
+        {{ lecturer.gender }}
+        {{ lecturer.position }}
+        {{ lecturer.department.department }}
+        {{ lecturer.office }}
     </div>
-    <div id="lecturers">lecturers</div>
+    <div id="lecturers" class="list">lecturers</div>
+    <div id="lec" class="list">
+        <div id="lec-profile"></div>
+        <form method="post" id="add-lec-unit">
+            {% csrf_token %}
+            <input type="text" placeholder="Add Unit" id="unit">
+            <input type="submit" value="Add Unit">
+        </form>
+    </div>
     <div id="units">units</div>
 </div>
 {% endblock %}

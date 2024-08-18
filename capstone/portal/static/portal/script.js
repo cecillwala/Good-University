@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     ShowPage("#main", "#profile");
+    dept_details();
 });
 
 
@@ -123,31 +124,6 @@ function warnings(status, section, user){
     }
 }
 
-function upload_departments(){
-    ShowPage("#main", "#dept-registration");
-    ShowPage("#dept-registration", "#dept-file-upload");
-    document.querySelector("#dept-csv").addEventListener('change', () => {
-        console.log(":)");
-        document.querySelector("#dept-upload").setAttribute('class','btn btn-outline-success me-2');
-        const file_name = document.querySelector("#dept-csv").value.split("\\");
-        document.querySelector("#dept-upload").value = file_name[2];
-        document.querySelector("#dept-status").outerHTML = `
-        <div id="dept-status" class="alert alert-danger">
-            <strong>Warning! Submitting file has no reverse process!</strong>
-        </div>
-        `;
-    });
-    document.querySelector("#upload-dept-form").addEventListener('submit', (event) => {
-        event.preventDefault();
-        fetch('upload_depts', {
-            method: 'POST',
-            body: document.querySelector("#dept-csv").files[0]
-        })
-        .then(response => response.json())
-        .then(status => warnings(status, "dept-status", "Department"));
-    });
-}
-
 
 function register_department(){
     ShowPage("#department-registration", "#single-department");
@@ -188,4 +164,54 @@ function upload_data(data){
         .then(response => response.json())
         .then(status => warnings(status, `${data}-status`, `${data[0].toUpperCase()}${data.slice(1)}`));
     });
+}
+
+
+async function dept_details(){
+    const response = await fetch("dept_details");
+    const lecs = await response.json();
+    console.log(lecs);
+
+    document.querySelector("#dept-lec-view").addEventListener('click', () => {
+        ShowPage("#main", "#lecturers");
+        document.querySelector("#lecturers").innerHTML = '';
+        lecs.lecturers.forEach(lec => {
+            let lec_btn = document.createElement('button');
+            let hr = document.createElement('hr');
+            lec_btn.addEventListener('click', () => {
+                ShowPage("#main", "#lec");
+                let units_div = document.createElement('div');
+                units_div.setAttribute('class', 'list');
+                if(lec.units.length <= 0){
+                    units_div.innerHTML = `${lec.first_name} ${lec.last_name} is not teaching any units.`;
+                }
+                else{
+                    lec.units.forEach(unit => {
+                        let unit_div = document.createElement('div');
+                        unit_div.innerHTML = `${unit.unit_code}: ${unit.unit}`;
+                        units_div.append(unit_div, hr);
+                    });
+                }
+                document.querySelector("#lec-profile").innerHTML = '';
+                document.querySelector("#lec-profile").append(lec.first_name, hr, lec.last_name, hr, lec.phone_number, hr, units_div);
+
+                document.querySelector("#add-lec-unit").addEventListener('submit', (event) => {
+                    event.preventDefault();
+                    fetch('assign_unit', {
+                        method: 'PUT',
+                        body: JSON.stringify({
+                            unit: document.querySelector("#unit").value,
+                            lecturer:lec.username
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(status => console.log(status));
+                });
+            });
+            lec_btn.setAttribute('class', 'btn btn-light');
+            lec_btn.innerHTML = lec.username;
+            document.querySelector("#lecturers").append(lec_btn, hr);
+        });
+    });
+
 }

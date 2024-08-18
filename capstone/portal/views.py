@@ -17,28 +17,28 @@ from django.contrib.auth.models import Group
 # Create your views here.
 @login_required(login_url="login")
 def index(request):
-    if request.user.is_superuser:
-        return render(request, "administration/hod-index.html")
-    elif request.user.groups.contains(Group.objects.get(name="HR")):
-        return render(request, "administration/hr-index.html")
-    else:
-        return render(request, "portal/index.html")
+        if request.user.groups.contains(Group.objects.get(name="hod")):
+            return render(request, "administration/hod-index.html", {
+                "lecturer": Lecturer.lecturer.get(username=request.user.username)
+            })
 
 
 def login_view(request):
     if request.method == "POST":
         user = authenticate(
             request,
-            username=request.POST["employeeId"],
-            password=request.POST["password"],
+        username=request.POST["userID"],
+        password=request.POST["password"],
         )
-        if user is None:
+        print(request.POST["userID"], request.POST["password"])
+        print(user)
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect(reverse("index"))
+        elif user is None:
             return render(
                 request, "portal/login.html", {"message": "Invalid ID and/or password"}
             )
-        else:
-            login(request, user)
-            return HttpResponseRedirect(reverse("index"))
     logout(request)
     return render(request, "portal/login.html")
 
@@ -47,17 +47,16 @@ def register_view(request):
     if request.method == "POST":
         if request.POST["password"] == request.POST["confirmation"]:
             try:
-                user = User.objects.get(username=request.POST["username"])
+                user = User.objects.get(username=request.POST["userID"])
             except ObjectDoesNotExist:
                 return render(
                     request, "portal/register.html", {"no_user": "ID does not exist"}
                 )
-            user.set_password(request.POST["password"])
+            print(user.username, request.POST["password"])
+            user.set_password(f'{request.POST["password"]}')
             user.save()
-            if request.POST["rank"] == "Student":
-                return HttpResponseRedirect(reverse("index"))
-            else:
-                return HttpResponseRedirect(reverse("emp_index"))
+            login(request, user)
+            return HttpResponseRedirect(reverse("index"))
         else:
             return render(
                 request, "portal/register.html", {"message": "Passwords do not match"}
@@ -496,3 +495,31 @@ def make_hod(request):
         else:
             hod.groups.remove(perms)
         return JsonResponse({"status":200})
+
+
+@login_required(login_url="login")
+@csrf_exempt
+def dept_details(request):
+    hod = Lecturer.lecturer.get(username=request.user.username)
+    dept = Department.objects.get(department=hod.department.department)
+    return JsonResponse(dept.serialize())
+
+
+@login_required(login_url="login")
+@csrf_exempt
+def assign_unit(request):
+    if request.method == 'PUT':
+        data = json.loads(request.body)
+        try:
+            unit = Unit.objects.get(unit_code=data["unit"])
+        except Unit.DoesNotExist:
+            return JsonResponse({"status": 935})
+        try:
+            lec = Lecturer.lecturer.get(username=data["lecturer"])
+            lec.units.add(unit)
+            lec.save()
+        except Lecturer.DoesNotExist:
+            return JsonResponse({"status": 935})
+        return JsonResponse({"status": 200})
+    else:
+        return JsonResponse({"error": "PUT method required"})
