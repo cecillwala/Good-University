@@ -47,16 +47,16 @@ function registration_view(){
     ShowPage('#main', '#student-registration');
     const d = new Date();
     month = d.getMonth();
-    // if (month >= 7){
-    //     console.log(month);
-    //     ShowPage('#student-registration', '#state');
-    //     document.querySelector("#state").innerHTML = `
-    //     <h4>${d.getFullYear()}/${d.getFullYear() + 1} Student Registration ended on the 31st of July.</h4>
-    //     `;
-    // }
-    // else{
+    if (month >= 7){
+        console.log(month);
+        ShowPage('#student-registration', '#state');
+        document.querySelector("#state").innerHTML = `
+        <h4>${d.getFullYear()}/${d.getFullYear() + 1} Student Registration ended on the 31st of July.</h4>
+        `;
+    }
+    else{
         ShowPage('#student-registration', '#file-upload');
-    // }
+    }
 }
 
 
@@ -85,6 +85,12 @@ function warnings(status, section, user){
     console.log(status);
     console.log(status.status);
     switch(status.status){
+        case 200:
+            document.querySelector(`#${section}`).outerHTML = `
+            <div class="alert alert-success" id=${section}>
+                <strong>Success! ${user}'s details uploaded successfully!</strong>
+            </div>`;
+            break;
         case 935:
             document.querySelector(`#${section}`).outerHTML = `
         <div class="alert alert-danger" id=${section}>
@@ -94,7 +100,7 @@ function warnings(status, section, user){
         case 912:
         document.querySelector(`#${section}`).outerHTML = `
             <div class="alert alert-danger" id=${section}>
-                <strong>912 ERROR! Invalid course entered!</strong>
+                <strong>912 ERROR! Invalid ${user} entered!</strong>
             </div>`;
             break;
         case 900:
@@ -107,12 +113,6 @@ function warnings(status, section, user){
             document.querySelector(`#${section}`).outerHTML = `
             <div class="alert alert-danger" id=${section}>
                 <strong>905 ERROR! Faculty does NOT exist!</strong>
-            </div>`;
-            break;
-        case 200:
-            document.querySelector(`#${section}`).outerHTML = `
-            <div class="alert alert-success" id=${section}>
-                <strong>Success! ${user}'s details uploaded successfully!</strong>
             </div>`;
             break;
         default:

@@ -61,6 +61,11 @@
                         Upload Units
                     </div>
                 </button>
+                <button onclick="upload_data('room')" class="btn btn-light menu-options">
+                    <div>
+                        Upload Rooms
+                    </div>
+                </button>
             </nav>
             <div id="main" class="main">
                 <div id="profile">
@@ -265,6 +270,25 @@
                             <input class="btn btn-outline-success me-2 disabled" type="submit" id="unit-upload" value="Upload file">
                         </form>
                         <button class="btn btn-outline-primary" onclick="register_unit()">Register Single unit</button>
+                    </div>
+                </div>
+                <div id="room-registration" class="student-registration">
+                    <div id="room-file-upload">
+                        <h3>Upload Rooms</h3>
+                        <br>
+                        <div id="room-status"></div>
+                        <div><strong>NOTE: </strong> File must be an excel file `file.xlsx`</div>
+                        <br>
+                        <form id="upload-room-form" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <label for="room-csv" class="file-input btn btn-primary">
+                                Choose file
+                                <input type="file" name="file" id="room-csv">
+                            </label>
+                            <span id="filename"></span>
+                            <input class="btn btn-outline-success me-2 disabled" type="submit" id="room-upload" value="Upload file">
+                        </form>
+                        <button class="btn btn-outline-primary">Register Single Room</button>
                     </div>
                 </div>
             </div>

@@ -17,22 +17,27 @@ from django.contrib.auth.models import Group
 # Create your views here.
 @login_required(login_url="login")
 def index(request):
-        if request.user.is_superuser:
-            return render(request, "administration/index.html")
-        elif request.user.groups.contains(Group.objects.get(name="hod")):
-            return render(request, "administration/hod-index.html", {
-                "lecturer": Lecturer.lecturer.get(username=request.user.username)
-            })
-        else:
-            return render(request, "portal/index.html")
+    if request.user.is_superuser:
+        return render(request, "administration/index.html")
+    elif request.user.groups.contains(Group.objects.get(name="hod")):
+        return render(request,"administration/hod-index.html", {
+            "lecturer": Lecturer.lecturer.get(username=request.user.username)
+        }
+        )
+    else:
+        return render(request, "portal/index.html",{
+            "student": Student.student.get(username=request.user.username),
+            "dorms": [accom.name() for accom in Residence.objects.all()]
+            }
+        )
 
 
 def login_view(request):
     if request.method == "POST":
         user = authenticate(
             request,
-        username=request.POST["userID"],
-        password=request.POST["password"],
+            username=request.POST["userID"],
+            password=request.POST["password"],
         )
         print(request.POST["userID"], request.POST["password"])
         print(user)
@@ -89,17 +94,17 @@ def upload_students(request):
                 try:
                     match row["faculty"].strip():
                         case "LAW":
-                            id = f'LL-{int(id) + 1}-{yr}'
+                            id = f"LL-{int(id) + 1}-{yr}"
                         case "PHY_SCI":
-                            id = f'PS-{int(id) + 1}-{yr}'
+                            id = f"PS-{int(id) + 1}-{yr}"
                         case "EDU":
-                            id = f'EDU-{int(id) + 1}-{yr}'
+                            id = f"EDU-{int(id) + 1}-{yr}"
                         case "SOC_SCI":
-                            id = f'SC-{int(id) + 1}-{yr}'
+                            id = f"SC-{int(id) + 1}-{yr}"
                         case "BUS":
-                            id = f'BU-{int(id) + 1}-{yr}'
+                            id = f"BU-{int(id) + 1}-{yr}"
                         case "HEALTH_SCI":
-                            id = f'HS-{int(id) + 1}-{yr}'
+                            id = f"HS-{int(id) + 1}-{yr}"
                         case _:
                             return JsonResponse({"status": 912})
                     try:
@@ -338,8 +343,8 @@ def upload_departments(request):
                     return JsonResponse({"status": 905})
         return JsonResponse({"status": 200})
     else:
-        return JsonResponse({"error":"POST method required."})
-    
+        return JsonResponse({"error": "POST method required."})
+
 
 @permission_required("add_department")
 @login_required(login_url="login")
@@ -388,7 +393,8 @@ def upload_courses(request):
                     return JsonResponse({"status": 905})
         return JsonResponse({"status": 200})
     else:
-        return JsonResponse({"error":"POST method required"})
+        return JsonResponse({"error": "POST method required"})
+
 
 @permission_required("add_course")
 @login_required(login_url="login")
@@ -430,7 +436,7 @@ def upload_units(request):
                                 department=dept,
                                 unit=row["unit"],
                                 unit_code=row["unit_code"],
-                                year_sem=row["year_sem"]
+                                year_sem=row["year_sem"],
                             )
                             unit.save()
                             course = Course.objects.get(course=row["course"])
@@ -443,34 +449,34 @@ def upload_units(request):
                     return JsonResponse({"status": 905})
         return JsonResponse({"status": 200})
     else:
-        return JsonResponse({"error":"POST method required"})
-    
+        return JsonResponse({"error": "POST method required"})
+
 
 @permission_required("add_lecturer")
 @login_required(login_url="login")
 @csrf_exempt
 def add_unit(request):
     if request.method == "POST":
-       data = json.loads(request.body)
-       try:
-           course = Course.objects.get(course=data["course"]) 
-       except Course.DoesNotExist:
-           return JsonResponse({"status": 935})
-       try:
-           unit  = Unit.objects.get(unit_code=data["unit"])
-           unit.course.add(course)
-       except Unit.DoesNotExist:
-           return JsonResponse({"status": 405 })
-       return JsonResponse({"status": 200})
+        data = json.loads(request.body)
+        try:
+            course = Course.objects.get(course=data["course"])
+        except Course.DoesNotExist:
+            return JsonResponse({"status": 935})
+        try:
+            unit = Unit.objects.get(unit_code=data["unit"])
+            unit.course.add(course)
+        except Unit.DoesNotExist:
+            return JsonResponse({"status": 405})
+        return JsonResponse({"status": 200})
     else:
         return JsonResponse({"error": "POST method required"})
-    
+
 
 @permission_required("add_lecturer")
 @login_required(login_url="login")
 @csrf_exempt
 def remove_unit(request):
-    if request.method == 'PUT':
+    if request.method == "PUT":
         data = json.loads(request.body)
         try:
             course = Course.objects.get(course=data["course"])
@@ -484,7 +490,7 @@ def remove_unit(request):
         return JsonResponse({"status": 200})
     else:
         return JsonResponse({"error": "PUT method required"})
-    
+
 
 @permission_required("change_lecturer")
 @login_required(login_url="login")
@@ -498,7 +504,7 @@ def make_hod(request):
             hod.groups.add(perms)
         else:
             hod.groups.remove(perms)
-        return JsonResponse({"status":200})
+        return JsonResponse({"status": 200})
 
 
 @login_required(login_url="login")
@@ -512,7 +518,7 @@ def dept_details(request):
 @login_required(login_url="login")
 @csrf_exempt
 def assign_unit(request):
-    if request.method == 'PUT':
+    if request.method == "PUT":
         data = json.loads(request.body)
         try:
             unit = Unit.objects.get(unit_code=data["unit"])
@@ -527,23 +533,24 @@ def assign_unit(request):
         return JsonResponse({"status": 200})
     else:
         return JsonResponse({"error": "PUT method required"})
-    
+
 
 @login_required(login_url="login")
 @csrf_exempt
 def remove_unit(request, unit, lec):
-    if request.method == 'PUT':
+    if request.method == "PUT":
         remove_unit = Unit.objects.get(unit_code=unit)
         lec = Lecturer.objects.get(username=lec)
         lec.units.remove(remove_unit)
         lec.save()
-        return JsonResponse({"status":200})
+        return JsonResponse({"status": 200})
     else:
-        return JsonResponse({"error":"PUT method required"})
+        return JsonResponse({"error": "PUT method required"})
+
 
 @login_required(login_url="login")
 def lec_details(request, lec):
-    lecturer = Lecturer.lecturer.get(username=lec)    
+    lecturer = Lecturer.lecturer.get(username=lec)
     return JsonResponse(lecturer.serialize())
 
 
@@ -551,3 +558,77 @@ def lec_details(request, lec):
 def unit_details(request, unit):
     unit = Unit.objects.get(unit_code=unit)
     return JsonResponse(unit.serialize())
+
+
+@login_required(login_url="login")
+@csrf_exempt
+def unit_registration(request):
+    student = Student.student.get(username=request.user.username)
+    if request.method == 'PUT':
+        data = json.loads(request.body)
+        unit = Unit.objects.get(unit_code=data)
+        student.units.add(unit)
+        student.save()
+
+    if 7 <= int(datetime.datetime.now().strftime("%m")) <= 12:
+        year = (
+            int(datetime.datetime.now().strftime("%y")) - int(student.username.split("-")[2]) + 1
+        )
+        sem = 0.1
+    elif 1 <= int(datetime.datetime.now().strftime("%m")) <= 4:
+        year = int(datetime.datetime.now().strftime("%y")) - int(
+            student.username.split("-")[2]
+        )
+        sem = 0.2
+    year_sem = float(year + sem)
+    return JsonResponse({
+        "all_units":[
+            {"unit_code": unit.unit_code, "unit": unit.unit}
+            for unit in student.course.topics.filter(year_sem=year_sem)
+        ],
+        "registered_units":[
+            {"unit_code": unit.unit_code, "unit": unit.unit}
+            for unit in student.units.filter(year_sem=year_sem)
+        ]}
+    )
+
+
+@login_required(login_url="login")
+@csrf_exempt
+def upload_rooms(request):
+    if request.method == "POST":
+        file = pd.read_excel(request.body)
+        file.to_csv('portal/static/portal/rooms.csv', header=True, index=False)
+        with open("portal/static/portal/rooms.csv") as rooms:
+            reader = csv.DictReader(rooms)
+            for row in reader:
+                try:
+                    dorm = Residence.objects.get(hostel=row["hostel"])
+                except Residence.DoesNotExist:
+                    return JsonResponse({"status":912})
+                try:
+                    exists = Accomodation.objects.get(
+                        house=dorm,
+                        room=row["room"],
+                        bed=row["bed"])
+                    return JsonResponse({"status":935})
+                except Accomodation.DoesNotExist:
+                    try:
+                        Accomodation.objects.create(
+                            house=dorm,
+                            room=row["room"],
+                            bed=row["bed"]
+                        )
+                    except IntegrityError:
+                        return JsonResponse({"status": 935})
+        return JsonResponse({"status":200})
+    else:
+        return JsonResponse({"status":100})
+    
+
+@login_required(login_url="login")
+def accomodation_registration(request):
+    if request.method == "POST":
+        dorm = Residence.objects.get(hostel=request.POST["dorm"])
+        room = Accomodation.objects.get(house=dorm, room=request.POST["room"], bed=request.POST["bed"])
+        

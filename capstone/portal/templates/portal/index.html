@@ -1,29 +1,57 @@
 {% extends "portal/layout.html"%}
 {% block body %}
 <nav class="menu">
-    <button class="menu-options btn btn-light">
+    <button onclick="ShowPage('#main', '#profile')" class="menu-options btn btn-light">
         <div>
             Profile
         </div>
     </button>
-    <button class="menu-options btn btn-light">
+    <button onclick="unit_registration()" class="menu-options btn btn-light">
         <div>
             Unit Registration
         </div>
     </button>
-    <button class="menu-options btn btn-light">
+    <button onclick="ShowPage('#main', '#accom-registration')" class="menu-options btn btn-light">
         <div>
             Accomodation Registration
         </div>
     </button>
-    <button class="menu-options btn btn-light">
-        <div>
-            Resit/Special Registration
-        </div>
-    </button>
 </nav>
-<div class="main">
-    <div id="profile"></div>
-    <div id="unit-registration"></div>
+<div class="main" id="main">
+    <div id="profile">
+        {{ student.first_name }}
+        {{ student.last_name }}
+        {{ student.course.course }}
+        {{ student.gender }}
+        +{{ student.phone_number }}
+    </div>
+    <div id="unit-registration" >units</div>
+    <div id="accom-registration" class="student-registration">
+        <div id="status">
+            <h4>2024/2025 Accomodation Registration</h4>
+            <br>
+            <div class="alert alert-warning">
+                <strong>ALERT!</strong> Room Booking is closed!
+            </div>
+        </div>
+        <div id="accom-upload">
+            <h4>2024/2025 Accomodation Registration</h4>
+            <br>
+            <h6>Hostels:</h6>
+            <form method="post" action="{% url 'accom_registration' %}">
+                {% csrf_token %}
+                <select name="dorm">
+                    <option>Hostels</option>
+                    {% for dorm in dorms %}
+                    <option>{{ dorm }}</option>
+                    {% endfor %}
+                </select>
+                <input type="number" placeholder="Room" autocomplete="off" required ="room" min="1" max="30">
+                <input type="number" placeholder="Bed" autocomplete="off" name="bed" required min="1" max="3">
+                <br><br>
+                <input type="submit" value="Register Residence" class="btn btn-primary">
+            </form> 
+        </div>
+    </div>
 </div>
 {% endblock %}

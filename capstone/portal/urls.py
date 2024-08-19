@@ -21,7 +21,10 @@ urlpatterns = [
     path("make_hod", views.make_hod, name="hod"),
     path("dept_details", views.dept_details, name="dept_details"),
     path("assign_unit", views.assign_unit, name="assign_unit"),
-    path("lec_details/<str:lec>", views.lec_details, name='lec_details'),
+    path("lec_details/<str:lec>", views.lec_details, name="lec_details"),
     path("unit_details/<str:unit>", views.unit_details, name="unit_details"),
-    path("remove_unit/<str:unit>/<str:lec>", views.remove_unit, name="remove_unit")    
+    path("remove_unit/<str:unit>/<str:lec>", views.remove_unit, name="remove_unit"),
+    path("unit_registration", views.unit_registration, name="unit_registration"),
+    path("upload_rooms", views.upload_rooms, name="upload_rooms"),
+    path("accom_registration", views.accomodation_registration, name="accom_registration")
 ]

@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager, Group
 
 # Create your models here
 
+
 class Faculty(models.Model):
     class Faculties(models.TextChoices):
         PHY_SCI = "PHY_SCI", "Physical Science"
@@ -40,35 +41,74 @@ class Department(models.Model):
         return {
             "department": self.department,
             "lecturers": [lecturer.username for lecturer in self.sector.all()],
-            "units": [{"unit":unit.unit, "unit_code":unit.unit_code} for unit in self.syllabus.all()]
+            "units": [
+                {"unit": unit.unit, "unit_code": unit.unit_code}
+                for unit in self.syllabus.all()
+            ],
         }
 
+
 class Course(models.Model):
-    faculty = models.ForeignKey(Faculty, on_delete=models.DO_NOTHING, related_name="division", null=True)
+    faculty = models.ForeignKey(
+        Faculty, on_delete=models.DO_NOTHING, related_name="division", null=True
+    )
     course = models.CharField(max_length=100, null=True, unique=True)
 
     def serialize(self):
-        return {"course": self.course, 
-                "units": [unit.serialize() for unit in self.topics.order_by("year_sem")]
-            }
+        return {
+            "course": self.course,
+            "units": [unit.serialize() for unit in self.topics.order_by("year_sem")],
+        }
 
 
 class Unit(models.Model):
-    department = models.ForeignKey(Department, on_delete=models.DO_NOTHING, related_name="syllabus")
+    department = models.ForeignKey(
+        Department, on_delete=models.DO_NOTHING, related_name="syllabus"
+    )
     unit_code = models.CharField(max_length=20)
     unit = models.CharField(max_length=100)
     course = models.ManyToManyField(Course, related_name="topics", null=True)
     year_sem = models.FloatField()
 
     def serialize(self):
-        return {"unit_code": self.unit_code, 
-                "unit": self.unit,
-                "yr/sem": self.year_sem,
-                "courses": [course.course for course in self.course.all()],
-                "professors": [professor.username for professor in self.professor.all()],
-                "students": [student.username for student in self.apprentice.all()]
-                }
+        return {
+            "unit_code": self.unit_code,
+            "unit": self.unit,
+            "yr/sem": self.year_sem,
+            "courses": [course.course for course in self.course.all()],
+            "professors": [professor.username for professor in self.professor.all()],
+            "students": [student.username for student in self.apprentice.all()],
+        }
 
+
+class Residence(models.Model):
+    class Hostels(models.TextChoices):
+            MARINGO = "MARINGO", "Maringo"
+            BURUBURU = "BURUBURU", "BuruBuru"
+            NON_RESIDENT = "NON_RESIDENT", "Non Resident"
+            OLD_HALL = "OLD_HALL", "Old Hall"
+            CBD = "CBD", "CBD"
+            THORNTON = "THORNTON", "Thornton"
+
+    hostel = models.CharField(max_length=100, unique=True, choices=Hostels.choices)
+
+    def save(self, *args, **kwargs):
+        for label in Residence.Hostels:
+            if self.hostel.capitalize() in label.label:
+                self.hostel = label
+        return super().save(*args, **kwargs)
+    
+    def name(self):
+         for label in Residence.Hostels:
+            if label == self.hostel:
+                return label.label
+         return None
+
+
+class Accomodation(models.Model):
+    house = models.ForeignKey(Residence, on_delete=models.CASCADE, related_name="dorm",null=True)
+    room = models.IntegerField()
+    bed = models.IntegerField(null=True)
 
 
 class User(AbstractUser):
@@ -113,9 +153,11 @@ class Student(User):
     base_role = User.Role.STUDENT
     student = StudentManager()
 
-    course = models.ForeignKey(Course, on_delete=models.DO_NOTHING, null=True, related_name="study")
+    course = models.ForeignKey(
+        Course, on_delete=models.DO_NOTHING, null=True, related_name="study"
+    )
     units = models.ManyToManyField(Unit, related_name="apprentice", null=True)
-    residence = models.CharField(max_length=100, null=True)
+    residence = models.OneToOneField(Accomodation, on_delete=models.DO_NOTHING, related_name='tenant', null=True)
 
     def serialize(self):
         return {
@@ -143,8 +185,12 @@ class Lecturer(User):
     base_role = User.Role.LECTURER
     lecturer = LecturerManager()
 
-    department = models.ForeignKey(Department, on_delete=models.DO_NOTHING, null=True, related_name="sector")
-    units = models.ManyToManyField(Unit, related_name="professor", null=True, blank=True)
+    department = models.ForeignKey(
+        Department, on_delete=models.DO_NOTHING, null=True, related_name="sector"
+    )
+    units = models.ManyToManyField(
+        Unit, related_name="professor", null=True, blank=True
+    )
     office = models.CharField(max_length=50, null=True, blank=True)
 
     def serialize(self):
@@ -156,7 +202,7 @@ class Lecturer(User):
             "phone_number": self.phone_number,
             "department": self.department.department,
             "faculty": self.faculty.faculty,
-            "units": [unit.serialize() for unit in self.units.all()]
+            "units": [unit.serialize() for unit in self.units.all()],
         }
 
     class Meta:

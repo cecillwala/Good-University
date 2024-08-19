@@ -11,13 +11,13 @@
             {% if no_user %}
                 <div>{{ no_user }}</div>
             {% endif %}
-            <input type="text" placeholder="EmployeeID" name="userID" class="form-control">
+            <input type="text" placeholder="EmployeeID" required name="userID" class="form-control">
         </div>
         <div class="form form-group">
-            <input type="password" name="password" placeholder="Enter Password" class="form-control">
+            <input type="password" name="password" required placeholder="Enter Password" class="form-control">
         </div>
         <div class="form form-group">
-            <input type="password" name="confirmation" placeholder="Confirm Password" class="form-control">
+            <input type="password" name="confirmation" required placeholder="Confirm Password" class="form-control">
             {% if message %}
                 <div>{{ message }}</div>
             {% endif %}
