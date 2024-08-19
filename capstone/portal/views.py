@@ -529,10 +529,25 @@ def assign_unit(request):
         return JsonResponse({"error": "PUT method required"})
     
 
+@login_required(login_url="login")
+@csrf_exempt
+def remove_unit(request, unit, lec):
+    if request.method == 'PUT':
+        remove_unit = Unit.objects.get(unit_code=unit)
+        lec = Lecturer.objects.get(username=lec)
+        lec.units.remove(remove_unit)
+        lec.save()
+        return JsonResponse({"status":200})
+    else:
+        return JsonResponse({"error":"PUT method required"})
+
+@login_required(login_url="login")
 def lec_details(request, lec):
     lecturer = Lecturer.lecturer.get(username=lec)    
     return JsonResponse(lecturer.serialize())
 
+
+@login_required(login_url="login")
 def unit_details(request, unit):
     unit = Unit.objects.get(unit_code=unit)
     return JsonResponse(unit.serialize())

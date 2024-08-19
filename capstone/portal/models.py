@@ -175,6 +175,3 @@ class HR(User):
 
     class Meta:
         verbose_name = "HR"
-
-
-

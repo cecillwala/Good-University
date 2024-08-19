@@ -22,5 +22,6 @@ urlpatterns = [
     path("dept_details", views.dept_details, name="dept_details"),
     path("assign_unit", views.assign_unit, name="assign_unit"),
     path("lec_details/<str:lec>", views.lec_details, name='lec_details'),
-    path("unit_details/<str:unit>", views.unit_details, name="unit_details")
+    path("unit_details/<str:unit>", views.unit_details, name="unit_details"),
+    path("remove_unit/<str:unit>/<str:lec>", views.remove_unit, name="remove_unit")    
 ]

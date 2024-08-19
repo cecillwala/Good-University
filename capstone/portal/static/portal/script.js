@@ -195,7 +195,7 @@ async function dept_details(){
         lecs.units.forEach(unit => {
             const unit_btn = document.createElement('button');
             let hr = document.createElement('hr');
-            unit_btn.setAttribute('class', 'menu-options btn btn-light');
+            unit_btn.setAttribute('class', 'btn btn-light');
             unit_btn.innerHTML = `${unit.unit_code}: ${unit.unit}`;
             unit_btn.addEventListener('click', () => unit_details(unit.unit_code));
             document.querySelector("#unit-list").append(unit_btn, hr);
@@ -206,21 +206,44 @@ async function dept_details(){
 
 
 async function lecturer_details(lec){
-    ShowPage("#main", "#lec");
     const response = await fetch(`lec_details/${lec}`)
     const lec_details = await response.json();
+    console.log(lec_details);
     let units_div = document.createElement('div');
     let hr = document.createElement('hr');
     units_div.setAttribute('class', 'list');
+    document.querySelector("#add-lec-unit").outerHTML = `
+    <form method="post" id="add-lec-unit">
+        <input type="text" placeholder="Add Unit" id="add-unit">
+        <input type="submit" value="Add Unit">
+    </form>`;
+    let unit_div = document.createElement('div');
     if(lec_details.units.length <= 0){
-        units_div.outerHTML = `<div class="alert alert-danger">
+        unit_div.innerHTML = `<div class="alert alert-warning">
                 <strong>ALERT! </strong>${lec_details.first_name} ${lec_details.last_name} is not teaching any units.
             </div>`;
     }
     else{
         lec_details.units.forEach(unit => {
             let unit_div = document.createElement('div');
-            unit_div.innerHTML = `${unit.unit_code}: ${unit.unit}`;
+            let unit_txt = document.createElement('div');
+            let remove_unit = document.createElement('button');
+            let hr = document.createElement('hr');
+            unit_div.setAttribute('class', 'row-flex');
+            remove_unit.setAttribute('class', 'btn btn-light');
+            remove_unit.innerHTML = 'Remove Unit';
+            remove_unit.addEventListener('click', () => {
+                fetch(`remove_unit/${unit.unit_code}/${lec}`, {
+                    method:"PUT"
+                })
+                .then(response => response.json())
+                .then(status => {
+                    console.log(status);
+                    lecturer_details(lec);
+                })
+            });
+            unit_txt.innerHTML = `${unit.unit_code}: ${unit.unit}`;
+            unit_div.append(unit_txt, remove_unit);
             units_div.append(unit_div, hr);
         });
     }
@@ -232,15 +255,16 @@ async function lecturer_details(lec){
             method: 'PUT',
             body: JSON.stringify({
                 unit: document.querySelector("#add-unit").value,
-                lecturer:lec_details.username
+                lecturer:lec
             })
         })
         .then(response => response.json())
         .then(status => {
             console.log(status);
-            lecturer_details(lec);
         });
+        lecturer_details(lec);
     });
+    ShowPage("#main", "#lec");
 }
 
 
