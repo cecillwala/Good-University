@@ -26,5 +26,6 @@ urlpatterns = [
     path("remove_unit/<str:unit>/<str:lec>", views.remove_unit, name="remove_unit"),
     path("unit_registration", views.unit_registration, name="unit_registration"),
     path("upload_rooms", views.upload_rooms, name="upload_rooms"),
-    path("accom_registration", views.accomodation_registration, name="accom_registration")
+    path("accom_registration", views.accomodation_registration, name="accom_registration"),
+    path("lec_units", views.lecturer_units, name="lec_units")
 ]

@@ -1,0 +1,48 @@
+{% extends "portal/layout.html" %}
+
+{% block body %}
+<nav class="menu">
+    <button onclick="ShowPage('#main', '#profile')" class="menu-options btn btn-light">
+        <div>
+            Profile
+        </div>
+    </button>
+    <button onclick="lecturer_units()" class="menu-options btn btn-light">
+        <div>
+            Units
+        </div>
+    </button>
+</nav>
+<div class="main" id="main">
+    <div id="profile">
+        {{ lecturer.username }}
+        {{ lecturer.first_name }}
+        {{ lecturer.last_name }}
+        {% if lecturer.is_active %}
+        Yes
+        {% else %}
+        No
+        {% endif %}
+        {{ lecturer.email }}
+        {{ lecturer.gender }}
+        {{ lecturer.position }}
+        {{ lecturer.department.department }}
+        {{ lecturer.office }}
+    </div>
+    <div id="lec-units">
+        <div id="units-list"></div>
+        <div id="unit-details">
+            <br>
+            <h5 id="unit"></h5>
+            <hr>
+            <div id="unit-courses" class="list">
+            </div>
+            <hr>
+            <div id="unit-lecs" class="list">
+            </div>
+            <hr>
+            <div id="unit-students" class="list"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

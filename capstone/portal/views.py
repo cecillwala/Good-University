@@ -18,12 +18,18 @@ from django.contrib.auth.models import Group
 @login_required(login_url="login")
 def index(request):
     if request.user.is_superuser:
-        return render(request, "administration/index.html")
+        return render(request, "administration/index.html", {
+            "dorms": [accom.name() for accom in Residence.objects.all()],
+            "faculties": [faculty.name() for faculty in Faculty.objects.all()]
+        })
     elif request.user.groups.contains(Group.objects.get(name="hod")):
         return render(request,"administration/hod-index.html", {
             "lecturer": Lecturer.lecturer.get(username=request.user.username)
-        }
-        )
+        })
+    # else:
+    #     return render(request,"administration/lec-index.html", {
+    #         "lecturer": Lecturer.lecturer.get(username=request.user.username)
+    #     })
     else:
         return render(request, "portal/index.html",{
             "student": Student.student.get(username=request.user.username),
@@ -649,3 +655,8 @@ def accomodation_registration(request):
     except AttributeError:
         return JsonResponse({"status":300}, safe=False)
     
+
+@login_required(login_url="login")
+def lecturer_units(request):
+    lec = Lecturer.lecturer.get(username=request.user.username)
+    return JsonResponse(lec.serialize())

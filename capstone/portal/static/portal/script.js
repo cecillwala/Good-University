@@ -124,6 +124,18 @@ function warnings(status, section, user){
 }
 
 
+function register_course(){
+    ShowPage("#course-registration", "#single-course");
+}
+
+function register_unit(){
+    ShowPage("#unit-registration", "#single-unit");
+}
+
+function register_room(){
+    ShowPage("#room-registration", "#single-room");
+}
+
 function register_department(){
     ShowPage("#department-registration", "#single-department");
     document.querySelector("#single-department-form").addEventListener('submit', (event) => {
@@ -180,14 +192,12 @@ async function dept_details(){
             let lec_btn = document.createElement('button');
             let hr = document.createElement('hr');
             lec_btn.addEventListener('click', () => lecturer_details(lec));
-            lec_btn.setAttribute('class', 'btn btn-light');
+            lec_btn.setAttribute('class', 'other-btns');
             lec_btn.innerHTML = lec;
             document.querySelector("#lecturers").append(lec_btn, hr);
         });
     });
 
-
-    //
     document.querySelector("#dept-units-view").addEventListener('click', () => {
         ShowPage('#main', '#units');
         ShowPage("#units", "#unit-list");
@@ -195,7 +205,7 @@ async function dept_details(){
         lecs.units.forEach(unit => {
             const unit_btn = document.createElement('button');
             let hr = document.createElement('hr');
-            unit_btn.setAttribute('class', 'btn btn-light');
+            unit_btn.setAttribute('class', 'other-btns');
             unit_btn.innerHTML = `${unit.unit_code}: ${unit.unit}`;
             unit_btn.addEventListener('click', () => unit_details(unit.unit_code));
             document.querySelector("#unit-list").append(unit_btn, hr);
@@ -215,7 +225,7 @@ async function lecturer_details(lec){
     document.querySelector("#add-lec-unit").outerHTML = `
     <form method="post" id="add-lec-unit">
         <input type="text" placeholder="Add Unit" id="add-unit">
-        <input type="submit" value="Add Unit">
+        <input type="submit" class="other-btns" value="Add Unit">
     </form>`;
     let unit_div = document.createElement('div');
     if(lec_details.units.length <= 0){
@@ -230,7 +240,7 @@ async function lecturer_details(lec){
             let remove_unit = document.createElement('button');
             let hr = document.createElement('hr');
             unit_div.setAttribute('class', 'row-flex');
-            remove_unit.setAttribute('class', 'btn btn-light');
+            remove_unit.setAttribute('class', 'other-btns');
             remove_unit.innerHTML = 'Remove Unit';
             remove_unit.addEventListener('click', () => {
                 fetch(`remove_unit/${unit.unit_code}/${lec}`, {

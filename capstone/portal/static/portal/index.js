@@ -22,7 +22,7 @@ async function faculty_details(){
     data.forEach(faculty => {
         let button = document.createElement('button');
         let div = document.createElement('div'); 
-        button.setAttribute('class', 'btn btn-light menu-options');
+        button.setAttribute('class', 'menu-options');
         //faculty.key -> faculty_name
         div.innerHTML = `School Of ${Object.keys(faculty)[0]}`;
         button.append(div);
@@ -31,7 +31,7 @@ async function faculty_details(){
             ShowPage("#main", "#options");
             document.querySelector("#options").innerHTML = '';
             let dept = document.createElement('button');
-            dept.setAttribute('class', 'grid-item btn btn-light');
+            dept.setAttribute('class', 'menu-options');
             dept.addEventListener('click', () => {
                 ShowPage("#main", "#departments");
                 document.querySelector("#departments").innerHTML = '';
@@ -41,20 +41,21 @@ async function faculty_details(){
                 Object.values(faculty)[0].departments.forEach(department => {
                     document.querySelector("#dept-options").innerHTML = '';
                     let depts = document.createElement('button');
-                    depts.setAttribute('class', 'btn btn-light');
+                    depts.setAttribute('class', 'menu-options');
                     depts.innerHTML = department.department;
                     depts.addEventListener('click', () => {
                         let dept_name = document.createElement('h3');
                         dept_name.innerHTML = `${department.department}: `;
                         let lecs = document.createElement('button');
                         lecs.innerHTML = 'Lecturers';
-                        lecs.setAttribute('class', 'grid-item btn btn-light');
+                        lecs.setAttribute('class', 'menu-options');
                         let topics = document.createElement('button');
                         topics.innerHTML = 'Units';
-                        topics.setAttribute('class', 'grid-item btn btn-light');
+                        topics.setAttribute('class', 'menu-options');
+                        let br = document.createElement('br');
                         ShowPage("#main", "#dept-details");
                         ShowPage("#dept-details","#dept-options");
-                        document.querySelector("#dept-options").append(dept_name, lecs, topics);
+                        document.querySelector("#dept-options").append(dept_name, lecs, br, topics);
                         lecs.addEventListener('click', () => {
                             document.querySelector("#dept-lecs").innerHTML = '';
                             ShowPage("#dept-details", "#dept-lecs");
@@ -92,7 +93,7 @@ async function faculty_details(){
                                         make_hod.innerHTML = 'Make HOD';
                                     }
                                 })
-                                make_hod.setAttribute('class', 'btn btn-light');
+                                make_hod.setAttribute('class', 'other-btns');
                                 lec_txt.innerHTML = `${lec}`;
                                 lec_div.append(lec_txt, make_hod);
                                 document.querySelector("#dept-lecs").append(lec_div, hr);
@@ -109,11 +110,12 @@ async function faculty_details(){
                             });
                         });
                     });
-                    document.querySelector("#departments").append(depts);
+                    let br = document.createElement('br');
+                    document.querySelector("#departments").append(depts, br);
                 });
             });
             let course = document.createElement('button');
-            course.setAttribute('class', 'grid-item btn btn-light');
+            course.setAttribute('class', 'menu-options');
             course.addEventListener('click', () => {
                 ShowPage("#main", "#courses");
                 document.querySelector("#courses").innerHTML = '';
@@ -122,7 +124,7 @@ async function faculty_details(){
                 document.querySelector("#courses").append(head);
                 Object.values(faculty)[0].courses.forEach(course => {
                     let crse = document.createElement('button');
-                    crse.setAttribute('class', 'btn btn-light');
+                    crse.setAttribute('class', 'menu-options');
                     crse.innerHTML = course.course;
                     crse.addEventListener('click', () => {
                         ShowPage("#main", "#course-details");
@@ -149,7 +151,7 @@ async function faculty_details(){
                             let hr = document.createElement('hr');
                             remove_btn.innerHTML = 'Remove Unit';
                             unit_div.setAttribute('class', 'row-flex');
-                            remove_btn.setAttribute('class', 'btn btn-light');
+                            remove_btn.setAttribute('class', 'other-btns');
                             remove_btn.addEventListener('click', async () => {
                                let feedback = await fetch('remove_unit', {
                                     method: 'PUT',
@@ -175,8 +177,9 @@ async function faculty_details(){
             dept.append(dept_div);
             const course_div = document.createElement('div');
             course_div.innerHTML = 'Courses';
+            let br = document.createElement('br');
             course.append(course_div);
-            document.querySelector("#options").append(dept, course);
+            document.querySelector("#options").append(dept, br, course);
         });
         document.querySelector("#menu").append(button);
     });

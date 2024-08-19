@@ -78,6 +78,7 @@ class Unit(models.Model):
             "courses": [course.course for course in self.course.all()],
             "professors": [professor.username for professor in self.professor.all()],
             "students": [student.username for student in self.apprentice.all()],
+            "department": self.department.department
         }
 
 

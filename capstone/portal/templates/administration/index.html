@@ -26,42 +26,42 @@
                 {% endif %}
             </div>
             <nav id="menu" class="menu">
-                <button onclick="ShowPage('#main', '#profile')" class="btn btn-light menu-options">
+                <button onclick="ShowPage('#main', '#profile')" class="menu-options">
                     <div>
                         Profile
                     </div>
                 </button>
-                <a href="{% url 'faculties' %}" class="btn btn-light menu-options">
-                    <div>
-                        Faculties
-                    </div>
-                </a>
-                <button onclick="upload_data('student')" class="btn btn-light menu-options">
+                <button class="menu-options">
+                    <a href="{% url 'faculties' %}" class="menu-options">
+                            Faculties
+                    </a>
+                </button>
+                <button onclick="upload_data('student')" class="menu-options">
                     <div>
                         First Year Registration
                     </div>
                 </button>
-                <button onclick="upload_data('lecturer')" class="btn btn-light menu-options">
+                <button onclick="upload_data('lecturer')" class="menu-options">
                     <div>
                         Lecturer Registration
                     </div>
                 </button>
-                <button onclick="upload_data('department')" class="btn btn-light menu-options">
+                <button onclick="upload_data('department')" class="menu-options">
                     <div>
                         Upload Departments
                     </div>
                 </button>
-                <button onclick="upload_data('course')" class="btn btn-light menu-options">
+                <button onclick="upload_data('course')" class="menu-options">
                     <div>
                         Upload Courses
                     </div>
                 </button>
-                <button onclick="upload_data('unit')" class="btn btn-light menu-options">
+                <button onclick="upload_data('unit')" class="menu-options">
                     <div>
                         Upload Units
                     </div>
                 </button>
-                <button onclick="upload_data('room')" class="btn btn-light menu-options">
+                <button onclick="upload_data('room')" class="menu-options">
                     <div>
                         Upload Rooms
                     </div>
@@ -95,14 +95,14 @@
                         <br>
                         <form id="upload-student-form" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
-                            <label for="student-csv" class="file-input btn btn-primary">
+                            <label for="student-csv" class="file-input other-btns">
                                 Choose file
                                 <input type="file" name="file" id="student-csv">
                             </label>
                             <span id="filename"></span>
-                            <input class="btn btn-outline-success me-2 disabled" type="submit" id="student-upload" value="Upload file">
+                            <input class="btn btn-success me-2 disabled" type="submit" id="student-upload" value="Upload file">
                         </form>
-                        <button onclick="register_student()" class="btn btn-outline-primary">Register Single Student</button>
+                        <button onclick="register_student()" class="other-btns">Register Single Student</button>
                     </div>
                     <div class="alert alert-warning" id="state"></div>
                     <div id="single-student">
@@ -125,22 +125,24 @@
                             <br>
                             <input type="number" placeholder="National ID" autocomplete="off" required id="national-id">
                             <br>
-                            <input type="text" placeholder="Faculty"autocomplete="off" required id="faculty" required>
+                            <select id="student-faculty" required>
+                                <option>Faculty</option>
+                                {% for faculty in faculties %}
+                                <option value="{{ faculty }}">{{faculty}}</option>
+                                {% endfor %}
+                            </select>
                             <br>
                             <input type="text" placeholder="Department"autocomplete="off" required id="department" required>
                             <br>
                             <select id="course" required>
                                 <option>Select Course</option>
                                 <option>B.Sc. Computer Science</option>
-                                <option>B.A. Psychology</option>
-                                <option>B.Ed. Early ChildHood Eductaion</option>
-                                <option>B.Ed Chemical Engineering</option>
-                                <option>B.B.A. Finance</option>
+                                <option>LL.B Law</option>
                             </select>
                             <br>
                             <input type="submit" class="btn btn-success me-2" value="Register Student">
                         </form>
-                        <button onclick="ShowPage('#student-registration', '#file-upload')" class="btn btn-outline-primary">Upload Student File</button>
+                        <button onclick="ShowPage('#student-registration', '#file-upload')" class="other-btns">Upload Student File</button>
                     </div>
                 </div>
                 <div class="student-registration" id="lecturer-registration">
@@ -152,13 +154,13 @@
                         <br>
                         <form id="upload-lecturer-form" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
-                            <label for="lecturer-csv" class="file-input btn btn-primary">
+                            <label for="lecturer-csv" class="file-input other-btns">
                                 Choose file
                                 <input type="file" name="file" id="lecturer-csv">
                             </label>
-                            <input class="btn btn-outline-success me-2 disabled" type="submit" id="lecturer-upload" value="Upload file">
+                            <input class="btn btn-success me-2 disabled" type="submit" id="lecturer-upload" value="Upload file">
                         </form>
-                        <button class="btn btn-outline-primary" onclick="register_lecturer()">Register Single Lecturer</button>
+                        <button class="other-btns" onclick="register_lecturer()">Register Single Lecturer</button>
                     </div>
                     <div id="single-lecturer">
                         <h3>Lecturer Registration</h3>
@@ -174,7 +176,12 @@
                             <br>
                             <input type="number" placeholder="National ID" autocomplete="off" required id="national-id">
                             <br>
-                            <input type="text" placeholder="Faculty" autocomplete="off" required id="faculty">
+                            <select required id="lec-faculty">
+                                <option>Faculty</option>
+                                {% for faculty in faculties %}
+                                <option value="{{ faculty }}">{{faculty}}</option>
+                                {% endfor %}
+                            </select>
                             <br>
                             <input type="text" placeholder="Department" autocomplete="off" required id="department">
                             <br>
@@ -184,9 +191,9 @@
                                 <option>Rather Not Say</option>
                             </select>
                             <br>
-                            <input type="submit" class="btn btn-success me-2" value="Register Student">
+                            <input type="submit" class="btn btn-success me-2" value="Register Lecturer">
                         </form>
-                        <button onclick="ShowPage('#lecturer-registration', '#file-upload')" class="btn btn-outline-primary">Upload Lecturer File</button>
+                        <button onclick="ShowPage('#lecturer-registration', '#file-upload')" class="other-btns">Upload Lecturer File</button>
                     </div>
                 </div>
                 <div class="student-registration" id="department-registration">
@@ -198,13 +205,13 @@
                         <br>
                         <form id="upload-department-form" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
-                            <label for="department-csv" class="file-input btn btn-primary">
+                            <label for="department-csv" class="file-input other-btns">
                                 Choose file
                                 <input type="file" name="file" id="department-csv">
                             </label>
-                            <input class="btn btn-outline-success me-2 disabled" type="submit" id="department-upload" value="Upload file">
+                            <input class="btn btn-success me-2 disabled" type="submit" id="department-upload" value="Upload file">
                         </form>
-                        <button class="btn btn-outline-primary" onclick="register_department()">Register Single Department</button>
+                        <button class="other-btns" onclick="register_department()">Register Single Department</button>
                     </div>
                     <div class="alert alert-warning" id="state"></div>
                     <div id="single-department">
@@ -215,11 +222,16 @@
                             {% csrf_token %}
                             <input type="text" placeholder="Department" autocomplete="off" id="department-department" required>
                             <br>
-                            <input type="text" placeholder="Faculty" autocomplete="off" required id="department-faculty">
+                            <select required id="department-faculty">
+                                <option>Faculty</option>
+                                {% for faculty in faculties %}
+                                <option value="{{ faculty }}">{{faculty}}</option>
+                                {% endfor %}
+                            </select>
                             <br>
                             <input type="submit" class="btn btn-success me-2" value="Register Department">
                         </form>
-                        <button onclick="ShowPage('#department-registration', '#department-file-upload')" class="btn btn-outline-primary">Upload Department(s) File</button>
+                        <button onclick="ShowPage('#department-registration', '#department-file-upload')" class="other-btns">Upload Department File</button>
                     </div>
                 </div>
                 <div class="student-registration" id="course-registration">
@@ -231,27 +243,27 @@
                         <br>
                         <form id="upload-course-form" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
-                            <label for="course-csv" class="file-input btn btn-primary">
+                            <label for="course-csv" class="file-input other-btns">
                                 Choose file
                                 <input type="file" name="file" id="course-csv">
                             </label>
-                            <input class="btn btn-outline-success me-2 disabled" type="submit" id="course-upload" value="Upload file">
+                            <input class="btn btn-success me-2 disabled" type="submit" id="course-upload" value="Upload file">
                         </form>
-                        <button class="btn btn-outline-primary" onclick="register_course()">Register Single Course</button>
+                        <button class="other-btns" onclick="register_course()">Register Single Course</button>
                     </div>
                     <div id="single-course">
-                        <h3>Department Registration</h3>
+                        <h3>Course Registration</h3>
                         <br>
                         <div id="single-course-status"></div>
                         <form id="course-form" method="post" class="forms">
                             {% csrf_token %}
-                            <input type="text" placeholder="Department" autocomplete="off" id="course-department" required>
+                            <input type="text" placeholder="Course" autocomplete="off" id="course-department" required>
                             <br>
                             <input type="text" placeholder="Faculty" autocomplete="off" required id="course-faculty">
                             <br>
                             <input type="submit" class="btn btn-success me-2" value="Register Course">
                         </form>
-                        <button onclick="ShowPage('#course-registration', '#course-file-upload')" class="btn btn-outline-primary">Upload Course(s) File</button>
+                        <button onclick="ShowPage('#course-registration', '#course-file-upload')" class="other-btns">Upload Course(s) File</button>
                     </div>
                 </div>
                 <div class="student-registration" id="unit-registration">
@@ -263,13 +275,33 @@
                         <br>
                         <form id="upload-unit-form" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
-                            <label for="unit-csv" class="file-input btn btn-primary">
+                            <label for="unit-csv" class="file-input other-btns">
                                 Choose file
                                 <input type="file" name="file" id="unit-csv">
                             </label>
-                            <input class="btn btn-outline-success me-2 disabled" type="submit" id="unit-upload" value="Upload file">
+                            <input class="btn btn-success me-2 disabled" type="submit" id="unit-upload" value="Upload file">
                         </form>
-                        <button class="btn btn-outline-primary" onclick="register_unit()">Register Single unit</button>
+                        <button class="other-btns" onclick="register_unit()">Register Single unit</button>
+                    </div>
+                    <div id="single-unit">
+                        <h3>Unit Registration</h3>
+                        <br>
+                        <div id="single-unit-status"></div>
+                        <form id="unit-form" method="post" class="forms">
+                            {% csrf_token %}
+                            <input type="text" placeholder="Course" autocomplete="off" id="unit-course" required>
+                            <br>
+                            <input type="text" placeholder="Unit" autocomplete="off" required id="unit-unit">
+                            <br>
+                            <input type="text" placeholder="Unit Code" autocomplete="off" id="unit-code" required>
+                            <br>
+                            <input type="text" placeholder="Department" autocomplete="off" required id="unit-department">
+                            <br>
+                            <input type="text" placeholder="Year.Sem" autocomplete="off" required id="unit-period">
+                            <br>
+                            <input type="submit" class="other-btns" value="Register Unit">
+                        </form>
+                        <button onclick="ShowPage('#unit-registration', '#unit-file-upload')" class="other-btns">Upload Unit(s) File</button>
                     </div>
                 </div>
                 <div id="room-registration" class="student-registration">
@@ -281,14 +313,36 @@
                         <br>
                         <form id="upload-room-form" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
-                            <label for="room-csv" class="file-input btn btn-primary">
+                            <label for="room-csv" class="file-input other-btns">
                                 Choose file
                                 <input type="file" name="file" id="room-csv">
                             </label>
                             <span id="filename"></span>
-                            <input class="btn btn-outline-success me-2 disabled" type="submit" id="room-upload" value="Upload file">
+                            <input class="btn btn-success me-2 disabled" type="submit" id="room-upload" value="Upload file">
                         </form>
-                        <button class="btn btn-outline-primary">Register Single Room</button>
+                        <button class="other-btns" onclick="register_room()">Register Single Room</button>
+                    </div>
+                    <div id="single-room">
+                        <h3>Room Registration</h3>
+                        <br>
+                        <div id="single-room-status"></div>
+                        <form id="room-form" method="post" class="forms">
+                            {% csrf_token %}
+                            <select id="house">
+                                <option>Hostels</option>
+                                {% for dorm in dorms %}
+                                <option value="{{ dorm }}">{{ dorm }}</option>
+                                {% endfor %}
+                            </select>
+                            <br>
+                            <input type="number" placeholder="Room" autocomplete="off" required id="room" min="1" max="30">
+                            <br>
+                            <input type="number" placeholder="Bed" autocomplete="off" id="bed" required min="1" max="3">
+                            <br>
+                            <input type="submit" value="Register Residence" class="other-btns">
+                        </form>
+                        <button onclick="ShowPage('#room-registration', '#room-file-upload')" class="other-btns">Upload Room(s) File</button>
+                    </div>
                     </div>
                 </div>
             </div>
