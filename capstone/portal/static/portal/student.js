@@ -49,7 +49,50 @@ async function unit_registration(){
         units_div.append(unit_div, hr);
     })
     document.querySelector("#unit-registration").innerHTML = '';
-    document.querySelector("#unit-registration").append(units_div);
+    document.querySelector("#unit-registration").append(units_div);   
+}
 
-    
+
+async function accomodation_registration(){
+    let response = await fetch('accom_registration');
+    let status = await response.json();
+    console.log(status);
+    ShowPage("#main", "#accom-registration");
+    if(status.status == 300){
+        ShowPage("#accom-registration", "#accom-upload");
+        document.querySelector("#book-room").addEventListener('submit', (event) => {
+            event.preventDefault();
+            fetch("accom_registration", {
+                method:'POST',
+                body: JSON.stringify({
+                    house: document.querySelector("#house").value,
+                    room: document.querySelector("#room").value,
+                    bed:document.querySelector("#bed").value     
+                })
+            })
+            .then(response => response.json())
+            .then(status => {
+                    console.log(status);
+                    accomodation_registration();
+            });
+        });
+    }
+    else{
+        document.querySelector("#status").outerHTML = `
+        <div id="status">
+            <div class="alert alert-success">
+                ALERT! Accomodation Registration completed!
+            </div>
+            <br>
+            <h6>hostel<h6>
+            <div class="list">
+                <div>Hostel: ${status.house}</div>
+                <hr>
+                <div>Room: ${status.room}</div>
+                <hr>
+                <div>Bed: ${status.bed}</div>
+            </div>
+        </div>`;
+        ShowPage("#accom-registration", "#status");
+    }
 }

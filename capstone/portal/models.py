@@ -90,7 +90,7 @@ class Residence(models.Model):
             CBD = "CBD", "CBD"
             THORNTON = "THORNTON", "Thornton"
 
-    hostel = models.CharField(max_length=100, unique=True, choices=Hostels.choices)
+    hostel = models.CharField(max_length=100, unique=True, choices=Hostels)
 
     def save(self, *args, **kwargs):
         for label in Residence.Hostels:
@@ -109,6 +109,13 @@ class Accomodation(models.Model):
     house = models.ForeignKey(Residence, on_delete=models.CASCADE, related_name="dorm",null=True)
     room = models.IntegerField()
     bed = models.IntegerField(null=True)
+
+    def serialize(self):
+        return {
+            "house": self.house.name(),
+            "room": self.room,
+            "bed": self.bed
+        }
 
 
 class User(AbstractUser):

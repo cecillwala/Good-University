@@ -627,8 +627,25 @@ def upload_rooms(request):
     
 
 @login_required(login_url="login")
+@csrf_exempt
 def accomodation_registration(request):
+    student = Student.student.get(username=request.user.username)
     if request.method == "POST":
-        dorm = Residence.objects.get(hostel=request.POST["dorm"])
-        room = Accomodation.objects.get(house=dorm, room=request.POST["room"], bed=request.POST["bed"])
-        
+        data = json.loads(request.body)
+        print(data)
+        house = data["house"].upper()
+        try:
+            dorm = Residence.objects.get(hostel=house)
+        except Residence.DoesNotExist:
+            return JsonResponse({"status": 340})
+        try:
+            room = Accomodation.objects.get(house=dorm, room=data["room"], bed=data["bed"])
+        except Accomodation.DoesNotExist:
+            return JsonResponse({"status":560})
+        Student.student.filter(username=request.user.username).update(residence=room)
+        return JsonResponse({"status" : 200})
+    try:
+        return JsonResponse(student.residence.serialize(), safe=False)
+    except AttributeError:
+        return JsonResponse({"status":300}, safe=False)
+    
