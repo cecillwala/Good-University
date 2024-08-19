@@ -17,10 +17,14 @@ from django.contrib.auth.models import Group
 # Create your views here.
 @login_required(login_url="login")
 def index(request):
-        if request.user.groups.contains(Group.objects.get(name="hod")):
+        if request.user.is_superuser:
+            return render(request, "administration/index.html")
+        elif request.user.groups.contains(Group.objects.get(name="hod")):
             return render(request, "administration/hod-index.html", {
                 "lecturer": Lecturer.lecturer.get(username=request.user.username)
             })
+        else:
+            return render(request, "portal/index.html")
 
 
 def login_view(request):
@@ -523,3 +527,12 @@ def assign_unit(request):
         return JsonResponse({"status": 200})
     else:
         return JsonResponse({"error": "PUT method required"})
+    
+
+def lec_details(request, lec):
+    lecturer = Lecturer.lecturer.get(username=lec)    
+    return JsonResponse(lecturer.serialize())
+
+def unit_details(request, unit):
+    unit = Unit.objects.get(unit_code=unit)
+    return JsonResponse(unit.serialize())

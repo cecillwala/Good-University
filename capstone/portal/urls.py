@@ -20,5 +20,7 @@ urlpatterns = [
     path("upload_units", views.upload_units, name="upload_units"),
     path("make_hod", views.make_hod, name="hod"),
     path("dept_details", views.dept_details, name="dept_details"),
-    path("assign_unit", views.assign_unit, name="assign_unit")
+    path("assign_unit", views.assign_unit, name="assign_unit"),
+    path("lec_details/<str:lec>", views.lec_details, name='lec_details'),
+    path("unit_details/<str:unit>", views.unit_details, name="unit_details")
 ]

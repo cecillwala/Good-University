@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    ShowPage("#main", "#profile");
     dept_details();
 });
 
@@ -168,50 +167,142 @@ function upload_data(data){
 
 
 async function dept_details(){
+    ShowPage("#main", "#profile");
     const response = await fetch("dept_details");
     const lecs = await response.json();
     console.log(lecs);
 
+    //Lecturers btn
     document.querySelector("#dept-lec-view").addEventListener('click', () => {
         ShowPage("#main", "#lecturers");
         document.querySelector("#lecturers").innerHTML = '';
         lecs.lecturers.forEach(lec => {
             let lec_btn = document.createElement('button');
             let hr = document.createElement('hr');
-            lec_btn.addEventListener('click', () => {
-                ShowPage("#main", "#lec");
-                let units_div = document.createElement('div');
-                units_div.setAttribute('class', 'list');
-                if(lec.units.length <= 0){
-                    units_div.innerHTML = `${lec.first_name} ${lec.last_name} is not teaching any units.`;
-                }
-                else{
-                    lec.units.forEach(unit => {
-                        let unit_div = document.createElement('div');
-                        unit_div.innerHTML = `${unit.unit_code}: ${unit.unit}`;
-                        units_div.append(unit_div, hr);
-                    });
-                }
-                document.querySelector("#lec-profile").innerHTML = '';
-                document.querySelector("#lec-profile").append(lec.first_name, hr, lec.last_name, hr, lec.phone_number, hr, units_div);
-
-                document.querySelector("#add-lec-unit").addEventListener('submit', (event) => {
-                    event.preventDefault();
-                    fetch('assign_unit', {
-                        method: 'PUT',
-                        body: JSON.stringify({
-                            unit: document.querySelector("#unit").value,
-                            lecturer:lec.username
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(status => console.log(status));
-                });
-            });
+            lec_btn.addEventListener('click', () => lecturer_details(lec));
             lec_btn.setAttribute('class', 'btn btn-light');
-            lec_btn.innerHTML = lec.username;
+            lec_btn.innerHTML = lec;
             document.querySelector("#lecturers").append(lec_btn, hr);
         });
     });
 
+
+    //
+    document.querySelector("#dept-units-view").addEventListener('click', () => {
+        ShowPage('#main', '#units');
+        ShowPage("#units", "#unit-list");
+        document.querySelector("#unit-list").innerHTML ='';
+        lecs.units.forEach(unit => {
+            const unit_btn = document.createElement('button');
+            let hr = document.createElement('hr');
+            unit_btn.setAttribute('class', 'menu-options btn btn-light');
+            unit_btn.innerHTML = `${unit.unit_code}: ${unit.unit}`;
+            unit_btn.addEventListener('click', () => unit_details(unit.unit_code));
+            document.querySelector("#unit-list").append(unit_btn, hr);
+        });
+    });
+
+}
+
+
+async function lecturer_details(lec){
+    ShowPage("#main", "#lec");
+    const response = await fetch(`lec_details/${lec}`)
+    const lec_details = await response.json();
+    let units_div = document.createElement('div');
+    let hr = document.createElement('hr');
+    units_div.setAttribute('class', 'list');
+    if(lec_details.units.length <= 0){
+        units_div.outerHTML = `<div class="alert alert-danger">
+                <strong>ALERT! </strong>${lec_details.first_name} ${lec_details.last_name} is not teaching any units.
+            </div>`;
+    }
+    else{
+        lec_details.units.forEach(unit => {
+            let unit_div = document.createElement('div');
+            unit_div.innerHTML = `${unit.unit_code}: ${unit.unit}`;
+            units_div.append(unit_div, hr);
+        });
+    }
+    document.querySelector("#lec-profile").innerHTML = '';
+    document.querySelector("#lec-profile").append(lec_details.first_name, hr, lec_details.last_name, hr, `+${lec_details.phone_number}`, hr, units_div);
+    document.querySelector("#add-lec-unit").addEventListener('submit', (event) => {
+        event.preventDefault();
+        fetch('assign_unit', {
+            method: 'PUT',
+            body: JSON.stringify({
+                unit: document.querySelector("#add-unit").value,
+                lecturer:lec_details.username
+            })
+        })
+        .then(response => response.json())
+        .then(status => {
+            console.log(status);
+            lecturer_details(lec);
+        });
+    });
+}
+
+
+async function unit_details(unit){
+    ShowPage("#units", "#unit-details");
+    const children = Array.from(document.querySelector("#unit-details").children);
+    children.forEach(child => {
+        child.innerHTML = '';
+    });
+    const response = await fetch(`unit_details/${unit}`);
+    const units = await response.json();
+    const course_tag = document.createElement('h6');
+    const student_tag = document.createElement('h6');
+    const lecs_tag = document.createElement('h6');
+    course_tag.innerHTML = "Courses: ";
+    student_tag.innerHTML = "Students: ";
+    lecs_tag.innerHTML = "Lecturers: ";
+    document.querySelector("#unit-courses").append(course_tag);
+    document.querySelector("#unit-students").append(student_tag);
+    document.querySelector("#unit-lecs").append(lecs_tag);
+    console.log(units);
+    document.querySelector("#unit").innerHTML = `${units.unit_code}: ${units.unit}`;
+    if(units.courses.length<= 0){
+        document.querySelector("#unit-courses").outerHTML = `
+        <div id='unit-courses'>
+            <div class="alert alert-warning">
+                <strong>ALERT!</strong> No course is taking this unit!
+            </div>
+        </div>`;
+    }
+    else{
+        units.courses.forEach(course => {
+            document.querySelector("#unit-courses").append(course)
+        });
+    }
+
+    if(units.professors.length <= 0){
+        document.querySelector("#unit-lecs").outerHTML = `
+        <div id='unit-lecs' class="list">
+            <h6>Lecturers: </h6>
+            <div class="alert alert-warning">
+                <strong>ALERT!</strong> No lecturer is teaching this unit!
+            </div>
+        </div>`;
+    }
+    else{
+        units.professors.forEach(prof => {
+            document.querySelector("#unit-lecs").append(prof)
+        });
+    }
+    if(units.students.length <= 0){
+        document.querySelector("#unit-students").outerHTML = `
+        <div id='unit-students' class='list'>
+            <h6>Students: </h6>
+            <div class="alert alert-warning">
+                <strong>ALERT!</strong> No students are taking this unit!
+            </div>
+        </div>`;
+    }
+    else{
+        units.students.forEach(student => {
+            document.querySelector("#unit-students").append(student)
+        });
+    }
 }

@@ -39,8 +39,8 @@ class Department(models.Model):
     def serialize(self):
         return {
             "department": self.department,
-            "lecturers": [lecturer.serialize() for lecturer in self.sector.all()],
-            "units": [unit.serialize() for unit in self.syllabus.all()]
+            "lecturers": [lecturer.username for lecturer in self.sector.all()],
+            "units": [{"unit":unit.unit, "unit_code":unit.unit_code} for unit in self.syllabus.all()]
         }
 
 class Course(models.Model):
@@ -63,7 +63,10 @@ class Unit(models.Model):
     def serialize(self):
         return {"unit_code": self.unit_code, 
                 "unit": self.unit,
-                "yr/sem": self.year_sem
+                "yr/sem": self.year_sem,
+                "courses": [course.course for course in self.course.all()],
+                "professors": [professor.username for professor in self.professor.all()],
+                "students": [student.username for student in self.apprentice.all()]
                 }
 
 
