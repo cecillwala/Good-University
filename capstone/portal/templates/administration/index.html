@@ -108,33 +108,35 @@
                         <div id="single-status"></div>
                         <form id="student-form" method="post" class="forms">
                             {% csrf_token %}
-                            <input type="text" placeholder="First Name" autocomplete="off" id="first-name" required>
+                            <input type="text" placeholder="First Name" autocomplete="off" id="student-first-name" required>
                             <br>
-                            <input type="text" placeholder="Last Name"autocomplete="off" required id="last-name">
+                            <input type="text" placeholder="Last Name"autocomplete="off" required id="student-last-name">
                             <br>
-                            <select id="gender" required>
+                            <select id="student-gender" required>
+                                <option>Gender</option>
                                 <option>Male</option>
                                 <option>Female</option>
                                 <option>Rather Not Say</option>
                             </select>
                             <br>
-                            <input type="number" placeholder="i.e 071234..." autocomplete="off" required id="phone-number">
+                            <input type="number" placeholder="i.e 071234..." autocomplete="off" required id="student-phone-number">
                             <br>
-                            <input type="number" placeholder="National ID" autocomplete="off" required id="national-id">
+                            <input type="number" placeholder="National ID" autocomplete="off" required id="student-national-id">
                             <br>
                             <select id="student-faculty" required>
                                 <option>Faculty</option>
                                 {% for faculty in faculties %}
-                                <option value="{{ faculty }}">{{faculty}}</option>
+                                <option value="{{ faculty.faculty }}">{{ faculty.name }}</option>
                                 {% endfor %}
                             </select>
                             <br>
-                            <input type="text" placeholder="Department"autocomplete="off" required id="department" required>
+                            <input type="text" placeholder="Year" id="student-year" autocomplete="off" required>
                             <br>
-                            <select id="course" required>
+                            <select id="student-course" required>
                                 <option>Select Course</option>
-                                <option>B.Sc. Computer Science</option>
-                                <option>LL.B Law</option>
+                                {% for course in courses %}
+                                <option value="{{ course }}">{{ course }}</option>
+                                {% endfor %}
                             </select>
                             <br>
                             <input type="submit" class="btn btn-success me-2" value="Register Student">
@@ -162,27 +164,30 @@
                     <div id="single-lecturer">
                         <h3>Lecturer Registration</h3>
                         <br>
-                        <div id="single-status"></div>
+                        <div id="single-lec-status"></div>
                         <form id="lecturer-form" method="post" class="forms">
                             {% csrf_token %}
-                            <input type="text" placeholder="First Name" autocomplete="off" id="first-name" required>
+                            <input type="text" placeholder="First Name" autocomplete="off" id="lec-first-name" required>
                             <br>
-                            <input type="text" placeholder="Last Name"autocomplete="off" required id="last-name">
+                            <input type="text" placeholder="Last Name"autocomplete="off" required id="lec-last-name">
                             <br>
-                            <input type="number" placeholder="i.e 071234..." autocomplete="off" required id="phone-number">
+                            <input type="number" placeholder="i.e 25471234..." autocomplete="off" required id="lec-phone-number">
                             <br>
-                            <input type="number" placeholder="National ID" autocomplete="off" required id="national-id">
+                            <input type="number" placeholder="National ID" autocomplete="off" required id="lec-national-id">
                             <br>
                             <select required id="lec-faculty">
                                 <option>Faculty</option>
                                 {% for faculty in faculties %}
-                                <option value="{{ faculty }}">{{faculty}}</option>
+                                <option value="{{ faculty.faculty }}">{{ faculty.name }}</option>
                                 {% endfor %}
                             </select>
                             <br>
-                            <input type="text" placeholder="Department" autocomplete="off" required id="department">
+                            <input type="text" placeholder="Department" autocomplete="off" required id="lec-department">
                             <br>
-                            <select id="gender" required>
+                            <input type="text" placeholder="year" autocompleter="off" id="lec-year" required>
+                            <br>
+                            <select id="lec-gender" required>
+                                <option>Gender</option>
                                 <option>Male</option>
                                 <option>Female</option>
                                 <option>Rather Not Say</option>
@@ -222,7 +227,7 @@
                             <select required id="department-faculty">
                                 <option>Faculty</option>
                                 {% for faculty in faculties %}
-                                <option value="{{ faculty }}">{{faculty}}</option>
+                                <option value="{{ faculty.faculty }}">{{ faculty.name }}</option>
                                 {% endfor %}
                             </select>
                             <br>
@@ -254,9 +259,14 @@
                         <div id="single-course-status"></div>
                         <form id="course-form" method="post" class="forms">
                             {% csrf_token %}
-                            <input type="text" placeholder="Course" autocomplete="off" id="course-department" required>
+                            <input type="text" placeholder="Course" autocomplete="off" id="course-course" required>
                             <br>
-                            <input type="text" placeholder="Faculty" autocomplete="off" required id="course-faculty">
+                            <select required id="course-faculty">
+                                <option>Faculty</option>
+                                {% for faculty in faculties %}
+                                <option value="{{ faculty.faculty }}">{{ faculty.name }}</option>
+                                {% endfor %}
+                            </select>
                             <br>
                             <input type="submit" class="btn btn-success me-2" value="Register Course">
                         </form>
@@ -290,7 +300,7 @@
                             <br>
                             <input type="text" placeholder="Unit" autocomplete="off" required id="unit-unit">
                             <br>
-                            <input type="text" placeholder="Unit Code" autocomplete="off" id="unit-code" required>
+                            <input type="text" placeholder="Unit Code" autocomplete="off" id="unit-unit-code" required>
                             <br>
                             <input type="text" placeholder="Department" autocomplete="off" required id="unit-department">
                             <br>
@@ -325,16 +335,16 @@
                         <div id="single-room-status"></div>
                         <form id="room-form" method="post" class="forms">
                             {% csrf_token %}
-                            <select id="house">
+                            <select id="room-hostel">
                                 <option>Hostels</option>
                                 {% for dorm in dorms %}
-                                <option value="{{ dorm }}">{{ dorm }}</option>
+                                <option value="{{ dorm.dorm }}">{{ dorm.name }}</option>
                                 {% endfor %}
                             </select>
                             <br>
-                            <input type="number" placeholder="Room" autocomplete="off" required id="room" min="1" max="30">
+                            <input type="number" placeholder="Room" autocomplete="off" required id="room-room">
                             <br>
-                            <input type="number" placeholder="Bed" autocomplete="off" id="bed" required min="1" max="3">
+                            <input type="number" placeholder="Bed" autocomplete="off" id="room-bed" required>
                             <br>
                             <input type="submit" value="Register Residence" class="other-btns">
                         </form>

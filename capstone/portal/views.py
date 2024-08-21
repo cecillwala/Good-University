@@ -20,8 +20,9 @@ def index(request):
     period = academic_year(request)
     if request.user.is_superuser:
         return render(request, "administration/index.html", {
-            "dorms": [accom.name() for accom in Residence.objects.all()],
-            "faculties": [faculty.name() for faculty in Faculty.objects.all()],
+            "dorms": [{"dorm":accom.hostel, "name":accom.name()} for accom in Residence.objects.all()],
+            "faculties": [{"faculty":faculty.faculty, "name": faculty.name()} for faculty in Faculty.objects.all()],
+            "courses": [course.course for course in Course.objects.all()],
             "period": period
         })
     elif request.user.groups.contains(Group.objects.get(name="hod")):
@@ -100,23 +101,22 @@ def upload_students(request):
                     latest_student = Student.student.latest("date_joined")
                     serial = latest_student.username.split("-")
                     id = serial[1].strip()
-                    yr = datetime.datetime.now().strftime("%y")
                 except (Student.DoesNotExist, IndexError):
                     id = 0
                 try:
                     match row["faculty"].strip():
                         case "LAW":
-                            id = f"LL-{int(id) + 1}-{yr}"
+                            id = f"LL-{int(id) + 1}-{row['year']}"
                         case "PHY_SCI":
-                            id = f"PS-{int(id) + 1}-{yr}"
+                            id = f"PS-{int(id) + 1}-{row['year']}"
                         case "EDU":
-                            id = f"EDU-{int(id) + 1}-{yr}"
+                            id = f"EDU-{int(id) + 1}-{row['year']}"
                         case "SOC_SCI":
-                            id = f"SC-{int(id) + 1}-{yr}"
+                            id = f"SC-{int(id) + 1}-{row['year']}"
                         case "BUS":
-                            id = f"BU-{int(id) + 1}-{yr}"
+                            id = f"BU-{int(id) + 1}-{row['year']}"
                         case "HEALTH_SCI":
-                            id = f"HS-{int(id) + 1}-{yr}"
+                            id = f"HS-{int(id) + 1}-{row['year']}"
                         case _:
                             return JsonResponse({"status": 912})
                     try:
@@ -165,17 +165,17 @@ def upload_lecturers(request):
                 try:
                     match row["faculty"].strip():
                         case "LAW":
-                            id = f'ELL-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                            id = f'ELL-{int(id) + 1}-{row["year"]}'
                         case "PHY_SCI":
-                            id = f'EPS-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                            id = f'EPS-{int(id) + 1}-{row["year"]}'
                         case "EDU":
-                            id = f'EEDU-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                            id = f'EEDU-{int(id) + 1}-{row["year"]}'
                         case "SOC_SCI":
-                            id = f'ESC-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                            id = f'ESC-{int(id) + 1}-{row["year"]}'
                         case "BUS":
-                            id = f'EBU-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                            id = f'EBU-{int(id) + 1}-{row["year"]}'
                         case "HEALTH_SCI":
-                            id = f'EHS-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                            id = f'EHS-{int(id) + 1}-{row["year"]}'
                         case _:
                             return JsonResponse({"status": 912})
                     try:
@@ -208,22 +208,24 @@ def register_lecturer(request):
         data = json.loads(request.body)
         latest_lecturer = Lecturer.lecturer.latest("date_joined")
         try:
-            serial = latest_lecturer[0].username.split("-")
+            serial = latest_lecturer.username.split("-")
             id = serial[1].strip()
         except (AttributeError, Lecturer.DoesNotExist, IndexError):
             id = 0
         try:
-            match data["department"].strip():
-                case "Computer Science":
-                    id = f'ECS-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
-                case "Psychology":
-                    id = f'EPS-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
-                case "Early Childhood Education":
-                    id = f'EEC-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
-                case "Chemical Engineering":
-                    id = f'ECE-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
-                case "Finance":
-                    id = f'EFI-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+            match data["faculty"].strip():
+                case "LAW":
+                    id = f'ELL-{int(id) + 1}-{data["year"]}'
+                case "PHY_SCI":
+                    id = f'EPS-{int(id) + 1}-{data["year"]}'
+                case "EDU":
+                    id = f'EEDU-{int(id) + 1}-{data["year"]}'
+                case "SOC_SCI":
+                    id = f'ESC-{int(id) + 1}-{data["year"]}'
+                case "BUS":
+                    id = f'EBU-{int(id) + 1}-{data["year"]}'
+                case "HEALTH_SCI":
+                    id = f'EHS-{int(id) + 1}-{data["year"]}'
                 case _:
                     return JsonResponse({"status": 912})
             try:
@@ -231,6 +233,8 @@ def register_lecturer(request):
                 return JsonResponse({"status": 935})
             except Lecturer.DoesNotExist:
                 try:
+                    faculty = Faculty.objects.get(faculty=data["faculty"])
+                    dept = Department.objects.get(department=data["department"])
                     lecturer = Lecturer.lecturer.create(
                         username=id,
                         first_name=data["first_name"].strip(),
@@ -238,11 +242,11 @@ def register_lecturer(request):
                         phone_number=data["phone_number"],
                         national_id=data["nationalID"],
                         gender=data["gender"].strip(),
-                        department=data["department"].strip(),
-                        faculty=data["faculty"].strip(),
+                        department=dept,
+                        faculty=faculty,
                     )
                     lecturer.user_permissions.clear()
-                    comrade = Group.objects.get(name="Lecturer")
+                    comrade = Group.objects.get(name="lec")
                     lecturer.groups.add(comrade)
                     lecturer.save()
                 except IntegrityError:
@@ -272,23 +276,25 @@ def register_student(request):
         try:
             match data["faculty"].strip():
                 case "LAW":
-                    id = f'LL-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                    id = f'LL-{int(id) + 1}-{data["year"]}'
                 case "PHY_SCI":
-                    id = f'PS-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                    id = f'PS-{int(id) + 1}-{data["year"]}'
                 case "EDU":
-                    id = f'EDU-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                    id = f'EDU-{int(id) + 1}-{data["year"]}'
                 case "SOC_SCI":
-                    id = f'SC-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                    id = f'SC-{int(id) + 1}-{data["year"]}'
                 case "BUS":
-                    id = f'BU-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                    id = f'BU-{int(id) + 1}-{data["year"]}'
                 case "HEALTH_SCI":
-                    id = f'HS-{int(id) + 1}-{datetime.datetime.now().strftime("%y")}'
+                    id = f'HS-{int(id) + 1}-{data["year"]}'
                 case _:
                     return JsonResponse({"status": 912})
             try:
                 Student.student.get(national_id=data["nationalID"])
                 return JsonResponse({"status": 935})
             except Student.DoesNotExist:
+                faculty = Faculty.objects.get(faculty=data["faculty"])
+                course =  Course.objects.get(course=data["course"])
                 student = Student.student.create(
                     username=id,
                     first_name=data["first_name"].strip(),
@@ -296,11 +302,11 @@ def register_student(request):
                     phone_number=data["phone_number"],
                     national_id=data["nationalID"].strip(),
                     gender=data["gender"].strip(),
-                    faculty=data["faculty"].strip(),
-                    course=data["course"].strip(),
+                    faculty=faculty,
+                    course=course,
                 )
                 student.user_permissions.clear()
-                comrade = Group.objects.get(name="Comrade")
+                comrade = Group.objects.get(name="comrade")
                 student.groups.add(comrade)
                 student.save()
         except KeyError:
@@ -411,6 +417,35 @@ def upload_courses(request):
         return JsonResponse({"error": "POST method required"})
 
 
+@permission_required("add_unit")
+@login_required(login_url="login")
+@csrf_exempt
+def register_unit(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        try:
+            try:
+                try:
+                    course = Course.objects.get(course=data["course"])
+                    dept = Department.objects.get(department=data["department"])
+                    unit =  Unit(
+                         unit=data["unit"],
+                         unit_code=data["unit_code"],
+                         department=dept,
+                         year_sem=data["period"]
+                        )
+                    unit.save()
+                    unit.course.add(course)
+                except KeyError:
+                    return JsonResponse({"status": 900})
+            except IntegrityError:
+                return JsonResponse({"status": 935})
+        except (Course.DoesNotExist, Department.DoesNotExist):
+            return JsonResponse({"status": 905})
+        return JsonResponse({"status": 200})
+    else:
+        return JsonResponse({"error": "POST method required"})
+
 @permission_required("add_course")
 @login_required(login_url="login")
 @csrf_exempt
@@ -427,6 +462,32 @@ def register_course(request):
             except IntegrityError:
                 return JsonResponse({"status": 935})
         except Faculty.DoesNotExist:
+            return JsonResponse({"status": 905})
+        return JsonResponse({"status": 200})
+    else:
+        return JsonResponse({"error": "POST method required"})
+
+
+@permission_required("add_accomodation")
+@login_required(login_url="login")
+@csrf_exempt
+def register_room(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        try:
+            try:
+                try:
+                    hostel = Residence.objects.get(hostel=data["hostel"])
+                    Accomodation.objects.create(
+                        house=hostel,
+                        room=data["room"],
+                        bed=data["bed"]
+                    )
+                except KeyError:
+                    return JsonResponse({"status": 900})
+            except IntegrityError:
+                return JsonResponse({"status": 935})
+        except Residence.DoesNotExist:
             return JsonResponse({"status": 905})
         return JsonResponse({"status": 200})
     else:

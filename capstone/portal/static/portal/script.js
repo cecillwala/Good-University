@@ -19,24 +19,24 @@ function register_student(){
         fetch('register_student', {
             method: 'POST', 
             body: JSON.stringify({
-                first_name: document.querySelector("#first-name").value,
-                last_name: document.querySelector("#last-name").value,
-                phone_number: document.querySelector("#phone-number").value,
-                nationalID: document.querySelector("#national-id").value,
-                gender: document.querySelector("#gender").value,
-                course: document.querySelector("#course").value,
-                faculty: document.querySelector("#faculty").value,
-                department: document.querySelector("#department").value
+                first_name: document.querySelector("#student-first-name").value,
+                last_name: document.querySelector("#student-last-name").value,
+                phone_number: document.querySelector("#student-phone-number").value,
+                nationalID: document.querySelector("#student-national-id").value,
+                gender: document.querySelector("#student-gender").value,
+                course: document.querySelector("#student-course").value,
+                faculty: document.querySelector("#student-faculty").value,
+                year: document.querySelector("#student-year").value
             })
         })
         .then(response => response.json())
         .then(status => {
-            document.querySelector("#first-name").value = '';
-            document.querySelector("#last-name").value  = '';
-            document.querySelector("#phone-number").value = '';
-            document.querySelector("#national-id").value = '';
-            document.querySelector("#gender").value = '';
-            document.querySelector("#course").value = '';
+            document.querySelector("#student-first-name").value = '';
+            document.querySelector("#student-last-name").value  = '';
+            document.querySelector("#student-phone-number").value = '';
+            document.querySelector("#student-national-id").value = '';
+            document.querySelector("#student-gender").value = '';
+            document.querySelector("#student-course").value = '';
             warnings(status, 'single-status', 'Student');
         });
     });
@@ -67,17 +67,18 @@ function register_lecturer(){
         fetch('register_lecturer', {
             method:'POST',
             body: JSON.stringify({
-                first_name: document.querySelector("#first-name").value,
-                last_name: document.querySelector("#last-name").value,
-                phone_number: document.querySelector("#phone-number").value,
-                nationalID: document.querySelector("#national-id").value,
-                gender: document.querySelector("#gender").value,
-                faculty: document.querySelector("#faculty").value,
-                department: document.querySelector("#department").value
+                first_name: document.querySelector("#lec-first-name").value,
+                last_name: document.querySelector("#lec-last-name").value,
+                phone_number: document.querySelector("#lec-phone-number").value,
+                nationalID: document.querySelector("#lec-national-id").value,
+                gender: document.querySelector("#lec-gender").value,
+                faculty: document.querySelector("#lec-faculty").value,
+                department: document.querySelector("#lec-department").value,
+                year: document.querySelector("#lec-year").value
             })
         })
         .then(response => response.json())
-        .then(status => warnings(status, "single-status", 'Lecturer'))
+        .then(status => warnings(status, "single-lec-status", 'Lecturer'))
     });
 }
 
@@ -132,14 +133,55 @@ function warnings(status, section, user){
 
 function register_course(){
     ShowPage("#course-registration", "#single-course");
+    document.querySelector('#course-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const response = await fetch("register_course", {
+            method:'POST',
+            body: JSON.stringify({
+                course:document.querySelector("#course-course").value,
+                faculty:document.querySelector("#course-faculty").value
+            })
+        });
+        const status = await response.json();
+        warnings(status, 'single-course-status', 'Course');
+    });
 }
 
 function register_unit(){
     ShowPage("#unit-registration", "#single-unit");
+    document.querySelector("#unit-form").addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const response = await fetch("register_unit", {
+            method:"POST",
+            body: JSON.stringify({
+                unit:document.querySelector("#unit-unit").value,
+                unit_code:document.querySelector("#unit-unit-code").value,
+                department:document.querySelector("#unit-department").value,
+                period:document.querySelector("#unit-period").value,
+                course:document.querySelector("#unit-course").value
+            })
+        });
+        const status = await response.json();
+        warnings(status, "single-unit-status", "Unit");
+
+    })
 }
 
 function register_room(){
     ShowPage("#room-registration", "#single-room");
+    document.querySelector("#room-form").addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const response = await fetch("register_room", {
+            method:"POST",
+            body:JSON.stringify({
+                hostel:document.querySelector("#room-hostel").value,
+                room:document.querySelector("#room-room").value,
+                bed:document.querySelector("#room-bed").value
+            })
+        });
+        const status = await response.json();
+        warnings(status, "single-room-status", "Room");
+    })
 }
 
 function register_department(){
