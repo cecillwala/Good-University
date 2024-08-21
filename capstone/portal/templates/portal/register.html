@@ -5,9 +5,9 @@
         {% csrf_token %}
         <h1 class="welcome-decoration">Welcome to Godolkin University</h1>
         <br>
-        <input type="radio" id="student" name="rank" value="Student">
+        <input type="radio" id="student" name="rank" required value="Student">
         <label for="student">Student</label>
-        <input type="radio" id="employee" name="rank" value="Employee">
+        <input type="radio" id="employee" name="rank" required value="Employee">
         <label for="employee">Employee</label>
         <div class="form form-group">
             {% if no_user %}

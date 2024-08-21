@@ -30,18 +30,18 @@ def index(request):
             "lecturer": Lecturer.lecturer.get(username=request.user.username),
             "period": period
         })
-    else:
+    elif request.user.groups.contains(Group.objects.get(name="lec")):
         return render(request,"administration/lec-index.html", {
             "lecturer": Lecturer.lecturer.get(username=request.user.username),
             "period": period
         })
-    # else:
-    #     return render(request, "portal/index.html",{
-    #         "student": Student.student.get(username=request.user.username),
-    #         "dorms": [accom.name() for accom in Residence.objects.all()],
-    #         "period": period
-    #         }
-    #     )
+    else:
+        return render(request, "portal/index.html",{
+            "student": Student.student.get(username=request.user.username),
+            "dorms": [accom.name() for accom in Residence.objects.exclude(hostel="NON_RESIDENT").all()],
+            "period": period
+            }
+        )
 
 
 def login_view(request):
@@ -71,7 +71,10 @@ def register_view(request):
                 return render(
                     request, "portal/register.html", {"no_user": "ID does not exist"}
                 )
-            print(user.username, request.POST["password"])
+            if user.password != "":
+                return render(
+                    request, "portal/register.html", {"no_user": "ID already exists, login."}
+                )
             user.set_password(f'{request.POST["password"]}')
             user.save()
             login(request, user)
@@ -131,7 +134,7 @@ def upload_students(request):
                             course=Course.objects.get(course=row["course"].strip()),
                         )
                         student.user_permissions.clear()
-                        comrade = Group.objects.get(name="Comrade")
+                        comrade = Group.objects.get(name="comrade")
                         student.groups.add(comrade)
                         student.save()
                     except IntegrityError:
@@ -191,6 +194,10 @@ def upload_lecturers(request):
                             ),
                             faculty=Faculty.objects.get(faculty=row["faculty"].strip()),
                         )
+                        lecturer.user_permissions.clear()
+                        comrade = Group.objects.get(name="lec")
+                        lecturer.groups.add(comrade)
+                        lecturer.save()
                     except IntegrityError:
                         return JsonResponse({"status": 935})
                 except KeyError:
@@ -498,7 +505,7 @@ def register_room(request):
 @login_required(login_url="login")
 @csrf_exempt
 def upload_units(request):
-    if request.method == "PUT":
+    if request.method == "POST":
         try:
             file = pd.read_excel(request.body)
         except ValueError:

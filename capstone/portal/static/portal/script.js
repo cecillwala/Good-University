@@ -281,6 +281,16 @@ async function lecturer_details(lec){
         <input type="submit" class="other-btns" value="Add Unit">
     </form>`;
     let unit_div = document.createElement('div');
+    let name = document.createElement('h6');
+    let id = document.createElement('h4');
+    let dept = document.createElement('h6');
+    let gender = document.createElement('h6');
+    let phone_number = document.createElement('h6');
+    phone_number.innerHTML = `Phone Number: ${lec_details.phone_number}`;
+    name.innerHTML = `Name: ${lec_details.first_name} ${lec_details.last_name}`;
+    id.innerHTML = `${lec_details.username}`;
+    dept.innerHTML = `Department: ${lec_details.department}`;
+    gender.innerHTML = `Gender: ${lec_details.gender}`;
     if(lec_details.units.length <= 0){
         unit_div.innerHTML = `<div class="alert alert-warning">
                 <strong>ALERT! </strong>${lec_details.first_name} ${lec_details.last_name} is not teaching any units.
@@ -311,7 +321,7 @@ async function lecturer_details(lec){
         });
     }
     document.querySelector("#lec-profile").innerHTML = '';
-    document.querySelector("#lec-profile").append(lec_details.first_name, hr, lec_details.last_name, hr, `+${lec_details.phone_number}`, hr, units_div);
+    document.querySelector("#lec-profile").append(id, name, phone_number, gender, dept, hr, units_div);
     document.querySelector("#add-lec-unit").addEventListener('submit', (event) => {
         event.preventDefault();
         fetch('assign_unit', {

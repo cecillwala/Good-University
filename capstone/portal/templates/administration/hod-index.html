@@ -20,7 +20,7 @@
                         </div>
                         {% if user.is_authenticated %}
                         <div >
-                            <strong>Signed as {{ user.username }}</strong>
+                            <strong class="link-decoration">Signed in as {{ user.username }}</strong>
                             <a href="{% url 'login' %}" class="link-decoration">Log Out</a>
                             {% else %}
                                 <strong>Not signed in.</strong>

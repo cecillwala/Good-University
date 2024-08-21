@@ -3,8 +3,6 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager, Group
 
 
 # Create your models here
-
-
 class Faculty(models.Model):
     class Faculties(models.TextChoices):
         PHY_SCI = "PHY_SCI", "Physical Science"
@@ -20,9 +18,10 @@ class Faculty(models.Model):
 
     def save(self, *args, **kwargs):
         for label in Faculty.Faculties:
-            if self.faculty.capitalize() in label.label:
+            if self.faculty.capitalize() in label.label.capitalize():
                 self.faculty = label
-                return super().save(self, *args, **kwargs)
+                return super().save(*args, **kwargs)    
+        return None   
 
     def name(self):
         for label in Faculty.Faculties:
@@ -64,9 +63,9 @@ class Course(models.Model):
 class Unit(models.Model):
     department = models.ForeignKey(
         Department, on_delete=models.DO_NOTHING, related_name="syllabus", null=True)
-    unit_code = models.CharField(max_length=20)
+    unit_code = models.CharField(max_length=20, unique= True)
     unit = models.CharField(max_length=100)
-    course = models.ManyToManyField(Course, related_name="topics", null=True)
+    course = models.ManyToManyField(Course, related_name="topics")
     year_sem = models.FloatField()
 
     def serialize(self):
@@ -94,9 +93,10 @@ class Residence(models.Model):
 
     def save(self, *args, **kwargs):
         for label in Residence.Hostels:
-            if self.hostel.capitalize() in label.label:
+            if self.hostel.capitalize() in label.label.capitalize():
                 self.hostel = label
-        return super().save(*args, **kwargs)
+                return super().save(*args, **kwargs)
+        return None
     
     def name(self):
          for label in Residence.Hostels:
@@ -121,7 +121,6 @@ class Accomodation(models.Model):
 class User(AbstractUser):
     class Role(models.TextChoices):
         ADMIN = "ADMIN", "Admin"
-        HR = "HR", "HR"
         STUDENT = "STUDENT", "Student"
         LECTURER = "LECTURER", "Lecturer"
 
@@ -163,7 +162,7 @@ class Student(User):
     course = models.ForeignKey(
         Course, on_delete=models.DO_NOTHING, null=True, related_name="study"
     )
-    units = models.ManyToManyField(Unit, related_name="apprentice", null=True)
+    units = models.ManyToManyField(Unit, related_name="apprentice")
     residence = models.OneToOneField(Accomodation, on_delete=models.DO_NOTHING, related_name='tenant', null=True)
 
     def serialize(self):
@@ -196,9 +195,8 @@ class Lecturer(User):
         Department, on_delete=models.DO_NOTHING, null=True, related_name="sector"
     )
     units = models.ManyToManyField(
-        Unit, related_name="professor", null=True, blank=True
+        Unit, related_name="professor", null=True
     )
-    office = models.CharField(max_length=50, null=True, blank=True)
     is_hod = models.BooleanField(default=False)
 
     def serialize(self):
@@ -215,17 +213,3 @@ class Lecturer(User):
 
     class Meta:
         verbose_name = "Lecturer"
-
-
-class HRManager(BaseUserManager):
-    def get_queryset(self, *args, **kwargs):
-        results = super().get_queryset(*args, **kwargs)
-        return results.filter(role=User.Role.HR)
-
-
-class HR(User):
-    base_role = User.Role.HR
-    hr = HRManager()
-
-    class Meta:
-        verbose_name = "HR"

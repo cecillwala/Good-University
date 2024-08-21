@@ -48,8 +48,6 @@ body{
 .register-container{
     width: 50%;
     margin-left: 32vw;
-    /* position: relative;
-    bottom: 450px; */
 }
 .content{
     margin: 15vb;
@@ -64,7 +62,6 @@ body{
 
 .header{
     grid-area: 1 /  1 / span 1 / span 3;
-    /* padding: 5px; */
     position: sticky;
     flex-flow: row wrap;
     background-color: #03315f;
@@ -134,12 +131,6 @@ body{
     text-align: right;
     border: 1px solid #ccc;
 }
-
-/* .faculty-main{
-    grid-area: 2 / 2 /span 2 / span 2;
-    display: grid;
-    grid-template-columns: auto auto;
-} */
 
 .grid-item{
     border: 1px #03315f solid;

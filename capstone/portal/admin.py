@@ -5,7 +5,6 @@ from .models import *
 admin.site.register(User)
 admin.site.register(Student)
 admin.site.register(Lecturer)
-admin.site.register(HR)
 admin.site.register(Faculty)
 admin.site.register(Department)
 admin.site.register(Course)
