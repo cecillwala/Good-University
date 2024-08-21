@@ -17,25 +17,30 @@ from django.contrib.auth.models import Group
 # Create your views here.
 @login_required(login_url="login")
 def index(request):
+    period = academic_year(request)
     if request.user.is_superuser:
         return render(request, "administration/index.html", {
             "dorms": [accom.name() for accom in Residence.objects.all()],
-            "faculties": [faculty.name() for faculty in Faculty.objects.all()]
+            "faculties": [faculty.name() for faculty in Faculty.objects.all()],
+            "period": period
         })
     elif request.user.groups.contains(Group.objects.get(name="hod")):
         return render(request,"administration/hod-index.html", {
-            "lecturer": Lecturer.lecturer.get(username=request.user.username)
+            "lecturer": Lecturer.lecturer.get(username=request.user.username),
+            "period": period
+        })
+    else:
+        return render(request,"administration/lec-index.html", {
+            "lecturer": Lecturer.lecturer.get(username=request.user.username),
+            "period": period
         })
     # else:
-    #     return render(request,"administration/lec-index.html", {
-    #         "lecturer": Lecturer.lecturer.get(username=request.user.username)
-    #     })
-    else:
-        return render(request, "portal/index.html",{
-            "student": Student.student.get(username=request.user.username),
-            "dorms": [accom.name() for accom in Residence.objects.all()]
-            }
-        )
+    #     return render(request, "portal/index.html",{
+    #         "student": Student.student.get(username=request.user.username),
+    #         "dorms": [accom.name() for accom in Residence.objects.all()],
+    #         "period": period
+    #         }
+    #     )
 
 
 def login_view(request):
@@ -45,8 +50,6 @@ def login_view(request):
             username=request.POST["userID"],
             password=request.POST["password"],
         )
-        print(request.POST["userID"], request.POST["password"])
-        print(user)
         if user is not None:
             login(request, user)
             return HttpResponseRedirect(reverse("index"))
@@ -85,7 +88,10 @@ def register_view(request):
 @csrf_exempt
 def upload_students(request):
     if request.method == "POST":
-        file = pd.read_excel(request.body)
+        try:
+            file = pd.read_excel(request.body)
+        except ValueError:
+            return JsonResponse({"status": 239})
         file.to_csv("portal/static/portal/students.csv", index=None, header=True)
         with open("portal/static/portal/students.csv") as file:
             reader = csv.DictReader(file)
@@ -142,7 +148,10 @@ def upload_students(request):
 @csrf_exempt
 def upload_lecturers(request):
     if request.method == "POST":
-        file = pd.read_excel(request.body)
+        try:
+            file = pd.read_excel(request.body)
+        except ValueError:
+            return JsonResponse({"status": 239})
         file.to_csv("portal/static/portal/lecturers.csv", index=None, header=True)
         with open("portal/static/portal/lecturers.csv") as file:
             reader = csv.DictReader(file)
@@ -311,14 +320,8 @@ def faculty_details(request):
     for faculty in Faculty.objects.all():
         faculties.append(
             {
-                faculty.name(): {
-                    "departments": [
-                        department.serialize() for department in faculty.school.all()
-                    ],
-                    "courses": [
-                        course.serialize() for course in faculty.division.all()
-                    ],
-                }
+                "name": faculty.name(),
+                "faculty": faculty.faculty
             }
         )
     return JsonResponse(faculties, safe=False)
@@ -329,7 +332,10 @@ def faculty_details(request):
 @csrf_exempt
 def upload_departments(request):
     if request.method == "POST":
-        file = pd.read_excel(request.body)
+        try:
+            file = pd.read_excel(request.body)
+        except ValueError:
+            return JsonResponse({"status": 239})
         file.to_csv("portal/static/portal/departments.csv", index=None, header=True)
         with open("portal/static/portal/departments.csv") as file:
             reader = csv.DictReader(file)
@@ -381,7 +387,10 @@ def register_department(request):
 @csrf_exempt
 def upload_courses(request):
     if request.method == "POST":
-        file = pd.read_excel(request.body)
+        try:
+            file = pd.read_excel(request.body)
+        except ValueError:
+            return JsonResponse({"status": 239})
         file.to_csv("portal/static/portal/courses.csv", index=None, header=True)
         with open("portal/static/portal/courses.csv") as file:
             reader = csv.DictReader(file)
@@ -428,8 +437,11 @@ def register_course(request):
 @login_required(login_url="login")
 @csrf_exempt
 def upload_units(request):
-    if request.method == "POST":
-        file = pd.read_excel(request.body)
+    if request.method == "PUT":
+        try:
+            file = pd.read_excel(request.body)
+        except ValueError:
+            return JsonResponse({"status": 239})
         file.to_csv("portal/static/portal/units.csv", index=None, header=True)
         with open("portal/static/portal/units.csv") as file:
             reader = csv.DictReader(file)
@@ -462,7 +474,7 @@ def upload_units(request):
 @login_required(login_url="login")
 @csrf_exempt
 def add_unit(request):
-    if request.method == "POST":
+    if request.method == "PUT":
         data = json.loads(request.body)
         try:
             course = Course.objects.get(course=data["course"])
@@ -481,7 +493,7 @@ def add_unit(request):
 @permission_required("add_lecturer")
 @login_required(login_url="login")
 @csrf_exempt
-def remove_unit(request):
+def withdraw_unit(request):
     if request.method == "PUT":
         data = json.loads(request.body)
         try:
@@ -498,6 +510,42 @@ def remove_unit(request):
         return JsonResponse({"error": "PUT method required"})
 
 
+@login_required(login_url="login")
+@csrf_exempt
+def add_dept_unit(request):
+    if request.method == "PUT":
+        data = json.loads(request.body)
+        try:
+            dept = Department.objects.get(department=data["department"])
+        except Department.DoesNotExist:
+            return JsonResponse({"status": 935})
+        try:
+            unit = Unit.objects.get(unit_code=data["unit"])
+            unit.department = dept
+            unit.save()
+        except:
+            return JsonResponse({"status": 405})
+        return JsonResponse({"status": 200})
+    else:
+        return JsonResponse({"error": "PUT method required"})
+
+
+@login_required(login_url="login")
+@csrf_exempt
+def remove_dept_unit(request):
+    if request.method == "PUT":
+        data = json.loads(request.body)
+        try:
+            unit = Unit.objects.get(unit_code=data["unit"])
+            unit.department = None
+            unit.save()
+        except:
+            return JsonResponse({"status": 405})
+        return JsonResponse({"status": 200})
+    else:
+        return JsonResponse({"error": "PUT method required"})
+
+
 @permission_required("change_lecturer")
 @login_required(login_url="login")
 @csrf_exempt
@@ -506,11 +554,26 @@ def make_hod(request):
         data = json.loads(request.body)
         hod = Lecturer.lecturer.get(username=data["lecturer"])
         perms = Group.objects.get(name="hod")
-        if data["status"]:
+        if data["status"] == False:
             hod.groups.add(perms)
+            hod.is_hod = True
+            hod.save()
         else:
             hod.groups.remove(perms)
+            hod.is_hod = False
+            hod.save()
         return JsonResponse({"status": 200})
+
+
+@login_required(login_url="login")
+def faculty_departments(request, faculty):
+    faculty = Faculty.objects.get(faculty=faculty)
+    return JsonResponse([dept.department for dept in faculty.school.all()], safe=False)
+
+@login_required(login_url="login")
+def faculty_courses(request, faculty):
+    faculty = Faculty.objects.get(faculty=faculty)
+    return JsonResponse([course.course for course in faculty.division.all()], safe=False)
 
 
 @login_required(login_url="login")
@@ -576,17 +639,8 @@ def unit_registration(request):
         student.units.add(unit)
         student.save()
 
-    if 7 <= int(datetime.datetime.now().strftime("%m")) <= 12:
-        year = (
-            int(datetime.datetime.now().strftime("%y")) - int(student.username.split("-")[2]) + 1
-        )
-        sem = 0.1
-    elif 1 <= int(datetime.datetime.now().strftime("%m")) <= 4:
-        year = int(datetime.datetime.now().strftime("%y")) - int(
-            student.username.split("-")[2]
-        )
-        sem = 0.2
-    year_sem = float(year + sem)
+    period = academic_year(request)
+    year_sem = float(period["year"] + float(f"0.{period['sem']}"))
     return JsonResponse({
         "all_units":[
             {"unit_code": unit.unit_code, "unit": unit.unit}
@@ -603,7 +657,10 @@ def unit_registration(request):
 @csrf_exempt
 def upload_rooms(request):
     if request.method == "POST":
-        file = pd.read_excel(request.body)
+        try:
+            file = pd.read_excel(request.body)
+        except ValueError:
+            return JsonResponse({"status": 239})
         file.to_csv('portal/static/portal/rooms.csv', header=True, index=False)
         with open("portal/static/portal/rooms.csv") as rooms:
             reader = csv.DictReader(rooms)
@@ -660,3 +717,36 @@ def accomodation_registration(request):
 def lecturer_units(request):
     lec = Lecturer.lecturer.get(username=request.user.username)
     return JsonResponse(lec.serialize())
+
+
+@login_required(login_url="login")
+def department_lecturers(request, department):
+    dept = Department.objects.get(department=department)
+    return JsonResponse([{"username":lec.username, "is_hod":lec.is_hod} for lec in dept.sector.all()], safe=False)
+
+
+@login_required(login_url="login")
+def department_units(request, department):
+    dept = Department.objects.get(department=department)
+    return JsonResponse([{"unit":unit.unit, "unit_code":unit.unit_code} for unit in dept.syllabus.order_by("year_sem")], safe=False)
+
+
+@login_required(login_url="login")
+def course_units(request, course):
+    course = Course.objects.get(course=course)
+    return JsonResponse([{"unit":unit.unit, "unit_code":unit.unit_code} for unit in course.topics.order_by("year_sem")], safe=False)
+
+
+def academic_year(request):
+    user = User.objects.get(username=request.user.username)
+    if 7 <= int(datetime.datetime.now().strftime("%m")) <= 12:
+        year = (
+            int(datetime.datetime.now().strftime("%y")) - int(user.username.split("-")[2]) + 1
+        )
+        sem = 1
+    elif 1 <= int(datetime.datetime.now().strftime("%m")) <= 4:
+        year = int(datetime.datetime.now().strftime("%y")) - int(
+            user.username.split("-")[2]
+        )
+        sem = 2
+    return {"year":year, "sem":sem}

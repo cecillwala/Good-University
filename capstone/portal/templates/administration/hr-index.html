@@ -13,7 +13,7 @@
         </button>
     </nav> 
     <div class="main" id="main">
-        <div id="profile">
+        <div id="profile" class="main-container">
             <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                 <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
@@ -31,7 +31,7 @@
             {{ user.department }}
             {{ user.office }}
         </div>
-        <div class="student-registration" id="lecturer-registration">
+        <div class="main-container" id="lecturer-registration">
             <div id="lec-file-upload">
                 <h3>Lecturer Registration</h3>
                 <br>
@@ -40,14 +40,14 @@
                 <br>
                 <form id="upload-form" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <label for="lec-csv" class="file-input btn btn-primary">
+                    <label for="lec-csv" class="file-input other-btns">
                         Choose file
                         <input type="file" name="file" id="lec-csv">
                     </label>
                     <span id="filename"></span>
-                    <input class="btn btn-outline-success me-2 disabled" type="submit" id="upload" value="Upload file">
+                    <input class="btn btn-success me-2 disabled" type="submit" id="upload" value="Upload file">
                 </form>
-                <button class="btn btn-outline-primary" onclick="register_lecturer()">Register Single Lecturer</button>
+                <button class="other-btns" onclick="register_lecturer()">Register Single Lecturer</button>
             </div>
             <div class="alert alert-warning" id="state"></div>
             <div id="single-lecturer">
@@ -74,9 +74,9 @@
                         <option>Rather Not Say</option>
                     </select>
                     <br>
-                    <input type="submit" class="btn btn-success me-2" value="Register Student">
+                    <input type="submit" class="other-btns" value="Register Student">
                 </form>
-                <button onclick="ShowPage('#lecturer-registration', '#file-upload')" class="btn btn-outline-primary">Upload Lecturer File</button>
+                <button onclick="ShowPage('#lecturer-registration', '#file-upload')" class="btn btn-primary">Upload Lecturer File</button>
             </div>
         </div>
     </div>

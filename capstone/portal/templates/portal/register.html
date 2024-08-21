@@ -3,6 +3,8 @@
 <div class="container">
     <form action="{% url 'register' %}" method="post" class="cecil">
         {% csrf_token %}
+        <h1 class="welcome-decoration">Welcome to Godolkin University</h1>
+        <br>
         <input type="radio" id="student" name="rank" value="Student">
         <label for="student">Student</label>
         <input type="radio" id="employee" name="rank" value="Employee">
@@ -22,8 +24,9 @@
                 <div>{{ message }}</div>
             {% endif %}
         </div>
-        <input class="btn btn-primary" type="submit" value="Create Account">
+        <input class="other-btns" type="submit" value="Create Account">
+        <br>
+        <div>Already have an account? <a class="welcome-decoration" href="{% url 'login' %}">Login Here.</a></div>
     </form>
-   <span style="position: absolute; top: 480px; left: 480px;">Already have an account? <a class="nav-link" href="{% url 'login' %}">Login Here.</a></span>
 </div>
 {% endblock %}

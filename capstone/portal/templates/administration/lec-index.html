@@ -2,32 +2,25 @@
 
 {% block body %}
 <nav class="menu">
-    <button onclick="ShowPage('#main', '#profile')" class="menu-options btn btn-light">
+    <button onclick="ShowPage('#main', '#profile')" class="menu-options">
         <div>
             Profile
         </div>
     </button>
-    <button onclick="lecturer_units()" class="menu-options btn btn-light">
+    <button onclick="lecturer_units()" class="menu-options">
         <div>
-            Units
+           Your Units
         </div>
     </button>
 </nav>
 <div class="main" id="main">
-    <div id="profile">
-        {{ lecturer.username }}
-        {{ lecturer.first_name }}
-        {{ lecturer.last_name }}
-        {% if lecturer.is_active %}
-        Yes
-        {% else %}
-        No
-        {% endif %}
-        {{ lecturer.email }}
-        {{ lecturer.gender }}
-        {{ lecturer.position }}
-        {{ lecturer.department.department }}
-        {{ lecturer.office }}
+    <div id="profile" class="main-container">
+        <h3>Profile: </h3>
+        <div><strong>Name:</strong> {{ lecturer.first_name }} {{ lecturer.last_name }}</div>
+        <div><strong>Department:</strong> {{ lecturer.department.department }}</div>
+        <div><strong>Gender:</strong> {{ lecturer.gender }}</div>
+        <div><strong>Phone Number: </strong> {{ lecturer.phone_number }}</div>
+        <div><strong>Session: </strong> Year {{ period.year}} Semester {{ period.sem }}</div>
     </div>
     <div id="lec-units">
         <div id="units-list"></div>

@@ -4,37 +4,52 @@ input[type="file"]{
 
 body{
     background-color: #87CEEB;
+    color: #001f3f;
 }
 
 .file-input{
     display: inline-block;
 }
 
+.container{
+    margin-left: 28vw;
+}
+
 .cecil{
     margin: auto;
-    width: 38%;
+    width: 50%;
     position: absolute;
     top: 120px;
-    border: 1px #ccc solid;
     border-radius: 60px;
     padding-left: 40px;
     padding-right: 40px;
-    padding-top: 120px;
+    padding-top: 50px;
     padding-bottom: 100px;
 }
 
-.container{
-    width: 40%;
+.link-decoration, .link-decoration:hover{
+    text-decoration: none;
+    color: #fff;
+    padding-right: 10px;
 }
 
-.student-registration{
-    border-radius: 30px;
+.welcome-decoration, .welcome-decoration:hover{
+    text-decoration: none;
+    color: #001f3f; 
+}
+
+.main-container{
     width: 50%;
     margin-left: 22vw;
     height: 70vh;
-    text-align: center;
     position: relative;
     top: 30px;
+}
+.register-container{
+    width: 50%;
+    margin-left: 32vw;
+    /* position: relative;
+    bottom: 450px; */
 }
 .content{
     margin: 15vb;
@@ -49,7 +64,7 @@ body{
 
 .header{
     grid-area: 1 /  1 / span 1 / span 3;
-    padding: 15px;
+    /* padding: 5px; */
     position: sticky;
     flex-flow: row wrap;
     background-color: #03315f;
@@ -58,7 +73,7 @@ body{
     z-index: 1;
 }
 
-.main, .faculty-main{
+.main{
     grid-area: 2 / 2 /span 2 / span 2;
     width: 85vw;
     min-height: 100vh;
@@ -103,6 +118,13 @@ body{
     border-radius: 5px;
     padding: 1%;
 }
+.other-btns-disabled{
+    border: none;
+    color: #073766;
+    background-color: #3abfef;
+    border-radius: 5px;
+    padding: 1%;
+}
 .menu-options:hover, .other-btns:hover{
     transition: all 300ms ease-in-out;
     background-color: #03315f;
@@ -128,7 +150,9 @@ body{
     margin: auto;
 }
 
-
+.profile-details{
+    font-size: 20px;
+}
 .list{
     width: 100%;
     display: flex;
@@ -136,9 +160,13 @@ body{
     padding: 20px;
 }
 
-.row-flex{
+.row-flex, .header-details{
     width: 100%;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
+}
+
+.header-details{
+    justify-content: flex-start;
 }

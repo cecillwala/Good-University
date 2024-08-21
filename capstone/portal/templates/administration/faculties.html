@@ -7,10 +7,8 @@
     <div id="courses" class="list">
     </div>
     <div id="course-details" class="list">
-        <form method="post" id="add-unit">
-            {% csrf_token %}
-            <input type="text" id="unit" placeholder="Add Unit" autocomplete="off">
-            </hr style="border: 1px #ccc solid;">
+        <form method="post" id="course-unit-form">
+            <input type="text" placeholder="Add Unit" id="add-course-unit">
             <input type="submit" value="Add Unit">
         </form>
         <div id="course-units" class="list"></div>
@@ -19,7 +17,13 @@
     </div>
     <div id="dept-details">
         <div id="dept-options" class="list"></div>
-        <div id="dept-units" class="list"></div>
+        <div id="dept-units" class="list">
+            <form method="post" id="dept-unit-form">
+                <input type="text" placeholder="Add Unit" id="add-dept-unit">
+                <input type="submit" value="Add Unit">
+            </form>
+            <div class="list" id="dept-units-list"></div>
+        </div>
         <div id="dept-lecs" class="list"></div>
     </div>
 </div>

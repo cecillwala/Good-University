@@ -115,10 +115,16 @@ function warnings(status, section, user){
                 <strong>905 ERROR! Faculty does NOT exist!</strong>
             </div>`;
             break;
+        case 239:
+            document.querySelector(`#${section}`).outerHTML = `
+            <div class="alert alert-danger" id=${section}>
+                <strong>239 Error! File format not supported!/No file Chosen!</strong>
+            </div>`;
+            break;
         default:
             document.querySelector(`#${section}`).outerHTML = `
             <div class="alert alert-danger" id=${section}>
-                <strong>UNKNOWN ERROR!Something Went horribly wrong!</strong>
+                <strong>Unkown Error!Something Went horribly wrong!</strong>
             </div>`;
     }
 }
@@ -157,9 +163,14 @@ function upload_data(data){
     ShowPage("#main", `#${data}-registration`);
     ShowPage(`#${data}-registration`, `#${data}-file-upload`);
     document.querySelector(`#${data}-csv`).addEventListener('change', () => {
-        document.querySelector(`#${data}-upload`).setAttribute('class','btn btn-outline-success me-2');
+        document.querySelector(`#${data}-upload`).setAttribute('class','btn btn-success me-2');
         const file_name = document.querySelector(`#${data}-csv`).value.split("\\");
+        if(file_name[2] != undefined){
         document.querySelector(`#${data}-upload`).value = file_name[2];
+        }
+        else{
+            document.querySelector(`#${data}-upload`).value = 'No File Chosen';   
+        }
         document.querySelector(`#${data}-status`).outerHTML = `
         <div id="${data}-status" class="alert alert-danger">
             <strong>Warning! Submitting file has no reverse process!</strong>
@@ -199,16 +210,16 @@ async function dept_details(){
     });
 
     document.querySelector("#dept-units-view").addEventListener('click', () => {
-        ShowPage('#main', '#units');
-        ShowPage("#units", "#unit-list");
-        document.querySelector("#unit-list").innerHTML ='';
+        ShowPage('#main', '#dept-units');
+        ShowPage("#dept-units", "#dept-unit-list");
+        document.querySelector("#dept-unit-list").innerHTML ='';
         lecs.units.forEach(unit => {
             const unit_btn = document.createElement('button');
             let hr = document.createElement('hr');
             unit_btn.setAttribute('class', 'other-btns');
             unit_btn.innerHTML = `${unit.unit_code}: ${unit.unit}`;
             unit_btn.addEventListener('click', () => unit_details(unit.unit_code));
-            document.querySelector("#unit-list").append(unit_btn, hr);
+            document.querySelector("#dept-unit-list").append(unit_btn, hr);
         });
     });
 
@@ -279,8 +290,8 @@ async function lecturer_details(lec){
 
 
 async function unit_details(unit){
-    ShowPage("#units", "#unit-details");
-    const children = Array.from(document.querySelector("#unit-details").children);
+    ShowPage("#dept-units", "#dept-unit-details");
+    const children = Array.from(document.querySelector("#dept-unit-details").children);
     children.forEach(child => {
         child.innerHTML = '';
     });
@@ -292,14 +303,14 @@ async function unit_details(unit){
     course_tag.innerHTML = "Courses: ";
     student_tag.innerHTML = "Students: ";
     lecs_tag.innerHTML = "Lecturers: ";
-    document.querySelector("#unit-courses").append(course_tag);
-    document.querySelector("#unit-students").append(student_tag);
-    document.querySelector("#unit-lecs").append(lecs_tag);
+    document.querySelector("#dept-unit-courses").append(course_tag);
+    document.querySelector("#dept-unit-students").append(student_tag);
+    document.querySelector("#dept-unit-lecs").append(lecs_tag);
     console.log(units);
-    document.querySelector("#unit").innerHTML = `${units.unit_code}: ${units.unit}`;
-    if(units.courses.length<= 0){
-        document.querySelector("#unit-courses").outerHTML = `
-        <div id='unit-courses'>
+    document.querySelector("#dept-unit-unit").innerHTML = `${units.unit_code}: ${units.unit}`;
+    if(units.courses.length <= 0){
+        document.querySelector("#dept-unit-courses").outerHTML = `
+        <div id='dept-unit-courses'>
             <div class="alert alert-warning">
                 <strong>ALERT!</strong> No course is taking this unit!
             </div>
@@ -307,13 +318,13 @@ async function unit_details(unit){
     }
     else{
         units.courses.forEach(course => {
-            document.querySelector("#unit-courses").append(course)
+            document.querySelector("#dept-unit-courses").append(course)
         });
     }
 
     if(units.professors.length <= 0){
-        document.querySelector("#unit-lecs").outerHTML = `
-        <div id='unit-lecs' class="list">
+        document.querySelector("#dept-unit-lecs").outerHTML = `
+        <div id='dept-unit-lecs' class="list">
             <h6>Lecturers: </h6>
             <div class="alert alert-warning">
                 <strong>ALERT!</strong> No lecturer is teaching this unit!
@@ -322,12 +333,12 @@ async function unit_details(unit){
     }
     else{
         units.professors.forEach(prof => {
-            document.querySelector("#unit-lecs").append(prof)
+            document.querySelector("#dept-unit-lecs").append(prof)
         });
     }
     if(units.students.length <= 0){
-        document.querySelector("#unit-students").outerHTML = `
-        <div id='unit-students' class='list'>
+        document.querySelector("#dept-unit-students").outerHTML = `
+        <div id='dept-unit-students' class='list'>
             <h6>Students: </h6>
             <div class="alert alert-warning">
                 <strong>ALERT!</strong> No students are taking this unit!
@@ -336,7 +347,7 @@ async function unit_details(unit){
     }
     else{
         units.students.forEach(student => {
-            document.querySelector("#unit-students").append(student)
+            document.querySelector("#dept-unit-students").append(student)
         });
     }
 }

@@ -7,19 +7,22 @@
         {% endif %}
         <form action="{% url 'login' %}" method="post">
             {% csrf_token %}
+            <h1 class="welcome-decoration">Welcome to Godolkin University</h1>
+            <br>
             <input type="radio" id="student" name="rank" required value="Student">
             <label for="student">Student</label>
             <input type="radio" id="employee" name="rank" value="Employee">
             <label for="employee">Employee</label>
             <div class="form-group">
-                <input class="form-control" autocomplete="off" type="text" name="userID" required placeholder='EmployeeID'>
+                <input class="form-control" autocomplete="off" type="text" name="userID" required placeholder='User ID'>
             </div>
             <div class="form-group">
                 <input class="form-control" type="text" autocomplete="off" name="password" required placeholder="Password">
             </div>
-                <input class="btn btn-primary" type="submit" value="Login">
+                <input class="other-btns" type="submit" value="Login">
+            <br>
+            <div>Don't have an account? <a class="welcome-decoration" href="{% url 'register' %}">Register Here.</a></div>
         </form>
-        <div style="position: absolute; top: 310px;">Don't have an account? <a class="nav-link" href="{% url 'register' %}">Register Here.</a></div>
     </div>
 </div>
 {% endblock %}

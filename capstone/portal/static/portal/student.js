@@ -31,6 +31,8 @@ async function unit_registration(){
         for(let i = 0; i < units.registered_units.length; i++){
             if(units.registered_units[i].unit_code == unit.unit_code){
                 register_unit.innerHTML = 'Registered';
+                register_unit.setAttribute('disabled', true);
+                register_unit.setAttribute('class', 'other-btns-disabled');
             }
         }
 

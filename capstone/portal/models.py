@@ -63,8 +63,7 @@ class Course(models.Model):
 
 class Unit(models.Model):
     department = models.ForeignKey(
-        Department, on_delete=models.DO_NOTHING, related_name="syllabus"
-    )
+        Department, on_delete=models.DO_NOTHING, related_name="syllabus", null=True)
     unit_code = models.CharField(max_length=20)
     unit = models.CharField(max_length=100)
     course = models.ManyToManyField(Course, related_name="topics", null=True)
@@ -200,6 +199,7 @@ class Lecturer(User):
         Unit, related_name="professor", null=True, blank=True
     )
     office = models.CharField(max_length=50, null=True, blank=True)
+    is_hod = models.BooleanField(default=False)
 
     def serialize(self):
         return {

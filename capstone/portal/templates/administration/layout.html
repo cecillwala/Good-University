@@ -14,14 +14,19 @@
             <div class="header">
                 {% if user.is_authenticated %}
                 <nav class="navbar bg-body-tertiary">
-                    <div class="container-fluid">
-                    <h3 class="navbar-brand">Godolkin University</h3>
-                    <div class="nav-item">
-                        <a href="{% url 'index' %}"class="nav-link">Home</a>
-                    </div>
-                    <div class="nav-item">
-                        <a href="{% url 'login' %}" class="nav-link">Log Out</a>
-                    </div>
+                    <div class="row-flex">
+                        <div class="nav-item">
+                            <a href="{% url 'index' %}" class="link-decoration"><h4>Godolkin University</h4></a>
+                        </div>
+                        {% if user.is_authenticated %}
+                        <div>
+                            <a href="{% url 'index' %}"class="link-decoration">Home</a>
+                            <strong>Signed as {{ user.username }}</strong>
+                            <a href="{% url 'login' %}" class="link-decoration">Log Out</a>
+                            {% else %}
+                                <strong>Not signed.</strong>
+                            {% endif %}
+                        </div>
                     </div>
                 </nav>
                 {% endif %}

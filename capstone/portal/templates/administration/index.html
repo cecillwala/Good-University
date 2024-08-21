@@ -13,14 +13,19 @@
             <div class="header">
                 {% if user.is_authenticated %}
                 <nav class="navbar bg-body-tertiary">
-                    <div class="container-fluid">
-                    <h3 class="navbar-brand">Godolkin University</h3>
-                    <div class="nav-item">
-                        <a href="{% url 'index' %}"class="nav-link">Home</a>
-                    </div>
-                    <div class="nav-item">
-                        <a href="{% url 'login' %}" class="nav-link">Log Out</a>
-                    </div>
+                    <div class="row-flex">
+                        <div class="nav-item">
+                            <a href="{% url 'index' %}" class="link-decoration"><h4>Godolkin University</h4></a>
+                        </div>
+                        {% if user.is_authenticated %}
+                        <div>
+                            <a href="{% url 'index' %}"class="link-decoration">Home</a>
+                            <strong  class="link-decoration">Signed as {{ user.username }}</strong>
+                            <a href="{% url 'login' %}" class="link-decoration">Log Out</a>
+                            {% else %}
+                                <strong>Not signed.</strong>
+                            {% endif %}
+                        </div>
                     </div>
                 </nav>
                 {% endif %}
@@ -32,13 +37,13 @@
                     </div>
                 </button>
                 <button class="menu-options">
-                    <a href="{% url 'faculties' %}" class="menu-options">
+                    <a href="{% url 'faculties' %}" class="link-decoration">
                             Faculties
                     </a>
                 </button>
                 <button onclick="upload_data('student')" class="menu-options">
                     <div>
-                        First Year Registration
+                        Student Registration
                     </div>
                 </button>
                 <button onclick="upload_data('lecturer')" class="menu-options">
@@ -68,27 +73,19 @@
                 </button>
             </nav>
             <div id="main" class="main">
-                <div id="profile">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                <div id="profile" class="main-container profile-details">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="65" height="65" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                         <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
                     </svg>
-                    {{ user.first_name }}
-                    {{ user.last_name }}
-                    {% if user.is_active %}
-                    Yes
-                    {% else %}
-                    No
-                    {% endif %}
-                    {{ user.email }}
-                    {{ user.gender }}
-                    {{ user.position }}
-                    {{ user.department }}
-                    {{ user.office }}
+                    <div><strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}</div>
+                    <div><strong>Gender:</strong> {{ user.gender }}</div>
+                    <div><strong>Phone Number: </strong> +{{ user.phone_number }}</div>
+                    <div><strong>Session: </strong> Year {{ period.year}} Semester {{ period.sem }}</div>
                 </div>
-                <div class="student-registration" id="student-registration">
+                <div class="main-container" id="student-registration">
                     <div id="student-file-upload">
-                        <h3>2024/2025 First Year Admission</h3>
+                        <h3>2024/2025 Student Registration</h3>
                         <br>
                         <div id="student-status"></div>
                         <div><strong>NOTE: </strong> File must be an excel file `file.xlsx`</div>
@@ -145,7 +142,7 @@
                         <button onclick="ShowPage('#student-registration', '#file-upload')" class="other-btns">Upload Student File</button>
                     </div>
                 </div>
-                <div class="student-registration" id="lecturer-registration">
+                <div class="main-container" id="lecturer-registration">
                     <div id="lecturer-file-upload">
                         <h3>Lecturer Registration</h3>
                         <br>
@@ -196,7 +193,7 @@
                         <button onclick="ShowPage('#lecturer-registration', '#file-upload')" class="other-btns">Upload Lecturer File</button>
                     </div>
                 </div>
-                <div class="student-registration" id="department-registration">
+                <div class="main-container" id="department-registration">
                     <div id="department-file-upload">
                         <h3>Department Registration</h3>
                         <br>
@@ -234,7 +231,7 @@
                         <button onclick="ShowPage('#department-registration', '#department-file-upload')" class="other-btns">Upload Department File</button>
                     </div>
                 </div>
-                <div class="student-registration" id="course-registration">
+                <div class="main-container" id="course-registration">
                     <div id="course-file-upload">
                         <h3>Course Registration</h3>
                         <br>
@@ -266,7 +263,7 @@
                         <button onclick="ShowPage('#course-registration', '#course-file-upload')" class="other-btns">Upload Course(s) File</button>
                     </div>
                 </div>
-                <div class="student-registration" id="unit-registration">
+                <div class="main-container" id="unit-registration">
                     <div id="unit-file-upload">
                         <h3>Unit Registration</h3>
                         <br>
@@ -304,7 +301,7 @@
                         <button onclick="ShowPage('#unit-registration', '#unit-file-upload')" class="other-btns">Upload Unit(s) File</button>
                     </div>
                 </div>
-                <div id="room-registration" class="student-registration">
+                <div id="room-registration" class="main-container">
                     <div id="room-file-upload">
                         <h3>Upload Rooms</h3>
                         <br>
